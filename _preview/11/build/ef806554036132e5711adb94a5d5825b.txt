@@ -1,0 +1,294 @@
+[31m---------------------------------------------------------------------------[39m
+[31mClientResponseError[39m                       Traceback (most recent call last)
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/implementations/http.py:427[39m, in [36mHTTPFileSystem._info[39m[34m(self, url, **kwargs)[39m
+[32m    425[39m [38;5;28;01mtry[39;00m:
+[32m    426[39m     info.update(
+[32m--> [39m[32m427[39m         [38;5;28;01mawait[39;00m _file_info(
+[32m    428[39m             [38;5;28mself[39m.encode_url(url),
+[32m    429[39m             size_policy=policy,
+[32m    430[39m             session=session,
+[32m    431[39m             **[38;5;28mself[39m.kwargs,
+[32m    432[39m             **kwargs,
+[32m    433[39m         )
+[32m    434[39m     )
+[32m    435[39m     [38;5;28;01mif[39;00m info.get([33m"[39m[33msize[39m[33m"[39m) [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/implementations/http.py:843[39m, in [36m_file_info[39m[34m(url, session, size_policy, **kwargs)[39m
+[32m    842[39m [38;5;28;01masync[39;00m [38;5;28;01mwith[39;00m r:
+[32m--> [39m[32m843[39m     [43mr[49m[43m.[49m[43mraise_for_status[49m[43m([49m[43m)[49m
+[32m    845[39m     [38;5;28;01mif[39;00m [33m"[39m[33mContent-Length[39m[33m"[39m [38;5;129;01min[39;00m r.headers:
+[32m    846[39m         [38;5;66;03m# Some servers may choose to ignore Accept-Encoding and return[39;00m
+[32m    847[39m         [38;5;66;03m# compressed content, in which case the returned size is unreliable.[39;00m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/aiohttp/client_reqrep.py:629[39m, in [36mClientResponse.raise_for_status[39m[34m(self)[39m
+[32m    627[39m     [38;5;28mself[39m.release()
+[32m--> [39m[32m629[39m [38;5;28;01mraise[39;00m ClientResponseError(
+[32m    630[39m     [38;5;28mself[39m.request_info,
+[32m    631[39m     [38;5;28mself[39m.history,
+[32m    632[39m     status=[38;5;28mself[39m.status,
+[32m    633[39m     message=[38;5;28mself[39m.reason,
+[32m    634[39m     headers=[38;5;28mself[39m.headers,
+[32m    635[39m )
+
+[31mClientResponseError[39m: 429, message='Too Many Requests', url='https://huggingface.co/datasets/martinschobben/microwave-remote-sensing/resolve/main/coef.zarr.zip'
+
+The above exception was the direct cause of the following exception:
+
+[31mFileNotFoundError[39m                         Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[5][39m[32m, line 1[39m
+[32m----> [39m[32m1[39m coef_dc = [43mcat[49m[43m.[49m[43mcoef[49m[43m.[49m[43mread[49m[43m([49m[43m)[49m.compute()
+[32m      2[39m coef_dc.hvplot.image(
+[32m      3[39m     x=[33m"[39m[33mx[39m[33m"[39m,
+[32m      4[39m     y=[33m"[39m[33my[39m[33m"[39m,
+[32m   (...)[39m[32m      9[39m     rasterize=[38;5;28;01mTrue[39;00m,
+[32m     10[39m ).opts(frame_height=[32m600[39m, framewise=[38;5;28;01mFalse[39;00m, aspect=[33m"[39m[33mequal[39m[33m"[39m)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/intake/readers/readers.py:121[39m, in [36mBaseReader.read[39m[34m(self, *args, **kwargs)[39m
+[32m    119[39m kw.update(kwargs)
+[32m    120[39m args = kw.pop([33m"[39m[33margs[39m[33m"[39m, ()) [38;5;129;01mor[39;00m args
+[32m--> [39m[32m121[39m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43m_read[49m[43m([49m[43m*[49m[43margs[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkw[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/intake/readers/readers.py:1327[39m, in [36mXArrayDatasetReader._read[39m[34m(self, data, open_local, **kw)[39m
+[32m   1325[39m         f = fsspec.open(data.url, **(data.storage_options [38;5;129;01mor[39;00m {})).open()
+[32m   1326[39m         [38;5;28;01mreturn[39;00m open_dataset(f, **kw)
+[32m-> [39m[32m1327[39m [38;5;28;01mreturn[39;00m [43mopen_dataset[49m[43m([49m[43mdata[49m[43m.[49m[43murl[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkw[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/backends/api.py:687[39m, in [36mopen_dataset[39m[34m(filename_or_obj, engine, chunks, cache, decode_cf, mask_and_scale, decode_times, decode_timedelta, use_cftime, concat_characters, decode_coords, drop_variables, inline_array, chunked_array_type, from_array_kwargs, backend_kwargs, **kwargs)[39m
+[32m    675[39m decoders = _resolve_decoders_kwargs(
+[32m    676[39m     decode_cf,
+[32m    677[39m     open_backend_dataset_parameters=backend.open_dataset_parameters,
+[32m   (...)[39m[32m    683[39m     decode_coords=decode_coords,
+[32m    684[39m )
+[32m    686[39m overwrite_encoded_chunks = kwargs.pop([33m"[39m[33moverwrite_encoded_chunks[39m[33m"[39m, [38;5;28;01mNone[39;00m)
+[32m--> [39m[32m687[39m backend_ds = [43mbackend[49m[43m.[49m[43mopen_dataset[49m[43m([49m
+[32m    688[39m [43m    [49m[43mfilename_or_obj[49m[43m,[49m
+[32m    689[39m [43m    [49m[43mdrop_variables[49m[43m=[49m[43mdrop_variables[49m[43m,[49m
+[32m    690[39m [43m    [49m[43m*[49m[43m*[49m[43mdecoders[49m[43m,[49m
+[32m    691[39m [43m    [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m,[49m
+[32m    692[39m [43m[49m[43m)[49m
+[32m    693[39m ds = _dataset_from_backend_dataset(
+[32m    694[39m     backend_ds,
+[32m    695[39m     filename_or_obj,
+[32m   (...)[39m[32m    705[39m     **kwargs,
+[32m    706[39m )
+[32m    707[39m [38;5;28;01mreturn[39;00m ds
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/backends/zarr.py:1578[39m, in [36mZarrBackendEntrypoint.open_dataset[39m[34m(self, filename_or_obj, mask_and_scale, decode_times, concat_characters, decode_coords, drop_variables, use_cftime, decode_timedelta, group, mode, synchronizer, consolidated, chunk_store, storage_options, zarr_version, zarr_format, store, engine, use_zarr_fill_value_as_mask, cache_members)[39m
+[32m   1576[39m filename_or_obj = _normalize_path(filename_or_obj)
+[32m   1577[39m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m store:
+[32m-> [39m[32m1578[39m     store = [43mZarrStore[49m[43m.[49m[43mopen_group[49m[43m([49m
+[32m   1579[39m [43m        [49m[43mfilename_or_obj[49m[43m,[49m
+[32m   1580[39m [43m        [49m[43mgroup[49m[43m=[49m[43mgroup[49m[43m,[49m
+[32m   1581[39m [43m        [49m[43mmode[49m[43m=[49m[43mmode[49m[43m,[49m
+[32m   1582[39m [43m        [49m[43msynchronizer[49m[43m=[49m[43msynchronizer[49m[43m,[49m
+[32m   1583[39m [43m        [49m[43mconsolidated[49m[43m=[49m[43mconsolidated[49m[43m,[49m
+[32m   1584[39m [43m        [49m[43mconsolidate_on_close[49m[43m=[49m[38;5;28;43;01mFalse[39;49;00m[43m,[49m
+[32m   1585[39m [43m        [49m[43mchunk_store[49m[43m=[49m[43mchunk_store[49m[43m,[49m
+[32m   1586[39m [43m        [49m[43mstorage_options[49m[43m=[49m[43mstorage_options[49m[43m,[49m
+[32m   1587[39m [43m        [49m[43mzarr_version[49m[43m=[49m[43mzarr_version[49m[43m,[49m
+[32m   1588[39m [43m        [49m[43muse_zarr_fill_value_as_mask[49m[43m=[49m[38;5;28;43;01mNone[39;49;00m[43m,[49m
+[32m   1589[39m [43m        [49m[43mzarr_format[49m[43m=[49m[43mzarr_format[49m[43m,[49m
+[32m   1590[39m [43m        [49m[43mcache_members[49m[43m=[49m[43mcache_members[49m[43m,[49m
+[32m   1591[39m [43m    [49m[43m)[49m
+[32m   1593[39m store_entrypoint = StoreBackendEntrypoint()
+[32m   1594[39m [38;5;28;01mwith[39;00m close_on_error(store):
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/backends/zarr.py:664[39m, in [36mZarrStore.open_group[39m[34m(cls, store, mode, synchronizer, group, consolidated, consolidate_on_close, chunk_store, storage_options, append_dim, write_region, safe_chunks, align_chunks, zarr_version, zarr_format, use_zarr_fill_value_as_mask, write_empty, cache_members)[39m
+[32m    638[39m [38;5;129m@classmethod[39m
+[32m    639[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mopen_group[39m(
+[32m    640[39m     [38;5;28mcls[39m,
+[32m   (...)[39m[32m    657[39m     cache_members: [38;5;28mbool[39m = [38;5;28;01mTrue[39;00m,
+[32m    658[39m ):
+[32m    659[39m     (
+[32m    660[39m         zarr_group,
+[32m    661[39m         consolidate_on_close,
+[32m    662[39m         close_store_on_close,
+[32m    663[39m         use_zarr_fill_value_as_mask,
+[32m--> [39m[32m664[39m     ) = [43m_get_open_params[49m[43m([49m
+[32m    665[39m [43m        [49m[43mstore[49m[43m=[49m[43mstore[49m[43m,[49m
+[32m    666[39m [43m        [49m[43mmode[49m[43m=[49m[43mmode[49m[43m,[49m
+[32m    667[39m [43m        [49m[43msynchronizer[49m[43m=[49m[43msynchronizer[49m[43m,[49m
+[32m    668[39m [43m        [49m[43mgroup[49m[43m=[49m[43mgroup[49m[43m,[49m
+[32m    669[39m [43m        [49m[43mconsolidated[49m[43m=[49m[43mconsolidated[49m[43m,[49m
+[32m    670[39m [43m        [49m[43mconsolidate_on_close[49m[43m=[49m[43mconsolidate_on_close[49m[43m,[49m
+[32m    671[39m [43m        [49m[43mchunk_store[49m[43m=[49m[43mchunk_store[49m[43m,[49m
+[32m    672[39m [43m        [49m[43mstorage_options[49m[43m=[49m[43mstorage_options[49m[43m,[49m
+[32m    673[39m [43m        [49m[43mzarr_version[49m[43m=[49m[43mzarr_version[49m[43m,[49m
+[32m    674[39m [43m        [49m[43muse_zarr_fill_value_as_mask[49m[43m=[49m[43muse_zarr_fill_value_as_mask[49m[43m,[49m
+[32m    675[39m [43m        [49m[43mzarr_format[49m[43m=[49m[43mzarr_format[49m[43m,[49m
+[32m    676[39m [43m    [49m[43m)[49m
+[32m    678[39m     [38;5;28;01mreturn[39;00m [38;5;28mcls[39m(
+[32m    679[39m         zarr_group,
+[32m    680[39m         mode,
+[32m   (...)[39m[32m    689[39m         cache_members=cache_members,
+[32m    690[39m     )
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/backends/zarr.py:1781[39m, in [36m_get_open_params[39m[34m(store, mode, synchronizer, group, consolidated, consolidate_on_close, chunk_store, storage_options, zarr_version, use_zarr_fill_value_as_mask, zarr_format)[39m
+[32m   1778[39m [38;5;28;01melif[39;00m consolidated [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[32m   1779[39m     [38;5;66;03m# same but with more error handling in case no consolidated metadata found[39;00m
+[32m   1780[39m     [38;5;28;01mtry[39;00m:
+[32m-> [39m[32m1781[39m         zarr_root_group = [43mzarr[49m[43m.[49m[43mopen_consolidated[49m[43m([49m[43mstore[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mopen_kwargs[49m[43m)[49m
+[32m   1782[39m     [38;5;28;01mexcept[39;00m ([38;5;167;01mValueError[39;00m, [38;5;167;01mKeyError[39;00m):
+[32m   1783[39m         [38;5;66;03m# ValueError in zarr-python 3.x, KeyError in 2.x.[39;00m
+[32m   1784[39m         [38;5;28;01mtry[39;00m:
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/zarr/convenience.py:1345[39m, in [36mopen_consolidated[39m[34m(store, metadata_key, mode, **kwargs)[39m
+[32m   1343[39m [38;5;66;03m# normalize parameters[39;00m
+[32m   1344[39m zarr_version = kwargs.get([33m"[39m[33mzarr_version[39m[33m"[39m)
+[32m-> [39m[32m1345[39m store = [43mnormalize_store_arg[49m[43m([49m
+[32m   1346[39m [43m    [49m[43mstore[49m[43m,[49m[43m [49m[43mstorage_options[49m[43m=[49m[43mkwargs[49m[43m.[49m[43mget[49m[43m([49m[33;43m"[39;49m[33;43mstorage_options[39;49m[33;43m"[39;49m[43m)[49m[43m,[49m[43m [49m[43mmode[49m[43m=[49m[43mmode[49m[43m,[49m[43m [49m[43mzarr_version[49m[43m=[49m[43mzarr_version[49m
+[32m   1347[39m [43m[49m[43m)[49m
+[32m   1348[39m [38;5;28;01mif[39;00m mode [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m {[33m"[39m[33mr[39m[33m"[39m, [33m"[39m[33mr+[39m[33m"[39m}:
+[32m   1349[39m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([33mf[39m[33m"[39m[33minvalid mode, expected either [39m[33m'[39m[33mr[39m[33m'[39m[33m or [39m[33m'[39m[33mr+[39m[33m'[39m[33m; found [39m[38;5;132;01m{[39;00mmode[38;5;132;01m!r}[39;00m[33m"[39m)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/zarr/storage.py:201[39m, in [36mnormalize_store_arg[39m[34m(store, storage_options, mode, zarr_version)[39m
+[32m    199[39m [38;5;28;01melse[39;00m:
+[32m    200[39m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([33m"[39m[33mzarr_version must be either 2 or 3[39m[33m"[39m)
+[32m--> [39m[32m201[39m [38;5;28;01mreturn[39;00m [43mnormalize_store[49m[43m([49m[43mstore[49m[43m,[49m[43m [49m[43mstorage_options[49m[43m,[49m[43m [49m[43mmode[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/zarr/storage.py:171[39m, in [36m_normalize_store_arg_v2[39m[34m(store, storage_options, mode)[39m
+[32m    169[39m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(store, [38;5;28mstr[39m):
+[32m    170[39m     [38;5;28;01mif[39;00m [33m"[39m[33m://[39m[33m"[39m [38;5;129;01min[39;00m store [38;5;129;01mor[39;00m [33m"[39m[33m::[39m[33m"[39m [38;5;129;01min[39;00m store:
+[32m--> [39m[32m171[39m         [38;5;28;01mreturn[39;00m [43mFSStore[49m[43m([49m[43mstore[49m[43m,[49m[43m [49m[43mmode[49m[43m=[49m[43mmode[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43m([49m[43mstorage_options[49m[43m [49m[38;5;129;43;01mor[39;49;00m[43m [49m[43m{[49m[43m}[49m[43m)[49m[43m)[49m
+[32m    172[39m     [38;5;28;01melif[39;00m storage_options:
+[32m    173[39m         [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([33m"[39m[33mstorage_options passed with non-fsspec path[39m[33m"[39m)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/zarr/storage.py:1384[39m, in [36mFSStore.__init__[39m[34m(self, url, normalize_keys, key_separator, mode, exceptions, dimension_separator, fs, check, create, missing_exceptions, **storage_options)[39m
+[32m   1382[39m [38;5;28;01mif[39;00m protocol [38;5;129;01min[39;00m ([38;5;28;01mNone[39;00m, [33m"[39m[33mfile[39m[33m"[39m) [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m storage_options.get([33m"[39m[33mauto_mkdir[39m[33m"[39m):
+[32m   1383[39m     storage_options[[33m"[39m[33mauto_mkdir[39m[33m"[39m] = [38;5;28;01mTrue[39;00m
+[32m-> [39m[32m1384[39m [38;5;28mself[39m.map = [43mfsspec[49m[43m.[49m[43mget_mapper[49m[43m([49m[43murl[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43m{[49m[43m*[49m[43m*[49m[43mmapper_options[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mstorage_options[49m[43m}[49m[43m)[49m
+[32m   1385[39m [38;5;28mself[39m.fs = [38;5;28mself[39m.map.fs  [38;5;66;03m# for direct operations[39;00m
+[32m   1386[39m [38;5;28mself[39m.path = [38;5;28mself[39m.fs._strip_protocol(url)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/mapping.py:249[39m, in [36mget_mapper[39m[34m(url, check, create, missing_exceptions, alternate_root, **kwargs)[39m
+[32m    218[39m [38;5;250m[39m[33;03m"""Create key-value interface for given URL and options[39;00m
+[32m    219[39m 
+[32m    220[39m [33;03mThe URL will be of the form "protocol://location" and point to the root[39;00m
+[32m   (...)[39m[32m    246[39m [33;03m``FSMap`` instance, the dict-like key-value store.[39;00m
+[32m    247[39m [33;03m"""[39;00m
+[32m    248[39m [38;5;66;03m# Removing protocol here - could defer to each open() on the backend[39;00m
+[32m--> [39m[32m249[39m fs, urlpath = [43murl_to_fs[49m[43m([49m[43murl[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+[32m    250[39m root = alternate_root [38;5;28;01mif[39;00m alternate_root [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;28;01melse[39;00m urlpath
+[32m    251[39m [38;5;28;01mreturn[39;00m FSMap(root, fs, check, create, missing_exceptions=missing_exceptions)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/core.py:415[39m, in [36murl_to_fs[39m[34m(url, **kwargs)[39m
+[32m    413[39m     inkwargs[[33m"[39m[33mfo[39m[33m"[39m] = urls
+[32m    414[39m urlpath, protocol, _ = chain[[32m0[39m]
+[32m--> [39m[32m415[39m fs = [43mfilesystem[49m[43m([49m[43mprotocol[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43minkwargs[49m[43m)[49m
+[32m    416[39m [38;5;28;01mreturn[39;00m fs, urlpath
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/registry.py:318[39m, in [36mfilesystem[39m[34m(protocol, **storage_options)[39m
+[32m    311[39m     warnings.warn(
+[32m    312[39m         [33m"[39m[33mThe [39m[33m'[39m[33marrow_hdfs[39m[33m'[39m[33m protocol has been deprecated and will be [39m[33m"[39m
+[32m    313[39m         [33m"[39m[33mremoved in the future. Specify it as [39m[33m'[39m[33mhdfs[39m[33m'[39m[33m.[39m[33m"[39m,
+[32m    314[39m         [38;5;167;01mDeprecationWarning[39;00m,
+[32m    315[39m     )
+[32m    317[39m [38;5;28mcls[39m = get_filesystem_class(protocol)
+[32m--> [39m[32m318[39m [38;5;28;01mreturn[39;00m [38;5;28;43mcls[39;49m[43m([49m[43m*[49m[43m*[49m[43mstorage_options[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/spec.py:81[39m, in [36m_Cached.__call__[39m[34m(cls, *args, **kwargs)[39m
+[32m     79[39m     [38;5;28;01mreturn[39;00m [38;5;28mcls[39m._cache[token]
+[32m     80[39m [38;5;28;01melse[39;00m:
+[32m---> [39m[32m81[39m     obj = [38;5;28;43msuper[39;49m[43m([49m[43m)[49m[43m.[49m[34;43m__call__[39;49m[43m([49m[43m*[49m[43margs[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+[32m     82[39m     [38;5;66;03m# Setting _fs_token here causes some static linters to complain.[39;00m
+[32m     83[39m     obj._fs_token_ = token
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/implementations/cached.py:759[39m, in [36mSimpleCacheFileSystem.__init__[39m[34m(self, **kwargs)[39m
+[32m    757[39m [38;5;28;01mfor[39;00m key [38;5;129;01min[39;00m [[33m"[39m[33mcache_check[39m[33m"[39m, [33m"[39m[33mexpiry_time[39m[33m"[39m, [33m"[39m[33mcheck_files[39m[33m"[39m]:
+[32m    758[39m     kw[key] = [38;5;28;01mFalse[39;00m
+[32m--> [39m[32m759[39m [38;5;28;43msuper[39;49m[43m([49m[43m)[49m[43m.[49m[34;43m__init__[39;49m[43m([49m[43m*[49m[43m*[49m[43mkw[49m[43m)[49m
+[32m    760[39m [38;5;28;01mfor[39;00m storage [38;5;129;01min[39;00m [38;5;28mself[39m.storage:
+[32m    761[39m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m os.path.exists(storage):
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/implementations/cached.py:168[39m, in [36mCachingFileSystem.__init__[39m[34m(self, target_protocol, cache_storage, cache_check, check_files, expiry_time, target_options, fs, same_names, compression, cache_mapper, **kwargs)[39m
+[32m    166[39m [38;5;28mself[39m._metadata = CacheMetadata([38;5;28mself[39m.storage)
+[32m    167[39m [38;5;28mself[39m.load_cache()
+[32m--> [39m[32m168[39m [38;5;28mself[39m.fs = fs [38;5;28;01mif[39;00m fs [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;28;01melse[39;00m [43mfilesystem[49m[43m([49m[43mtarget_protocol[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[38;5;28;43mself[39;49m[43m.[49m[43mkwargs[49m[43m)[49m
+[32m    170[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m_strip_protocol[39m(path):
+[32m    171[39m     [38;5;66;03m# acts as a method, since each instance has a difference target[39;00m
+[32m    172[39m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m.fs._strip_protocol([38;5;28mtype[39m([38;5;28mself[39m)._strip_protocol(path))
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/registry.py:318[39m, in [36mfilesystem[39m[34m(protocol, **storage_options)[39m
+[32m    311[39m     warnings.warn(
+[32m    312[39m         [33m"[39m[33mThe [39m[33m'[39m[33marrow_hdfs[39m[33m'[39m[33m protocol has been deprecated and will be [39m[33m"[39m
+[32m    313[39m         [33m"[39m[33mremoved in the future. Specify it as [39m[33m'[39m[33mhdfs[39m[33m'[39m[33m.[39m[33m"[39m,
+[32m    314[39m         [38;5;167;01mDeprecationWarning[39;00m,
+[32m    315[39m     )
+[32m    317[39m [38;5;28mcls[39m = get_filesystem_class(protocol)
+[32m--> [39m[32m318[39m [38;5;28;01mreturn[39;00m [38;5;28;43mcls[39;49m[43m([49m[43m*[49m[43m*[49m[43mstorage_options[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/spec.py:81[39m, in [36m_Cached.__call__[39m[34m(cls, *args, **kwargs)[39m
+[32m     79[39m     [38;5;28;01mreturn[39;00m [38;5;28mcls[39m._cache[token]
+[32m     80[39m [38;5;28;01melse[39;00m:
+[32m---> [39m[32m81[39m     obj = [38;5;28;43msuper[39;49m[43m([49m[43m)[49m[43m.[49m[34;43m__call__[39;49m[43m([49m[43m*[49m[43margs[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+[32m     82[39m     [38;5;66;03m# Setting _fs_token here causes some static linters to complain.[39;00m
+[32m     83[39m     obj._fs_token_ = token
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/implementations/zip.py:62[39m, in [36mZipFileSystem.__init__[39m[34m(self, fo, mode, target_protocol, target_options, compression, allowZip64, compresslevel, **kwargs)[39m
+[32m     60[39m [38;5;28mself[39m.force_zip_64 = allowZip64
+[32m     61[39m [38;5;28mself[39m.of = fo
+[32m---> [39m[32m62[39m [38;5;28mself[39m.fo = [43mfo[49m[43m.[49m[34;43m__enter__[39;49m[43m([49m[43m)[49m  [38;5;66;03m# the whole instance is a context[39;00m
+[32m     63[39m [38;5;28mself[39m.zip = zipfile.ZipFile(
+[32m     64[39m     [38;5;28mself[39m.fo,
+[32m     65[39m     mode=mode,
+[32m   (...)[39m[32m     68[39m     compresslevel=compresslevel,
+[32m     69[39m )
+[32m     70[39m [38;5;28mself[39m.dir_cache = [38;5;28;01mNone[39;00m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/core.py:105[39m, in [36mOpenFile.__enter__[39m[34m(self)[39m
+[32m    102[39m mode = [38;5;28mself[39m.mode.replace([33m"[39m[33mt[39m[33m"[39m, [33m"[39m[33m"[39m).replace([33m"[39m[33mb[39m[33m"[39m, [33m"[39m[33m"[39m) + [33m"[39m[33mb[39m[33m"[39m
+[32m    104[39m [38;5;28;01mtry[39;00m:
+[32m--> [39m[32m105[39m     f = [38;5;28;43mself[39;49m[43m.[49m[43mfs[49m[43m.[49m[43mopen[49m[43m([49m[38;5;28;43mself[39;49m[43m.[49m[43mpath[49m[43m,[49m[43m [49m[43mmode[49m[43m=[49m[43mmode[49m[43m)[49m
+[32m    106[39m [38;5;28;01mexcept[39;00m [38;5;167;01mFileNotFoundError[39;00m [38;5;28;01mas[39;00m e:
+[32m    107[39m     [38;5;28;01mif[39;00m has_magic([38;5;28mself[39m.path):
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/spec.py:1338[39m, in [36mAbstractFileSystem.open[39m[34m(self, path, mode, block_size, cache_options, compression, **kwargs)[39m
+[32m   1336[39m [38;5;28;01melse[39;00m:
+[32m   1337[39m     ac = kwargs.pop([33m"[39m[33mautocommit[39m[33m"[39m, [38;5;129;01mnot[39;00m [38;5;28mself[39m._intrans)
+[32m-> [39m[32m1338[39m     f = [38;5;28;43mself[39;49m[43m.[49m[43m_open[49m[43m([49m
+[32m   1339[39m [43m        [49m[43mpath[49m[43m,[49m
+[32m   1340[39m [43m        [49m[43mmode[49m[43m=[49m[43mmode[49m[43m,[49m
+[32m   1341[39m [43m        [49m[43mblock_size[49m[43m=[49m[43mblock_size[49m[43m,[49m
+[32m   1342[39m [43m        [49m[43mautocommit[49m[43m=[49m[43mac[49m[43m,[49m
+[32m   1343[39m [43m        [49m[43mcache_options[49m[43m=[49m[43mcache_options[49m[43m,[49m
+[32m   1344[39m [43m        [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m,[49m
+[32m   1345[39m [43m    [49m[43m)[49m
+[32m   1346[39m     [38;5;28;01mif[39;00m compression [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[32m   1347[39m         [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mfsspec[39;00m[34;01m.[39;00m[34;01mcompression[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m compr
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/implementations/http.py:366[39m, in [36mHTTPFileSystem._open[39m[34m(self, path, mode, block_size, autocommit, cache_type, cache_options, size, **kwargs)[39m
+[32m    364[39m kw.update(kwargs)
+[32m    365[39m info = {}
+[32m--> [39m[32m366[39m size = size [38;5;129;01mor[39;00m info.update([38;5;28;43mself[39;49m[43m.[49m[43minfo[49m[43m([49m[43mpath[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m) [38;5;129;01mor[39;00m info[[33m"[39m[33msize[39m[33m"[39m]
+[32m    367[39m session = sync([38;5;28mself[39m.loop, [38;5;28mself[39m.set_session)
+[32m    368[39m [38;5;28;01mif[39;00m block_size [38;5;129;01mand[39;00m size [38;5;129;01mand[39;00m info.get([33m"[39m[33mpartial[39m[33m"[39m, [38;5;28;01mTrue[39;00m):
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/asyn.py:118[39m, in [36msync_wrapper.<locals>.wrapper[39m[34m(*args, **kwargs)[39m
+[32m    115[39m [38;5;129m@functools[39m.wraps(func)
+[32m    116[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mwrapper[39m(*args, **kwargs):
+[32m    117[39m     [38;5;28mself[39m = obj [38;5;129;01mor[39;00m args[[32m0[39m]
+[32m--> [39m[32m118[39m     [38;5;28;01mreturn[39;00m [43msync[49m[43m([49m[38;5;28;43mself[39;49m[43m.[49m[43mloop[49m[43m,[49m[43m [49m[43mfunc[49m[43m,[49m[43m [49m[43m*[49m[43margs[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/asyn.py:103[39m, in [36msync[39m[34m(loop, func, timeout, *args, **kwargs)[39m
+[32m    101[39m     [38;5;28;01mraise[39;00m FSTimeoutError [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mreturn_result[39;00m
+[32m    102[39m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(return_result, [38;5;167;01mBaseException[39;00m):
+[32m--> [39m[32m103[39m     [38;5;28;01mraise[39;00m return_result
+[32m    104[39m [38;5;28;01melse[39;00m:
+[32m    105[39m     [38;5;28;01mreturn[39;00m return_result
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/asyn.py:56[39m, in [36m_runner[39m[34m(event, coro, result, timeout)[39m
+[32m     54[39m     coro = asyncio.wait_for(coro, timeout=timeout)
+[32m     55[39m [38;5;28;01mtry[39;00m:
+[32m---> [39m[32m56[39m     result[[32m0[39m] = [38;5;28;01mawait[39;00m coro
+[32m     57[39m [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m [38;5;28;01mas[39;00m ex:
+[32m     58[39m     result[[32m0[39m] = ex
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/implementations/http.py:440[39m, in [36mHTTPFileSystem._info[39m[34m(self, url, **kwargs)[39m
+[32m    437[39m     [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m [38;5;28;01mas[39;00m exc:
+[32m    438[39m         [38;5;28;01mif[39;00m policy == [33m"[39m[33mget[39m[33m"[39m:
+[32m    439[39m             [38;5;66;03m# If get failed, then raise a FileNotFoundError[39;00m
+[32m--> [39m[32m440[39m             [38;5;28;01mraise[39;00m [38;5;167;01mFileNotFoundError[39;00m(url) [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mexc[39;00m
+[32m    441[39m         logger.debug([33m"[39m[33m"[39m, exc_info=exc)
+[32m    443[39m [38;5;28;01mreturn[39;00m {[33m"[39m[33mname[39m[33m"[39m: url, [33m"[39m[33msize[39m[33m"[39m: [38;5;28;01mNone[39;00m, **info, [33m"[39m[33mtype[39m[33m"[39m: [33m"[39m[33mfile[39m[33m"[39m}
+
+[31mFileNotFoundError[39m: https://huggingface.co/datasets/martinschobben/microwave-remote-sensing/resolve/main/coef.zarr.zip

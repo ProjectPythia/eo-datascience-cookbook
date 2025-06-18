@@ -1,0 +1,294 @@
+[31m---------------------------------------------------------------------------[39m
+[31mClientResponseError[39m                       Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[2][39m[32m, line 3[39m
+[32m      1[39m url = [33m"[39m[33mhttps://huggingface.co/datasets/martinschobben/microwave-remote-sensing/resolve/main/microwave-remote-sensing.yml[39m[33m"[39m
+[32m      2[39m cat = intake.open_catalog(url)
+[32m----> [39m[32m3[39m ds = [43mcat[49m[43m.[49m[43mcomplex[49m[43m.[49m[43mread[49m[43m([49m[43m)[49m[43m.[49m[43mcompute[49m[43m([49m[43m)[49m
+[32m      4[39m ds[[33m"[39m[33mcmplx[39m[33m"[39m] = ds[[33m"[39m[33mreal[39m[33m"[39m] + ds[[33m"[39m[33mimag[39m[33m"[39m] * [32m1[39mj
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/core/dataset.py:715[39m, in [36mDataset.compute[39m[34m(self, **kwargs)[39m
+[32m    691[39m [38;5;250m[39m[33;03m"""Manually trigger loading and/or computation of this dataset's data[39;00m
+[32m    692[39m [33;03mfrom disk or a remote source into memory and return a new dataset.[39;00m
+[32m    693[39m [33;03mUnlike load, the original dataset is left unaltered.[39;00m
+[32m   (...)[39m[32m    712[39m [33;03mdask.compute[39;00m
+[32m    713[39m [33;03m"""[39;00m
+[32m    714[39m new = [38;5;28mself[39m.copy(deep=[38;5;28;01mFalse[39;00m)
+[32m--> [39m[32m715[39m [38;5;28;01mreturn[39;00m [43mnew[49m[43m.[49m[43mload[49m[43m([49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/core/dataset.py:542[39m, in [36mDataset.load[39m[34m(self, **kwargs)[39m
+[32m    539[39m chunkmanager = get_chunked_array_type(*lazy_data.values())
+[32m    541[39m [38;5;66;03m# evaluate all the chunked arrays simultaneously[39;00m
+[32m--> [39m[32m542[39m evaluated_data: [38;5;28mtuple[39m[np.ndarray[Any, Any], ...] = [43mchunkmanager[49m[43m.[49m[43mcompute[49m[43m([49m
+[32m    543[39m [43m    [49m[43m*[49m[43mlazy_data[49m[43m.[49m[43mvalues[49m[43m([49m[43m)[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m
+[32m    544[39m [43m[49m[43m)[49m
+[32m    546[39m [38;5;28;01mfor[39;00m k, data [38;5;129;01min[39;00m [38;5;28mzip[39m(lazy_data, evaluated_data, strict=[38;5;28;01mFalse[39;00m):
+[32m    547[39m     [38;5;28mself[39m.variables[k].data = data
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/namedarray/daskmanager.py:85[39m, in [36mDaskManager.compute[39m[34m(self, *data, **kwargs)[39m
+[32m     80[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mcompute[39m(
+[32m     81[39m     [38;5;28mself[39m, *data: Any, **kwargs: Any
+[32m     82[39m ) -> [38;5;28mtuple[39m[np.ndarray[Any, _DType_co], ...]:
+[32m     83[39m     [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mdask[39;00m[34;01m.[39;00m[34;01marray[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m compute
+[32m---> [39m[32m85[39m     [38;5;28;01mreturn[39;00m [43mcompute[49m[43m([49m[43m*[49m[43mdata[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/dask/base.py:662[39m, in [36mcompute[39m[34m(traverse, optimize_graph, scheduler, get, *args, **kwargs)[39m
+[32m    659[39m     postcomputes.append(x.__dask_postcompute__())
+[32m    661[39m [38;5;28;01mwith[39;00m shorten_traceback():
+[32m--> [39m[32m662[39m     results = [43mschedule[49m[43m([49m[43mdsk[49m[43m,[49m[43m [49m[43mkeys[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+[32m    664[39m [38;5;28;01mreturn[39;00m repack([f(r, *a) [38;5;28;01mfor[39;00m r, (f, a) [38;5;129;01min[39;00m [38;5;28mzip[39m(results, postcomputes)])
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/core/indexing.py:575[39m, in [36mImplicitToExplicitIndexingAdapter.__array__[39m[34m(self, dtype, copy)[39m
+[32m    571[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m__array__[39m(
+[32m    572[39m     [38;5;28mself[39m, dtype: np.typing.DTypeLike = [38;5;28;01mNone[39;00m, /, *, copy: [38;5;28mbool[39m | [38;5;28;01mNone[39;00m = [38;5;28;01mNone[39;00m
+[32m    573[39m ) -> np.ndarray:
+[32m    574[39m     [38;5;28;01mif[39;00m Version(np.__version__) >= Version([33m"[39m[33m2.0.0[39m[33m"[39m):
+[32m--> [39m[32m575[39m         [38;5;28;01mreturn[39;00m np.asarray([38;5;28;43mself[39;49m[43m.[49m[43mget_duck_array[49m[43m([49m[43m)[49m, dtype=dtype, copy=copy)
+[32m    576[39m     [38;5;28;01melse[39;00m:
+[32m    577[39m         [38;5;28;01mreturn[39;00m np.asarray([38;5;28mself[39m.get_duck_array(), dtype=dtype)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/core/indexing.py:580[39m, in [36mImplicitToExplicitIndexingAdapter.get_duck_array[39m[34m(self)[39m
+[32m    579[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mget_duck_array[39m([38;5;28mself[39m):
+[32m--> [39m[32m580[39m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43marray[49m[43m.[49m[43mget_duck_array[49m[43m([49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/core/indexing.py:799[39m, in [36mCopyOnWriteArray.get_duck_array[39m[34m(self)[39m
+[32m    798[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mget_duck_array[39m([38;5;28mself[39m):
+[32m--> [39m[32m799[39m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43marray[49m[43m.[49m[43mget_duck_array[49m[43m([49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/core/indexing.py:661[39m, in [36mLazilyIndexedArray.get_duck_array[39m[34m(self)[39m
+[32m    656[39m [38;5;66;03m# self.array[self.key] is now a numpy array when[39;00m
+[32m    657[39m [38;5;66;03m# self.array is a BackendArray subclass[39;00m
+[32m    658[39m [38;5;66;03m# and self.key is BasicIndexer((slice(None, None, None),))[39;00m
+[32m    659[39m [38;5;66;03m# so we need the explicit check for ExplicitlyIndexed[39;00m
+[32m    660[39m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(array, ExplicitlyIndexed):
+[32m--> [39m[32m661[39m     array = [43marray[49m[43m.[49m[43mget_duck_array[49m[43m([49m[43m)[49m
+[32m    662[39m [38;5;28;01mreturn[39;00m _wrap_numpy_scalars(array)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/coding/common.py:76[39m, in [36m_ElementwiseFunctionArray.get_duck_array[39m[34m(self)[39m
+[32m     75[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mget_duck_array[39m([38;5;28mself[39m):
+[32m---> [39m[32m76[39m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m.func([38;5;28;43mself[39;49m[43m.[49m[43marray[49m[43m.[49m[43mget_duck_array[49m[43m([49m[43m)[49m)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/core/indexing.py:654[39m, in [36mLazilyIndexedArray.get_duck_array[39m[34m(self)[39m
+[32m    650[39m     array = apply_indexer([38;5;28mself[39m.array, [38;5;28mself[39m.key)
+[32m    651[39m [38;5;28;01melse[39;00m:
+[32m    652[39m     [38;5;66;03m# If the array is not an ExplicitlyIndexedNDArrayMixin,[39;00m
+[32m    653[39m     [38;5;66;03m# it may wrap a BackendArray so use its __getitem__[39;00m
+[32m--> [39m[32m654[39m     array = [38;5;28;43mself[39;49m[43m.[49m[43marray[49m[43m[[49m[38;5;28;43mself[39;49m[43m.[49m[43mkey[49m[43m][49m
+[32m    656[39m [38;5;66;03m# self.array[self.key] is now a numpy array when[39;00m
+[32m    657[39m [38;5;66;03m# self.array is a BackendArray subclass[39;00m
+[32m    658[39m [38;5;66;03m# and self.key is BasicIndexer((slice(None, None, None),))[39;00m
+[32m    659[39m [38;5;66;03m# so we need the explicit check for ExplicitlyIndexed[39;00m
+[32m    660[39m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(array, ExplicitlyIndexed):
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/backends/zarr.py:224[39m, in [36mZarrArrayWrapper.__getitem__[39m[34m(self, key)[39m
+[32m    222[39m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(key, indexing.OuterIndexer):
+[32m    223[39m     method = [38;5;28mself[39m._oindex
+[32m--> [39m[32m224[39m [38;5;28;01mreturn[39;00m [43mindexing[49m[43m.[49m[43mexplicit_indexing_adapter[49m[43m([49m
+[32m    225[39m [43m    [49m[43mkey[49m[43m,[49m[43m [49m[43marray[49m[43m.[49m[43mshape[49m[43m,[49m[43m [49m[43mindexing[49m[43m.[49m[43mIndexingSupport[49m[43m.[49m[43mVECTORIZED[49m[43m,[49m[43m [49m[43mmethod[49m
+[32m    226[39m [43m[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/core/indexing.py:1023[39m, in [36mexplicit_indexing_adapter[39m[34m(key, shape, indexing_support, raw_indexing_method)[39m
+[32m   1001[39m [38;5;250m[39m[33;03m"""Support explicit indexing by delegating to a raw indexing method.[39;00m
+[32m   1002[39m 
+[32m   1003[39m [33;03mOuter and/or vectorized indexers are supported by indexing a second time[39;00m
+[32m   (...)[39m[32m   1020[39m [33;03mIndexing result, in the form of a duck numpy-array.[39;00m
+[32m   1021[39m [33;03m"""[39;00m
+[32m   1022[39m raw_key, numpy_indices = decompose_indexer(key, shape, indexing_support)
+[32m-> [39m[32m1023[39m result = [43mraw_indexing_method[49m[43m([49m[43mraw_key[49m[43m.[49m[43mtuple[49m[43m)[49m
+[32m   1024[39m [38;5;28;01mif[39;00m numpy_indices.tuple:
+[32m   1025[39m     [38;5;66;03m# index the loaded duck array[39;00m
+[32m   1026[39m     indexable = as_indexable(result)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/xarray/backends/zarr.py:214[39m, in [36mZarrArrayWrapper._getitem[39m[34m(self, key)[39m
+[32m    213[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m_getitem[39m([38;5;28mself[39m, key):
+[32m--> [39m[32m214[39m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43m_array[49m[43m[[49m[43mkey[49m[43m][49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/zarr/core.py:796[39m, in [36mArray.__getitem__[39m[34m(self, selection)[39m
+[32m    794[39m     result = [38;5;28mself[39m.vindex[selection]
+[32m    795[39m [38;5;28;01melif[39;00m is_pure_orthogonal_indexing(pure_selection, [38;5;28mself[39m.ndim):
+[32m--> [39m[32m796[39m     result = [38;5;28;43mself[39;49m[43m.[49m[43mget_orthogonal_selection[49m[43m([49m[43mpure_selection[49m[43m,[49m[43m [49m[43mfields[49m[43m=[49m[43mfields[49m[43m)[49m
+[32m    797[39m [38;5;28;01melse[39;00m:
+[32m    798[39m     result = [38;5;28mself[39m.get_basic_selection(pure_selection, fields=fields)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/zarr/core.py:1078[39m, in [36mArray.get_orthogonal_selection[39m[34m(self, selection, out, fields)[39m
+[32m   1075[39m [38;5;66;03m# setup indexer[39;00m
+[32m   1076[39m indexer = OrthogonalIndexer(selection, [38;5;28mself[39m)
+[32m-> [39m[32m1078[39m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43m_get_selection[49m[43m([49m[43mindexer[49m[43m=[49m[43mindexer[49m[43m,[49m[43m [49m[43mout[49m[43m=[49m[43mout[49m[43m,[49m[43m [49m[43mfields[49m[43m=[49m[43mfields[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/zarr/core.py:1341[39m, in [36mArray._get_selection[39m[34m(self, indexer, out, fields)[39m
+[32m   1338[39m [38;5;28;01mif[39;00m math.prod(out_shape) > [32m0[39m:
+[32m   1339[39m     [38;5;66;03m# allow storage to get multiple items at once[39;00m
+[32m   1340[39m     lchunk_coords, lchunk_selection, lout_selection = [38;5;28mzip[39m(*indexer)
+[32m-> [39m[32m1341[39m     [38;5;28;43mself[39;49m[43m.[49m[43m_chunk_getitems[49m[43m([49m
+[32m   1342[39m [43m        [49m[43mlchunk_coords[49m[43m,[49m
+[32m   1343[39m [43m        [49m[43mlchunk_selection[49m[43m,[49m
+[32m   1344[39m [43m        [49m[43mout[49m[43m,[49m
+[32m   1345[39m [43m        [49m[43mlout_selection[49m[43m,[49m
+[32m   1346[39m [43m        [49m[43mdrop_axes[49m[43m=[49m[43mindexer[49m[43m.[49m[43mdrop_axes[49m[43m,[49m
+[32m   1347[39m [43m        [49m[43mfields[49m[43m=[49m[43mfields[49m[43m,[49m
+[32m   1348[39m [43m    [49m[43m)[49m
+[32m   1349[39m [38;5;28;01mif[39;00m out.shape:
+[32m   1350[39m     [38;5;28;01mreturn[39;00m out
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/zarr/core.py:2182[39m, in [36mArray._chunk_getitems[39m[34m(self, lchunk_coords, lchunk_selection, out, lout_selection, drop_axes, fields)[39m
+[32m   2180[39m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28misinstance[39m([38;5;28mself[39m._meta_array, np.ndarray):
+[32m   2181[39m         contexts = ConstantMap(ckeys, constant=Context(meta_array=[38;5;28mself[39m._meta_array))
+[32m-> [39m[32m2182[39m     cdatas = [38;5;28;43mself[39;49m[43m.[49m[43mchunk_store[49m[43m.[49m[43mgetitems[49m[43m([49m[43mckeys[49m[43m,[49m[43m [49m[43mcontexts[49m[43m=[49m[43mcontexts[49m[43m)[49m
+[32m   2184[39m [38;5;28;01mfor[39;00m ckey, chunk_select, out_select [38;5;129;01min[39;00m [38;5;28mzip[39m(ckeys, lchunk_selection, lout_selection):
+[32m   2185[39m     [38;5;28;01mif[39;00m ckey [38;5;129;01min[39;00m cdatas:
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/zarr/storage.py:1426[39m, in [36mFSStore.getitems[39m[34m(self, keys, contexts)[39m
+[32m   1422[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mgetitems[39m(
+[32m   1423[39m     [38;5;28mself[39m, keys: Sequence[[38;5;28mstr[39m], *, contexts: Mapping[[38;5;28mstr[39m, Context]
+[32m   1424[39m ) -> Mapping[[38;5;28mstr[39m, Any]:
+[32m   1425[39m     keys_transformed = {[38;5;28mself[39m._normalize_key(key): key [38;5;28;01mfor[39;00m key [38;5;129;01min[39;00m keys}
+[32m-> [39m[32m1426[39m     results_transformed = [38;5;28;43mself[39;49m[43m.[49m[43mmap[49m[43m.[49m[43mgetitems[49m[43m([49m[38;5;28;43mlist[39;49m[43m([49m[43mkeys_transformed[49m[43m)[49m[43m,[49m[43m [49m[43mon_error[49m[43m=[49m[33;43m"[39;49m[33;43mreturn[39;49m[33;43m"[39;49m[43m)[49m
+[32m   1427[39m     results = {}
+[32m   1428[39m     [38;5;28;01mfor[39;00m k, v [38;5;129;01min[39;00m results_transformed.items():
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/mapping.py:105[39m, in [36mFSMap.getitems[39m[34m(self, keys, on_error)[39m
+[32m    103[39m oe = on_error [38;5;28;01mif[39;00m on_error == [33m"[39m[33mraise[39m[33m"[39m [38;5;28;01melse[39;00m [33m"[39m[33mreturn[39m[33m"[39m
+[32m    104[39m [38;5;28;01mtry[39;00m:
+[32m--> [39m[32m105[39m     out = [38;5;28;43mself[39;49m[43m.[49m[43mfs[49m[43m.[49m[43mcat[49m[43m([49m[43mkeys2[49m[43m,[49m[43m [49m[43mon_error[49m[43m=[49m[43moe[49m[43m)[49m
+[32m    106[39m     [38;5;28;01mif[39;00m [38;5;28misinstance[39m(out, [38;5;28mbytes[39m):
+[32m    107[39m         out = {keys2[[32m0[39m]: out}
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/implementations/cached.py:470[39m, in [36mCachingFileSystem.__getattribute__.<locals>.<lambda>[39m[34m(*args, **kw)[39m
+[32m    423[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m__getattribute__[39m([38;5;28mself[39m, item):
+[32m    424[39m     [38;5;28;01mif[39;00m item [38;5;129;01min[39;00m {
+[32m    425[39m         [33m"[39m[33mload_cache[39m[33m"[39m,
+[32m    426[39m         [33m"[39m[33m_open[39m[33m"[39m,
+[32m   (...)[39m[32m    468[39m         [38;5;66;03m# all the methods defined in this class. Note `open` here, since[39;00m
+[32m    469[39m         [38;5;66;03m# it calls `_open`, but is actually in superclass[39;00m
+[32m--> [39m[32m470[39m         [38;5;28;01mreturn[39;00m [38;5;28;01mlambda[39;00m *args, **kw: [38;5;28;43mgetattr[39;49m[43m([49m[38;5;28;43mtype[39;49m[43m([49m[38;5;28;43mself[39;49m[43m)[49m[43m,[49m[43m [49m[43mitem[49m[43m)[49m[43m.[49m[34;43m__get__[39;49m[43m([49m[38;5;28;43mself[39;49m[43m)[49m[43m([49m
+[32m    471[39m [43m            [49m[43m*[49m[43margs[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkw[49m
+[32m    472[39m [43m        [49m[43m)[49m
+[32m    473[39m     [38;5;28;01mif[39;00m item [38;5;129;01min[39;00m [[33m"[39m[33m__reduce_ex__[39m[33m"[39m]:
+[32m    474[39m         [38;5;28;01mraise[39;00m [38;5;167;01mAttributeError[39;00m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/implementations/cached.py:663[39m, in [36mWholeFileCacheFileSystem.cat[39m[34m(self, path, recursive, on_error, callback, **kwargs)[39m
+[32m    660[39m         paths.remove(p)
+[32m    662[39m [38;5;28;01mif[39;00m getpaths:
+[32m--> [39m[32m663[39m     [38;5;28;43mself[39;49m[43m.[49m[43mfs[49m[43m.[49m[43mget[49m[43m([49m[43mgetpaths[49m[43m,[49m[43m [49m[43mstorepaths[49m[43m)[49m
+[32m    664[39m     [38;5;28mself[39m.save_cache()
+[32m    666[39m callback.set_size([38;5;28mlen[39m(paths))
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/spec.py:1004[39m, in [36mAbstractFileSystem.get[39m[34m(self, rpath, lpath, recursive, callback, maxdepth, **kwargs)[39m
+[32m   1002[39m [38;5;28;01mfor[39;00m lpath, rpath [38;5;129;01min[39;00m callback.wrap([38;5;28mzip[39m(lpaths, rpaths)):
+[32m   1003[39m     [38;5;28;01mwith[39;00m callback.branched(rpath, lpath) [38;5;28;01mas[39;00m child:
+[32m-> [39m[32m1004[39m         [38;5;28;43mself[39;49m[43m.[49m[43mget_file[49m[43m([49m[43mrpath[49m[43m,[49m[43m [49m[43mlpath[49m[43m,[49m[43m [49m[43mcallback[49m[43m=[49m[43mchild[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/spec.py:927[39m, in [36mAbstractFileSystem.get_file[39m[34m(self, rpath, lpath, callback, outfile, **kwargs)[39m
+[32m    924[39m fs = LocalFileSystem(auto_mkdir=[38;5;28;01mTrue[39;00m)
+[32m    925[39m fs.makedirs(fs._parent(lpath), exist_ok=[38;5;28;01mTrue[39;00m)
+[32m--> [39m[32m927[39m [38;5;28;01mwith[39;00m [38;5;28;43mself[39;49m[43m.[49m[43mopen[49m[43m([49m[43mrpath[49m[43m,[49m[43m [49m[33;43m"[39;49m[33;43mrb[39;49m[33;43m"[39;49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m [38;5;28;01mas[39;00m f1:
+[32m    928[39m     [38;5;28;01mif[39;00m outfile [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[32m    929[39m         outfile = [38;5;28mopen[39m(lpath, [33m"[39m[33mwb[39m[33m"[39m)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/spec.py:1338[39m, in [36mAbstractFileSystem.open[39m[34m(self, path, mode, block_size, cache_options, compression, **kwargs)[39m
+[32m   1336[39m [38;5;28;01melse[39;00m:
+[32m   1337[39m     ac = kwargs.pop([33m"[39m[33mautocommit[39m[33m"[39m, [38;5;129;01mnot[39;00m [38;5;28mself[39m._intrans)
+[32m-> [39m[32m1338[39m     f = [38;5;28;43mself[39;49m[43m.[49m[43m_open[49m[43m([49m
+[32m   1339[39m [43m        [49m[43mpath[49m[43m,[49m
+[32m   1340[39m [43m        [49m[43mmode[49m[43m=[49m[43mmode[49m[43m,[49m
+[32m   1341[39m [43m        [49m[43mblock_size[49m[43m=[49m[43mblock_size[49m[43m,[49m
+[32m   1342[39m [43m        [49m[43mautocommit[49m[43m=[49m[43mac[49m[43m,[49m
+[32m   1343[39m [43m        [49m[43mcache_options[49m[43m=[49m[43mcache_options[49m[43m,[49m
+[32m   1344[39m [43m        [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m,[49m
+[32m   1345[39m [43m    [49m[43m)[49m
+[32m   1346[39m     [38;5;28;01mif[39;00m compression [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[32m   1347[39m         [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mfsspec[39;00m[34;01m.[39;00m[34;01mcompression[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m compr
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/implementations/zip.py:130[39m, in [36mZipFileSystem._open[39m[34m(self, path, mode, block_size, autocommit, cache_options, **kwargs)[39m
+[32m    128[39m [38;5;28;01mif[39;00m [33m"[39m[33mr[39m[33m"[39m [38;5;129;01min[39;00m [38;5;28mself[39m.mode [38;5;129;01mand[39;00m [33m"[39m[33mw[39m[33m"[39m [38;5;129;01min[39;00m mode:
+[32m    129[39m     [38;5;28;01mraise[39;00m [38;5;167;01mOSError[39;00m([33m"[39m[33mZipFS can only be open for reading or writing, not both[39m[33m"[39m)
+[32m--> [39m[32m130[39m out = [38;5;28;43mself[39;49m[43m.[49m[43mzip[49m[43m.[49m[43mopen[49m[43m([49m[43mpath[49m[43m,[49m[43m [49m[43mmode[49m[43m.[49m[43mstrip[49m[43m([49m[33;43m"[39;49m[33;43mb[39;49m[33;43m"[39;49m[43m)[49m[43m,[49m[43m [49m[43mforce_zip64[49m[43m=[49m[38;5;28;43mself[39;49m[43m.[49m[43mforce_zip_64[49m[43m)[49m
+[32m    131[39m [38;5;28;01mif[39;00m [33m"[39m[33mr[39m[33m"[39m [38;5;129;01min[39;00m mode:
+[32m    132[39m     info = [38;5;28mself[39m.info(path)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/zipfile/__init__.py:1631[39m, in [36mZipFile.open[39m[34m(self, name, mode, pwd, force_zip64)[39m
+[32m   1628[39m [38;5;28;01mif[39;00m fheader[_FH_SIGNATURE] != stringFileHeader:
+[32m   1629[39m     [38;5;28;01mraise[39;00m BadZipFile([33m"[39m[33mBad magic number for file header[39m[33m"[39m)
+[32m-> [39m[32m1631[39m fname = [43mzef_file[49m[43m.[49m[43mread[49m[43m([49m[43mfheader[49m[43m[[49m[43m_FH_FILENAME_LENGTH[49m[43m][49m[43m)[49m
+[32m   1632[39m [38;5;28;01mif[39;00m fheader[_FH_EXTRA_FIELD_LENGTH]:
+[32m   1633[39m     zef_file.seek(fheader[_FH_EXTRA_FIELD_LENGTH], whence=[32m1[39m)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/zipfile/__init__.py:811[39m, in [36m_SharedFile.read[39m[34m(self, n)[39m
+[32m    807[39m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([33m"[39m[33mCan[39m[33m'[39m[33mt read from the ZIP file while there [39m[33m"[39m
+[32m    808[39m             [33m"[39m[33mis an open writing handle on it. [39m[33m"[39m
+[32m    809[39m             [33m"[39m[33mClose the writing handle before trying to read.[39m[33m"[39m)
+[32m    810[39m [38;5;28mself[39m._file.seek([38;5;28mself[39m._pos)
+[32m--> [39m[32m811[39m data = [38;5;28;43mself[39;49m[43m.[49m[43m_file[49m[43m.[49m[43mread[49m[43m([49m[43mn[49m[43m)[49m
+[32m    812[39m [38;5;28mself[39m._pos = [38;5;28mself[39m._file.tell()
+[32m    813[39m [38;5;28;01mreturn[39;00m data
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/implementations/http.py:627[39m, in [36mHTTPFile.read[39m[34m(self, length)[39m
+[32m    625[39m [38;5;28;01melse[39;00m:
+[32m    626[39m     length = [38;5;28mmin[39m([38;5;28mself[39m.size - [38;5;28mself[39m.loc, length)
+[32m--> [39m[32m627[39m [38;5;28;01mreturn[39;00m [38;5;28;43msuper[39;49m[43m([49m[43m)[49m[43m.[49m[43mread[49m[43m([49m[43mlength[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/spec.py:2111[39m, in [36mAbstractBufferedFile.read[39m[34m(self, length)[39m
+[32m   2108[39m [38;5;28;01mif[39;00m length == [32m0[39m:
+[32m   2109[39m     [38;5;66;03m# don't even bother calling fetch[39;00m
+[32m   2110[39m     [38;5;28;01mreturn[39;00m [33mb[39m[33m"[39m[33m"[39m
+[32m-> [39m[32m2111[39m out = [38;5;28;43mself[39;49m[43m.[49m[43mcache[49m[43m.[49m[43m_fetch[49m[43m([49m[38;5;28;43mself[39;49m[43m.[49m[43mloc[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[43m.[49m[43mloc[49m[43m [49m[43m+[49m[43m [49m[43mlength[49m[43m)[49m
+[32m   2113[39m logger.debug(
+[32m   2114[39m     [33m"[39m[38;5;132;01m%s[39;00m[33m read: [39m[38;5;132;01m%i[39;00m[33m - [39m[38;5;132;01m%i[39;00m[33m [39m[38;5;132;01m%s[39;00m[33m"[39m,
+[32m   2115[39m     [38;5;28mself[39m,
+[32m   (...)[39m[32m   2118[39m     [38;5;28mself[39m.cache._log_stats(),
+[32m   2119[39m )
+[32m   2120[39m [38;5;28mself[39m.loc += [38;5;28mlen[39m(out)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/caching.py:557[39m, in [36mBytesCache._fetch[39m[34m(self, start, end)[39m
+[32m    555[39m [38;5;28;01melif[39;00m end - [38;5;28mself[39m.end > [38;5;28mself[39m.blocksize:
+[32m    556[39m     [38;5;28mself[39m.total_requested_bytes += bend - start
+[32m--> [39m[32m557[39m     [38;5;28mself[39m.cache = [38;5;28;43mself[39;49m[43m.[49m[43mfetcher[49m[43m([49m[43mstart[49m[43m,[49m[43m [49m[43mbend[49m[43m)[49m
+[32m    558[39m     [38;5;28mself[39m.start = start
+[32m    559[39m [38;5;28;01melse[39;00m:
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/asyn.py:118[39m, in [36msync_wrapper.<locals>.wrapper[39m[34m(*args, **kwargs)[39m
+[32m    115[39m [38;5;129m@functools[39m.wraps(func)
+[32m    116[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mwrapper[39m(*args, **kwargs):
+[32m    117[39m     [38;5;28mself[39m = obj [38;5;129;01mor[39;00m args[[32m0[39m]
+[32m--> [39m[32m118[39m     [38;5;28;01mreturn[39;00m [43msync[49m[43m([49m[38;5;28;43mself[39;49m[43m.[49m[43mloop[49m[43m,[49m[43m [49m[43mfunc[49m[43m,[49m[43m [49m[43m*[49m[43margs[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/asyn.py:103[39m, in [36msync[39m[34m(loop, func, timeout, *args, **kwargs)[39m
+[32m    101[39m     [38;5;28;01mraise[39;00m FSTimeoutError [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mreturn_result[39;00m
+[32m    102[39m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(return_result, [38;5;167;01mBaseException[39;00m):
+[32m--> [39m[32m103[39m     [38;5;28;01mraise[39;00m return_result
+[32m    104[39m [38;5;28;01melse[39;00m:
+[32m    105[39m     [38;5;28;01mreturn[39;00m return_result
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/asyn.py:56[39m, in [36m_runner[39m[34m(event, coro, result, timeout)[39m
+[32m     54[39m     coro = asyncio.wait_for(coro, timeout=timeout)
+[32m     55[39m [38;5;28;01mtry[39;00m:
+[32m---> [39m[32m56[39m     result[[32m0[39m] = [38;5;28;01mawait[39;00m coro
+[32m     57[39m [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m [38;5;28;01mas[39;00m ex:
+[32m     58[39m     result[[32m0[39m] = ex
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/fsspec/implementations/http.py:682[39m, in [36mHTTPFile.async_fetch_range[39m[34m(self, start, end)[39m
+[32m    679[39m [38;5;28;01mif[39;00m r.status == [32m416[39m:
+[32m    680[39m     [38;5;66;03m# range request outside file[39;00m
+[32m    681[39m     [38;5;28;01mreturn[39;00m [33mb[39m[33m"[39m[33m"[39m
+[32m--> [39m[32m682[39m [43mr[49m[43m.[49m[43mraise_for_status[49m[43m([49m[43m)[49m
+[32m    684[39m [38;5;66;03m# If the server has handled the range request, it should reply[39;00m
+[32m    685[39m [38;5;66;03m# with status 206 (partial content). But we'll guess that a suitable[39;00m
+[32m    686[39m [38;5;66;03m# Content-Range header or a Content-Length no more than the[39;00m
+[32m    687[39m [38;5;66;03m# requested range also mean we have got the desired range.[39;00m
+[32m    688[39m response_is_range = (
+[32m    689[39m     r.status == [32m206[39m
+[32m    690[39m     [38;5;129;01mor[39;00m [38;5;28mself[39m._parse_content_range(r.headers)[[32m0[39m] == start
+[32m    691[39m     [38;5;129;01mor[39;00m [38;5;28mint[39m(r.headers.get([33m"[39m[33mContent-Length[39m[33m"[39m, end + [32m1[39m)) <= end - start
+[32m    692[39m )
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook-dev/lib/python3.12/site-packages/aiohttp/client_reqrep.py:629[39m, in [36mClientResponse.raise_for_status[39m[34m(self)[39m
+[32m    626[39m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28mself[39m._in_context:
+[32m    627[39m     [38;5;28mself[39m.release()
+[32m--> [39m[32m629[39m [38;5;28;01mraise[39;00m ClientResponseError(
+[32m    630[39m     [38;5;28mself[39m.request_info,
+[32m    631[39m     [38;5;28mself[39m.history,
+[32m    632[39m     status=[38;5;28mself[39m.status,
+[32m    633[39m     message=[38;5;28mself[39m.reason,
+[32m    634[39m     headers=[38;5;28mself[39m.headers,
+[32m    635[39m )
+
+[31mClientResponseError[39m: 429, message='Too Many Requests', url='https://huggingface.co/datasets/martinschobben/microwave-remote-sensing/resolve/main/complex.zarr.zip'
