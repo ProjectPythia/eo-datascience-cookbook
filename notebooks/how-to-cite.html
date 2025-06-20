@@ -1,25 +1,771 @@
-<!DOCTYPE html><html lang="en" class="" style="scroll-padding:60px"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>How to Cite This Cookbook - Earth Observation Data Science Cookbook</title><meta property="og:title" content="How to Cite This Cookbook - Earth Observation Data Science Cookbook"/><meta name="generator" content="mystmd"/><meta name="keywords" content=""/><meta name="image" content="/eo-datascience-cookbook/build/940d5ffd64b58a1e369604298a5c4034.svg"/><meta property="og:image" content="/eo-datascience-cookbook/build/940d5ffd64b58a1e369604298a5c4034.svg"/><link rel="stylesheet" href="/eo-datascience-cookbook/build/_assets/app-SP33RAUV.css"/><link rel="stylesheet" href="/eo-datascience-cookbook/build/_assets/thebe-core-VKVHG5VY.css"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jupyter-matplotlib@0.11.3/css/mpl_widget.css"/><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css" integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ" crossorigin="anonymous"/><link rel="icon" href="/eo-datascience-cookbook/favicon.ico"/><link rel="stylesheet" href="/eo-datascience-cookbook/myst-theme.css"/><script>
-  const savedTheme = localStorage.getItem("myst:theme");
-  const theme = window.matchMedia("(prefers-color-scheme: light)").matches ? 'light' : 'dark';
-  const classes = document.documentElement.classList;
-  const hasAnyTheme = classes.contains('light') || classes.contains('dark');
-  if (!hasAnyTheme) classes.add(savedTheme ?? theme);
-</script></head><body class="m-0 transition-colors duration-500 bg-white dark:bg-stone-900"><div class="fixed top-1 left-1 h-[0px] w-[0px] focus-within:z-40 focus-within:h-auto focus-within:w-auto bg-white overflow-hidden focus-within:p-2 focus-within:ring-1" aria-label="skip to content options"><a href="#skip-to-frontmatter" class="block px-2 py-1 text-black underline">Skip to article frontmatter</a><a href="#skip-to-article" class="block px-2 py-1 text-black underline">Skip to article content</a></div><div class="bg-white/80 backdrop-blur dark:bg-stone-900/80 shadow dark:shadow-stone-700 p-3 md:px-8 sticky w-screen top-0 z-30 h-[60px]"><nav class="flex items-center justify-between flex-nowrap max-w-[1440px] mx-auto"><div class="flex flex-row xl:min-w-[19.5rem] mr-2 sm:mr-7 justify-start items-center shrink-0"><div class="block xl:hidden"><button class="flex items-center border-stone-400 text-stone-800 hover:text-stone-900 dark:text-stone-200 hover:dark:text-stone-100"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" width="2rem" height="2rem" class="m-1"><path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"></path></svg><span class="sr-only">Open Menu</span></button></div><a class="flex items-center ml-3 dark:text-white w-fit md:ml-5 xl:ml-7" href="/eo-datascience-cookbook/"><div class="p-1 mr-3"><img src="/eo-datascience-cookbook/build/pythia_logo-white-rt-f2a559d125fd2388a8fc7aff2c9f7874.svg" class="h-9 dark:hidden" height="2.25rem"/><img src="/eo-datascience-cookbook/build/config-item-84d6d338-5d09fcbcee196f37fd6b0f864da8b2a3.svg" class="hidden h-9 dark:block" height="2.25rem"/></div><span class="text-md sm:text-xl tracking-tight sm:mr-5 sr-only">Made with MyST</span></a></div><div class="flex items-center flex-grow w-auto"><div class="flex-grow hidden text-md lg:block"><div class="relative inline-block mx-2 grow-0"><a href="https://projectpythia.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full mx-2 py-1 text-md font-medium dark:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">Home</a></div><div class="relative inline-block mx-2 grow-0"><a href="https://foundations.projectpythia.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full mx-2 py-1 text-md font-medium dark:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">Foundations</a></div><div class="relative inline-block mx-2 grow-0"><a href="https://cookbooks.projectpythia.org/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full mx-2 py-1 text-md font-medium dark:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">Cookbooks</a></div><div class="relative inline-block mx-2 grow-0"><a href="https://projectpythia.org/resource-gallery/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full mx-2 py-1 text-md font-medium dark:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">Resources</a></div><div class="relative inline-block mx-2 grow-0"><a href="https://projectpythia.org/#join-us" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full mx-2 py-1 text-md font-medium dark:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">Community</a></div></div><div class="flex-grow block"></div><button type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:R74op:" data-state="closed" class="flex items-center h-10 aspect-square sm:w-64 text-left text-gray-400 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 hover:ring-blue-500 dark:hover:ring-blue-500 hover:border-blue-500 dark:hover:border-blue-500"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" class="p-2.5 h-10 w-10 aspect-square"><path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd"></path></svg><span class="hidden sm:block grow">Search</span><div aria-hidden="true" class="items-center hidden mx-1 font-mono text-sm text-gray-400 sm:flex gap-x-1"><kbd class="px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md shadow-[0px_2px_0px_0px_rgba(0,0,0,0.08)] dark:shadow-none hide-mac">CTRL</kbd><kbd class="px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md shadow-[0px_2px_0px_0px_rgba(0,0,0,0.08)] dark:shadow-none show-mac">⌘</kbd><kbd class="px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md shadow-[0px_2px_0px_0px_rgba(0,0,0,0.08)] dark:shadow-none ">K</kbd><script>
-;(() => {
-const script = document.currentScript;
-const root = script.parentElement;
 
-const isMac = /mac/i.test(
-      window.navigator.userAgentData?.platform ?? window.navigator.userAgent,
-    );
-root.querySelectorAll(".hide-mac").forEach(node => {node.classList.add(isMac ? "hidden" : "block")});
-root.querySelectorAll(".show-mac").forEach(node => {node.classList.add(!isMac ? "hidden" : "block")});
-})()</script></div></button><button class="theme rounded-full aspect-square border border-stone-700 dark:border-white hover:bg-neutral-100 border-solid overflow-hidden text-stone-700 dark:text-white hover:text-stone-500 dark:hover:text-neutral-800 w-8 h-8 mx-3" title="Toggle theme between light and dark mode." aria-label="Toggle theme between light and dark mode."><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" class="h-full w-full p-0.5 hidden dark:block"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z" clip-rule="evenodd"></path></svg><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="h-full w-full p-0.5 dark:hidden"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"></path></svg></button><div class="block sm:hidden"><div class="relative" data-headlessui-state=""><div><button class="flex text-sm bg-transparent rounded-full focus:outline-none" id="headlessui-menu-button-:Rr4op:" type="button" aria-haspopup="menu" aria-expanded="false" data-headlessui-state=""><span class="sr-only">Open Menu</span><div class="flex items-center text-stone-200 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" width="2rem" height="2rem" class="p-1"><path fill-rule="evenodd" d="M10.5 6a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm0 6a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm0 6a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" clip-rule="evenodd"></path></svg></div></button></div></div></div><div class="hidden sm:block"><a href="https://projectpythia.org" target="_blank" rel="noopener noreferrer" class="inline-block px-4 py-2 mx-1 mt-0 leading-none border rounded text-md border-stone-700 dark:border-white text-stone-700 dark:text-white hover:text-stone-500 dark:hover:text-neutral-800 hover:bg-neutral-100">Project Pythia</a></div></div></nav></div><div class="fixed xl:article-grid grid-gap xl:w-screen xl:pointer-events-none overflow-auto max-xl:min-w-[300px] hidden z-10" style="top:60px"><div class="pointer-events-auto xl:col-margin-left flex-col overflow-hidden hidden xl:flex"><div class="flex-grow py-6 overflow-y-auto primary-scrollbar"><nav aria-label="Navigation" class="overflow-y-hidden transition-opacity ml-3 xl:ml-0 mr-3 max-w-[350px] lg:hidden"><div class="w-full px-1 dark:text-white"><a href="https://projectpythia.org" target="_blank" rel="noopener noreferrer" class="p-2 my-1 rounded-lg hover:bg-slate-300/30 block break-words focus:outline outline-blue-200 outline-2 rounded">Home</a><a href="https://foundations.projectpythia.org" target="_blank" rel="noopener noreferrer" class="p-2 my-1 rounded-lg hover:bg-slate-300/30 block break-words focus:outline outline-blue-200 outline-2 rounded">Foundations</a><a href="https://cookbooks.projectpythia.org/" target="_blank" rel="noopener noreferrer" class="p-2 my-1 rounded-lg hover:bg-slate-300/30 block break-words focus:outline outline-blue-200 outline-2 rounded">Cookbooks</a><a href="https://projectpythia.org/resource-gallery/" target="_blank" rel="noopener noreferrer" class="p-2 my-1 rounded-lg hover:bg-slate-300/30 block break-words focus:outline outline-blue-200 outline-2 rounded">Resources</a><a href="https://projectpythia.org/#join-us" target="_blank" rel="noopener noreferrer" class="p-2 my-1 rounded-lg hover:bg-slate-300/30 block break-words focus:outline outline-blue-200 outline-2 rounded">Community</a></div></nav><div class="my-3 border-b-2 lg:hidden"></div><nav aria-label="Table of Contents" class="flex-grow overflow-y-hidden transition-opacity ml-3 xl:ml-0 mr-3 max-w-[350px]"><div class="w-full px-1 dark:text-white"><a title="Earth Observation Data Science Cookbook" class="block break-words focus:outline outline-blue-200 outline-2 rounded p-2 my-1 rounded-lg hover:bg-slate-300/30 font-bold" href="/eo-datascience-cookbook/">Earth Observation Data Science Cookbook</a><div data-state="closed" class="w-full"><div class="flex flex-row w-full gap-2 px-2 my-1 text-left rounded-lg outline-none hover:bg-slate-300/30"><div title="Preamble" class="block break-words rounded py-2 grow cursor-pointer">Preamble</div><button class="self-center flex-none rounded-md group hover:bg-slate-300/30 focus:outline outline-blue-200 outline-2" aria-label="Open Folder" type="button" aria-controls="radix-:Rmp8p:" aria-expanded="false" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" class="transition-transform duration-300 group-data-[state=open]:rotate-90 text-text-slate-700 dark:text-slate-100" height="1.5rem" width="1.5rem"><path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd"></path></svg></button></div><div data-state="closed" id="radix-:Rmp8p:" hidden="" class="pl-3 pr-[2px] collapsible-content"></div></div><div data-state="closed" class="w-full"><div class="flex flex-row w-full gap-2 px-2 my-1 text-left rounded-lg outline-none hover:bg-slate-300/30"><div title="Courses" class="block break-words rounded py-2 grow cursor-pointer">Courses</div><button class="self-center flex-none rounded-md group hover:bg-slate-300/30 focus:outline outline-blue-200 outline-2" aria-label="Open Folder" type="button" aria-controls="radix-:Rup8p:" aria-expanded="false" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" class="transition-transform duration-300 group-data-[state=open]:rotate-90 text-text-slate-700 dark:text-slate-100" height="1.5rem" width="1.5rem"><path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd"></path></svg></button></div><div data-state="closed" id="radix-:Rup8p:" hidden="" class="pl-3 pr-[2px] collapsible-content"></div></div><div data-state="closed" class="w-full"><div class="flex flex-row w-full gap-2 px-2 my-1 text-left rounded-lg outline-none hover:bg-slate-300/30"><div title="Templates" class="block break-words rounded py-2 grow cursor-pointer">Templates</div><button class="self-center flex-none rounded-md group hover:bg-slate-300/30 focus:outline outline-blue-200 outline-2" aria-label="Open Folder" type="button" aria-controls="radix-:R16p8p:" aria-expanded="false" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" class="transition-transform duration-300 group-data-[state=open]:rotate-90 text-text-slate-700 dark:text-slate-100" height="1.5rem" width="1.5rem"><path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd"></path></svg></button></div><div data-state="closed" id="radix-:R16p8p:" hidden="" class="pl-3 pr-[2px] collapsible-content"></div></div><div data-state="closed" class="w-full"><div class="flex flex-row w-full gap-2 px-2 my-1 text-left rounded-lg outline-none hover:bg-slate-300/30"><div title="Tutorials" class="block break-words rounded py-2 grow cursor-pointer">Tutorials</div><button class="self-center flex-none rounded-md group hover:bg-slate-300/30 focus:outline outline-blue-200 outline-2" aria-label="Open Folder" type="button" aria-controls="radix-:R1ep8p:" aria-expanded="false" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" class="transition-transform duration-300 group-data-[state=open]:rotate-90 text-text-slate-700 dark:text-slate-100" height="1.5rem" width="1.5rem"><path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd"></path></svg></button></div><div data-state="closed" id="radix-:R1ep8p:" hidden="" class="pl-3 pr-[2px] collapsible-content"></div></div><div data-state="closed" class="w-full"><div class="flex flex-row w-full gap-2 px-2 my-1 text-left rounded-lg outline-none hover:bg-slate-300/30"><div title="References" class="block break-words rounded py-2 grow cursor-pointer">References</div><button class="self-center flex-none rounded-md group hover:bg-slate-300/30 focus:outline outline-blue-200 outline-2" aria-label="Open Folder" type="button" aria-controls="radix-:R1mp8p:" aria-expanded="false" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" class="transition-transform duration-300 group-data-[state=open]:rotate-90 text-text-slate-700 dark:text-slate-100" height="1.5rem" width="1.5rem"><path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd"></path></svg></button></div><div data-state="closed" id="radix-:R1mp8p:" hidden="" class="pl-3 pr-[2px] collapsible-content"></div></div></div></nav></div><div class="flex-none py-6 transition-all duration-700 translate-y-6 opacity-0"><a class="flex mx-auto text-gray-700 w-fit hover:text-blue-700 dark:text-gray-200 dark:hover:text-blue-400" href="https://mystmd.org/made-with-myst" target="_blank" rel="noreferrer"><svg style="width:24px;height:24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" stroke="none"><g id="icon"><path fill="currentColor" d="M23.8,54.8v-3.6l4.7-0.8V17.5l-4.7-0.8V13H36l13.4,31.7h0.2l13-31.7h12.6v3.6l-4.7,0.8v32.9l4.7,0.8v3.6h-15
-          v-3.6l4.9-0.8V20.8H65L51.4,53.3h-3.8l-14-32.5h-0.1l0.2,17.4v12.1l5,0.8v3.6H23.8z"></path><path fill="#F37726" d="M47,86.9c0-5.9-3.4-8.8-10.1-8.8h-8.4c-5.2,0-9.4-1.3-12.5-3.8c-3.1-2.5-5.4-6.2-6.8-11l4.8-1.6
-          c1.8,5.6,6.4,8.6,13.8,8.8h9.2c6.4,0,10.8,2.5,13.1,7.5c2.3-5,6.7-7.5,13.1-7.5h8.4c7.8,0,12.7-2.9,14.6-8.7l4.8,1.6
-          c-1.4,4.9-3.6,8.6-6.8,11.1c-3.1,2.5-7.3,3.7-12.4,3.8H63c-6.7,0-10,2.9-10,8.8"></path></g></svg><span class="self-center ml-2 text-sm">Made with MyST</span></a></div></div></div><article class="article content article-grid grid-gap"><main class="article-grid subgrid-gap col-screen"><div class="hidden"></div><div id="skip-to-frontmatter" aria-label="article frontmatter" class="mb-8 pt-9"><div class="flex items-center h-6 mb-5 text-sm font-light"><div class="flex-grow"></div><a href="https://opensource.org/licenses/Apache-2.0" target="_blank" rel="noopener noreferrer" title="Content License: Apache License 2.0 (Apache-2.0)" class="text-inherit hover:text-inherit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem" class="mx-1 inline-block opacity-60 hover:opacity-100 hover:text-[#599F46]"><path d="M13.2 15.6c1.4-.5 2.1-1.6 2.1-3.3S13.8 8.9 12 8.9c-1.9 0-3.3 1.6-3.3 3.3 0 1.8.8 3 2.2 3.4l-2.3 5.9c-3.1-.8-6.3-4.6-6.3-9.3 0-5.5 4.3-10 9.7-10s9.8 4.5 9.8 10c0 4.7-3.1 8.5-6.3 9.3l-2.3-5.9z"></path></svg></a><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" class="opacity-50 hover:opacity-100 text-inherit hover:text-inherit" aria-label="Code License: Creative Commons Attribution 4.0 International (CC-BY-4.0)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem" class="inline-block mx-1"><title>Code License: Creative Commons Attribution 4.0 International (CC-BY-4.0)</title><path d="M12 2.2c2.7 0 5 1 7 2.9.9.9 1.6 2 2.1 3.1.5 1.2.7 2.4.7 3.8 0 1.3-.2 2.6-.7 3.8-.5 1.2-1.2 2.2-2.1 3.1-1 .9-2 1.7-3.2 2.2-1.2.5-2.5.7-3.7.7s-2.6-.3-3.8-.8c-1.2-.5-2.2-1.2-3.2-2.1s-1.6-2-2.1-3.2-.8-2.4-.8-3.7c0-1.3.2-2.5.7-3.7S4.2 6 5.1 5.1C7 3.2 9.3 2.2 12 2.2zM12 4c-2.2 0-4.1.8-5.6 2.3C5.6 7.1 5 8 4.6 9c-.4 1-.6 2-.6 3s.2 2.1.6 3c.4 1 1 1.8 1.8 2.6S8 19 9 19.4c1 .4 2 .6 3 .6s2.1-.2 3-.6c1-.4 1.9-1 2.7-1.8 1.5-1.5 2.3-3.3 2.3-5.6 0-1.1-.2-2.1-.6-3.1-.4-1-1-1.8-1.7-2.6C16.1 4.8 14.2 4 12 4zm-.1 6.4l-1.3.7c-.1-.3-.3-.5-.5-.6-.2-.1-.4-.2-.6-.2-.9 0-1.3.6-1.3 1.7 0 .5.1.9.3 1.3.2.3.5.5 1 .5.6 0 1-.3 1.2-.8l1.2.6c-.3.5-.6.9-1.1 1.1-.5.3-1 .4-1.5.4-.9 0-1.6-.3-2.1-.8-.5-.6-.8-1.3-.8-2.3 0-.9.3-1.7.8-2.2.6-.6 1.3-.8 2.1-.8 1.2 0 2.1.4 2.6 1.4zm5.6 0l-1.3.7c-.1-.3-.3-.5-.5-.6-.2-.1-.4-.2-.6-.2-.9 0-1.3.6-1.3 1.7 0 .5.1.9.3 1.3.2.3.5.5 1 .5.6 0 1-.3 1.2-.8l1.2.6c-.3.5-.6.9-1.1 1.1-.4.2-.9.3-1.4.3-.9 0-1.6-.3-2.1-.8s-.8-1.3-.8-2.2c0-.9.3-1.7.8-2.2.5-.5 1.2-.8 2-.8 1.2 0 2.1.4 2.6 1.4z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem" class="inline-block mr-1"><title>Credit must be given to the creator</title><path d="M12 2.2c2.7 0 5 .9 6.9 2.8 1.9 1.9 2.8 4.2 2.8 6.9s-.9 5-2.8 6.8c-2 1.9-4.3 2.9-7 2.9-2.6 0-4.9-1-6.9-2.9-1.8-1.7-2.8-4-2.8-6.7s1-5 2.9-6.9C7 3.2 9.3 2.2 12 2.2zM12 4c-2.2 0-4.1.8-5.6 2.3C4.8 8 4 9.9 4 12c0 2.2.8 4 2.4 5.6C8 19.2 9.8 20 12 20c2.2 0 4.1-.8 5.7-2.4 1.5-1.5 2.3-3.3 2.3-5.6 0-2.2-.8-4.1-2.3-5.7C16.1 4.8 14.2 4 12 4zm2.6 5.6v4h-1.1v4.7h-3v-4.7H9.4v-4c0-.2.1-.3.2-.4.1-.2.2-.2.4-.2h4c.2 0 .3.1.4.2.2.1.2.2.2.4zm-4-2.5c0-.9.5-1.4 1.4-1.4s1.4.5 1.4 1.4c0 .9-.5 1.4-1.4 1.4s-1.4-.5-1.4-1.4z"></path></svg></a><a href="https://en.wikipedia.org/wiki/Open_access" target="_blank" rel="noopener noreferrer" title="Open Access" class="text-inherit hover:text-inherit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem" class="mr-1 inline-block opacity-60 hover:opacity-100 hover:text-[#E18435]"><path d="M17.1 12.6h-2V7.5c0-1.7-1.4-3.1-3-3.1-.8 0-1.6.3-2.2.9-.6.5-.9 1.3-.9 2.2v.7H7v-.7c0-1.4.5-2.7 1.5-3.7s2.2-1.5 3.6-1.5 2.6.5 3.6 1.5 1.5 2.3 1.5 3.7v5.1z"></path><path d="M12 21.8c-.8 0-1.6-.2-2.3-.5-.7-.3-1.4-.8-1.9-1.3-.6-.6-1-1.2-1.3-2-.3-.8-.5-1.6-.5-2.4s.2-1.6.5-2.4c.3-.7.7-1.4 1.3-2s1.2-1 1.9-1.3c.7-.3 1.5-.5 2.3-.5.8 0 1.6.2 2.3.5.7.3 1.4.8 1.9 1.3.6.6 1 1.2 1.3 2 .3.8.5 1.6.5 2.4s-.2 1.6-.5 2.4c-.3.7-.7 1.4-1.3 2-.6.6-1.2 1-1.9 1.3-.7.3-1.5.5-2.3.5zm0-10.3c-2.2 0-4 1.8-4 4.1s1.8 4.1 4 4.1 4-1.8 4-4.1-1.8-4.1-4-4.1z"></path><circle cx="12" cy="15.6" r="1.7"></circle></svg></a><div class="relative flex inline-block mx-1 grow-0" data-headlessui-state=""><button class="relative ml-2 -mr-1" id="headlessui-menu-button-:Rs8top:" type="button" aria-haspopup="menu" aria-expanded="false" data-headlessui-state=""><span class="sr-only">Downloads</span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" width="1.25rem" height="1.25rem"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"></path></svg></button></div><button class="inline-flex size-[24px] hover:text-[#E18435] items-center justify-center" aria-label="Launch in external computing interface" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:Re8top:" data-state="closed"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.85357 3.85355L7.65355 3.05353C8.2981 2.40901 9.42858 1.96172 10.552 1.80125C11.1056 1.72217 11.6291 1.71725 12.0564 1.78124C12.4987 1.84748 12.7698 1.97696 12.8965 2.10357C13.0231 2.23018 13.1526 2.50125 13.2188 2.94357C13.2828 3.37086 13.2779 3.89439 13.1988 4.44801C13.0383 5.57139 12.591 6.70188 11.9464 7.34645L7.49999 11.7929L6.35354 10.6465C6.15827 10.4512 5.84169 10.4512 5.64643 10.6465C5.45117 10.8417 5.45117 11.1583 5.64643 11.3536L7.14644 12.8536C7.34171 13.0488 7.65829 13.0488 7.85355 12.8536L8.40073 12.3064L9.57124 14.2572C9.65046 14.3893 9.78608 14.4774 9.9389 14.4963C10.0917 14.5151 10.2447 14.4624 10.3535 14.3536L12.3535 12.3536C12.4648 12.2423 12.5172 12.0851 12.495 11.9293L12.0303 8.67679L12.6536 8.05355C13.509 7.19808 14.0117 5.82855 14.1887 4.58943C14.2784 3.9618 14.2891 3.33847 14.2078 2.79546C14.1287 2.26748 13.9519 1.74482 13.6035 1.39645C13.2552 1.04809 12.7325 0.871332 12.2045 0.792264C11.6615 0.710945 11.0382 0.721644 10.4105 0.8113C9.17143 0.988306 7.80189 1.491 6.94644 2.34642L6.32322 2.96968L3.07071 2.50504C2.91492 2.48278 2.75773 2.53517 2.64645 2.64646L0.646451 4.64645C0.537579 4.75533 0.484938 4.90829 0.50375 5.0611C0.522563 5.21391 0.61073 5.34954 0.742757 5.42876L2.69364 6.59928L2.14646 7.14645C2.0527 7.24022 2.00002 7.3674 2.00002 7.50001C2.00002 7.63261 2.0527 7.75979 2.14646 7.85356L3.64647 9.35356C3.84173 9.54883 4.15831 9.54883 4.35357 9.35356C4.54884 9.1583 4.54884 8.84172 4.35357 8.64646L3.20712 7.50001L3.85357 6.85356L6.85357 3.85355ZM10.0993 13.1936L9.12959 11.5775L11.1464 9.56067L11.4697 11.8232L10.0993 13.1936ZM3.42251 5.87041L5.43935 3.85356L3.17678 3.53034L1.80638 4.90074L3.42251 5.87041ZM2.35356 10.3535C2.54882 10.1583 2.54882 9.8417 2.35356 9.64644C2.1583 9.45118 1.84171 9.45118 1.64645 9.64644L0.646451 10.6464C0.451188 10.8417 0.451188 11.1583 0.646451 11.3535C0.841713 11.5488 1.1583 11.5488 1.35356 11.3535L2.35356 10.3535ZM3.85358 11.8536C4.04884 11.6583 4.04885 11.3417 3.85359 11.1465C3.65833 10.9512 3.34175 10.9512 3.14648 11.1465L1.14645 13.1464C0.95119 13.3417 0.951187 13.6583 1.14645 13.8535C1.34171 14.0488 1.65829 14.0488 1.85355 13.8536L3.85358 11.8536ZM5.35356 13.3535C5.54882 13.1583 5.54882 12.8417 5.35356 12.6464C5.1583 12.4512 4.84171 12.4512 4.64645 12.6464L3.64645 13.6464C3.45119 13.8417 3.45119 14.1583 3.64645 14.3535C3.84171 14.5488 4.1583 14.5488 4.35356 14.3535L5.35356 13.3535ZM9.49997 6.74881C10.1897 6.74881 10.7488 6.1897 10.7488 5.5C10.7488 4.8103 10.1897 4.25118 9.49997 4.25118C8.81026 4.25118 8.25115 4.8103 8.25115 5.5C8.25115 6.1897 8.81026 6.74881 9.49997 6.74881Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></button></div><h1 class="mb-0">How to Cite This Cookbook</h1><header class="mt-4 not-prose"><div><span class="font-semibold text-sm inline-block text-comma"><button class="focus:shadow-[0_0_0_2px] focus:shadow-black outline-none hover:underline" aria-label="Author Details" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:Rj8top:" data-state="closed">Wolfgang Wagner</button></span><span class="font-semibold text-sm inline-block text-comma"><button class="focus:shadow-[0_0_0_2px] focus:shadow-black outline-none hover:underline" aria-label="Author Details" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:Rl8top:" data-state="closed">Martin Schobben</button></span><span class="font-semibold text-sm inline-block text-comma"><button class="focus:shadow-[0_0_0_2px] focus:shadow-black outline-none hover:underline" aria-label="Author Details" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:Rn8top:" data-state="closed">Nikolas Pikall</button></span><span class="font-semibold text-sm inline-block text-comma"><button class="focus:shadow-[0_0_0_2px] focus:shadow-black outline-none hover:underline" aria-label="Author Details" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:Rp8top:" data-state="closed">Joseph Wagner</button></span><span class="font-semibold text-sm inline-block text-comma"><button class="focus:shadow-[0_0_0_2px] focus:shadow-black outline-none hover:underline" aria-label="Author Details" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:Rr8top:" data-state="closed">Davide Festa</button></span><span class="font-semibold text-sm inline-block text-comma"><button class="focus:shadow-[0_0_0_2px] focus:shadow-black outline-none hover:underline" aria-label="Author Details" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:Rt8top:" data-state="closed">Felix David Reuß</button></span><span class="font-semibold text-sm inline-block"><button class="focus:shadow-[0_0_0_2px] focus:shadow-black outline-none hover:underline" aria-label="Author Details" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:Rv8top:" data-state="closed">Luka Jović</button></span></div></header></div><div class="block my-10 lg:sticky lg:z-10 lg:h-0 lg:pt-0 lg:my-0 lg:ml-10 lg:col-margin-right" style="top:60px"><nav></nav></div><div id="skip-to-article"></div><p>The material in this Project Pythia Cookbook is licensed for free and open consumption and reuse. All code is served under <a target="_blank" rel="noreferrer" href="https://www.apache.org/licenses/LICENSE-2.0" class="">Apache 2.0</a>, while all non-code content is licensed under <a target="_blank" rel="noreferrer" href="https://creativecommons.org/licenses/by/4.0/" class="">Creative Commons BY 4.0 (CC BY 4.0)</a>. Effectively, this means you are free to share and adapt this material so long as you give appropriate credit to the Cookbook authors and the Project Pythia community.</p><p>The source code for the book is <a target="_blank" rel="noreferrer" href="https://github.com/TUW-GEO/eo-datascience-cookbook" class="">released on GitHub</a> and archived on Zenodo. This DOI will always resolve to the latest release of the book source:</p><p><a target="_blank" rel="noreferrer" href="https://doi.org/10.5281/zenodo.830421828" class=""><img id="KjkUwxZNbq" style="margin:0 auto" src="/eo-datascience-cookbook/build/940d5ffd64b58a1e369604298a5c4034.svg" alt="DOI" data-canonical-url="https://zenodo.org/badge/830421828.svg"/></a></p><div></div><div class="flex pt-10 mb-10 space-x-4"><a class="flex-1 block p-4 font-normal text-gray-600 no-underline border border-gray-200 rounded shadow-sm group hover:border-blue-600 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 dark:text-gray-100 dark:border-gray-500 hover:shadow-lg dark:shadow-neutral-700" href="/eo-datascience-cookbook/"><div class="flex h-full align-middle"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" width="1.5rem" height="1.5rem" class="self-center transition-transform group-hover:-translate-x-1 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path></svg><div class="flex-grow text-right"><div class="text-xs text-gray-500 dark:text-gray-400">Earth Observation Data Science Cookbook</div>Earth Observation Data Science Cookbook</div></div></a><a class="flex-1 block p-4 font-normal text-gray-600 no-underline border border-gray-200 rounded shadow-sm group hover:border-blue-600 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 dark:text-gray-100 dark:border-gray-500 hover:shadow-lg dark:shadow-neutral-700" href="/eo-datascience-cookbook/notebooks/courses/microwave-remote-sensing"><div class="flex h-full align-middle"><div class="flex-grow"><div class="text-xs text-gray-500 dark:text-gray-400">Courses</div>Microwave Remote Sensing</div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" width="1.5rem" height="1.5rem" class="self-center transition-transform group-hover:translate-x-1 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg></div></a></div></main></article><script>((a,d)=>{if(!window.history.state||!window.history.state.key){let h=Math.random().toString(32).slice(2);window.history.replaceState({key:h},"")}try{let f=JSON.parse(sessionStorage.getItem(a)||"{}")[d||window.history.state.key];typeof f=="number"&&window.scrollTo(0,f)}catch(h){console.error(h),sessionStorage.removeItem(a)}})("positions", null)</script><link rel="modulepreload" href="/eo-datascience-cookbook/build/entry.client-UNPC4GT3.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-OCTKKCIL.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-UAI5KRM7.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-2NH4LW52.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-TMJFFFM7.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-HBJK6BW3.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-HYMQ7M2K.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-OHOXABTA.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-OCWQY3HK.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-CPTH56EW.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-3CVK3PYF.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-J6FHCSRC.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-S4SWV34C.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-GUCIBHGO.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/root-LMCDRB6W.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/_shared/chunk-GOFUXLLW.js"/><link rel="modulepreload" href="/eo-datascience-cookbook/build/routes/$-SJYMRUNJ.js"/><script>window.__remixContext = {"url":"/notebooks/how-to-cite","state":{"loaderData":{"root":{"config":{"version":2,"myst":"1.4.0","options":{"favicon":"/eo-datascience-cookbook/build/config-item-9b3afca6-0355ebd6ed15eab1054578f5a6140cb5.ico","logo":"/eo-datascience-cookbook/build/pythia_logo-white-rt-f2a559d125fd2388a8fc7aff2c9f7874.svg","logo_dark":"/eo-datascience-cookbook/build/config-item-84d6d338-5d09fcbcee196f37fd6b0f864da8b2a3.svg","folders":true},"parts":{},"nav":[{"title":"Home","url":"https://projectpythia.org"},{"title":"Foundations","url":"https://foundations.projectpythia.org"},{"title":"Cookbooks","url":"https://cookbooks.projectpythia.org/"},{"title":"Resources","url":"https://projectpythia.org/resource-gallery/"},{"title":"Community","url":"https://projectpythia.org/#join-us"}],"actions":[{"title":"Project Pythia","url":"https://projectpythia.org","internal":false,"static":false}],"projects":[{"open_access":true,"license":{"content":{"id":"Apache-2.0","url":"https://opensource.org/licenses/Apache-2.0","name":"Apache License 2.0","free":true,"osi":true},"code":{"id":"CC-BY-4.0","url":"https://creativecommons.org/licenses/by/4.0/","name":"Creative Commons Attribution 4.0 International","free":true,"CC":true}},"title":"Earth Observation Data Science Cookbook","authors":[{"nameParsed":{"literal":"Wolfgang Wagner","given":"Wolfgang","family":"Wagner"},"name":"Wolfgang Wagner","id":"contributors-myst-generated-uid-0"},{"nameParsed":{"literal":"Martin Schobben","given":"Martin","family":"Schobben"},"name":"Martin Schobben","id":"contributors-myst-generated-uid-1"},{"nameParsed":{"literal":"Nikolas Pikall","given":"Nikolas","family":"Pikall"},"name":"Nikolas Pikall","id":"contributors-myst-generated-uid-2"},{"nameParsed":{"literal":"Joseph Wagner","given":"Joseph","family":"Wagner"},"name":"Joseph Wagner","id":"contributors-myst-generated-uid-3"},{"nameParsed":{"literal":"Davide Festa","given":"Davide","family":"Festa"},"name":"Davide Festa","id":"contributors-myst-generated-uid-4"},{"nameParsed":{"literal":"Felix David Reuß","given":"Felix David","family":"Reuß"},"name":"Felix David Reuß","id":"contributors-myst-generated-uid-5"},{"nameParsed":{"literal":"Luka Jović","given":"Luka","family":"Jović"},"name":"Luka Jović","id":"contributors-myst-generated-uid-6"}],"copyright":"2024","references":{"foundations":{"url":"https://foundations.projectpythia.org"},"xarray":{"url":"https://docs.xarray.dev/en/stable"},"matplotlib":{"url":"https://matplotlib.org/stable"}},"thebe":{"binder":{"url":"https://mybinder.org/","provider":"github","repo":"projectpythia/eo-datascience-cookbook","ref":"HEAD"}},"toc":[{"file":"README.md"},{"children":[{"file":"notebooks/how-to-cite.md"}],"title":"Preamble"},{"children":[{"children":[{"file":"notebooks/courses/microwave-remote-sensing/01_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/02_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/03_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/04_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/05_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/06_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/07_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/08_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/09_in_class_exercise.ipynb"}],"file":"notebooks/courses/microwave-remote-sensing.ipynb"}],"title":"Courses"},{"children":[{"children":[{"file":"notebooks/templates/classification.ipynb"}],"file":"notebooks/templates/prereqs-templates.ipynb"}],"title":"Templates"},{"children":[{"children":[{"file":"notebooks/tutorials/floodmapping.ipynb"}],"file":"notebooks/tutorials/prereqs-tutorials.ipynb"}],"title":"Tutorials"},{"children":[{"file":"notebooks/references.ipynb"}],"title":"References"}],"thumbnail":"/eo-datascience-cookbook/build/tuw-geo_eodc_logo_ho-1f1778fec5534a2a98ead4fcd08f3a6f.png","exports":[],"bibliography":[],"index":"index","pages":[{"level":1,"title":"Preamble"},{"slug":"notebooks.how-to-cite","title":"How to Cite This Cookbook","description":"","date":"","thumbnail":"/eo-datascience-cookbook/build/940d5ffd64b58a1e369604298a5c4034.svg","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2},{"level":1,"title":"Courses"},{"slug":"notebooks.courses.microwave-remote-sensing","title":"Microwave Remote Sensing","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2},{"level":1,"title":"Templates"},{"slug":"notebooks.templates.prereqs-templates","title":"Templates","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2},{"slug":"notebooks.templates.classification","title":"Classification of Sentinel-2 imagery","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":3},{"level":1,"title":"Tutorials"},{"slug":"notebooks.tutorials.prereqs-tutorials","title":"Tutorials","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2},{"slug":"notebooks.tutorials.floodmapping","title":"Reverend Bayes updates our Belief in Flood Detection","description":"","date":"","thumbnail":"/eo-datascience-cookbook/build/1ab490d3ba1d22952fb4c45d205afb33.gif","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":3},{"level":1,"title":"References"},{"slug":"notebooks.references","title":"References","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2}]}]},"CONTENT_CDN_PORT":"3100","MODE":"static","BASE_URL":"/eo-datascience-cookbook"},"routes/$":{"config":{"version":2,"myst":"1.4.0","options":{"favicon":"/eo-datascience-cookbook/build/config-item-9b3afca6-0355ebd6ed15eab1054578f5a6140cb5.ico","logo":"/eo-datascience-cookbook/build/pythia_logo-white-rt-f2a559d125fd2388a8fc7aff2c9f7874.svg","logo_dark":"/eo-datascience-cookbook/build/config-item-84d6d338-5d09fcbcee196f37fd6b0f864da8b2a3.svg","folders":true},"parts":{},"nav":[{"title":"Home","url":"https://projectpythia.org"},{"title":"Foundations","url":"https://foundations.projectpythia.org"},{"title":"Cookbooks","url":"https://cookbooks.projectpythia.org/"},{"title":"Resources","url":"https://projectpythia.org/resource-gallery/"},{"title":"Community","url":"https://projectpythia.org/#join-us"}],"actions":[{"title":"Project Pythia","url":"https://projectpythia.org","internal":false,"static":false}],"projects":[{"open_access":true,"license":{"content":{"id":"Apache-2.0","url":"https://opensource.org/licenses/Apache-2.0","name":"Apache License 2.0","free":true,"osi":true},"code":{"id":"CC-BY-4.0","url":"https://creativecommons.org/licenses/by/4.0/","name":"Creative Commons Attribution 4.0 International","free":true,"CC":true}},"title":"Earth Observation Data Science Cookbook","authors":[{"nameParsed":{"literal":"Wolfgang Wagner","given":"Wolfgang","family":"Wagner"},"name":"Wolfgang Wagner","id":"contributors-myst-generated-uid-0"},{"nameParsed":{"literal":"Martin Schobben","given":"Martin","family":"Schobben"},"name":"Martin Schobben","id":"contributors-myst-generated-uid-1"},{"nameParsed":{"literal":"Nikolas Pikall","given":"Nikolas","family":"Pikall"},"name":"Nikolas Pikall","id":"contributors-myst-generated-uid-2"},{"nameParsed":{"literal":"Joseph Wagner","given":"Joseph","family":"Wagner"},"name":"Joseph Wagner","id":"contributors-myst-generated-uid-3"},{"nameParsed":{"literal":"Davide Festa","given":"Davide","family":"Festa"},"name":"Davide Festa","id":"contributors-myst-generated-uid-4"},{"nameParsed":{"literal":"Felix David Reuß","given":"Felix David","family":"Reuß"},"name":"Felix David Reuß","id":"contributors-myst-generated-uid-5"},{"nameParsed":{"literal":"Luka Jović","given":"Luka","family":"Jović"},"name":"Luka Jović","id":"contributors-myst-generated-uid-6"}],"copyright":"2024","references":{"foundations":{"url":"https://foundations.projectpythia.org"},"xarray":{"url":"https://docs.xarray.dev/en/stable"},"matplotlib":{"url":"https://matplotlib.org/stable"}},"thebe":{"binder":{"url":"https://mybinder.org/","provider":"github","repo":"projectpythia/eo-datascience-cookbook","ref":"HEAD"}},"toc":[{"file":"README.md"},{"children":[{"file":"notebooks/how-to-cite.md"}],"title":"Preamble"},{"children":[{"children":[{"file":"notebooks/courses/microwave-remote-sensing/01_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/02_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/03_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/04_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/05_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/06_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/07_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/08_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/09_in_class_exercise.ipynb"}],"file":"notebooks/courses/microwave-remote-sensing.ipynb"}],"title":"Courses"},{"children":[{"children":[{"file":"notebooks/templates/classification.ipynb"}],"file":"notebooks/templates/prereqs-templates.ipynb"}],"title":"Templates"},{"children":[{"children":[{"file":"notebooks/tutorials/floodmapping.ipynb"}],"file":"notebooks/tutorials/prereqs-tutorials.ipynb"}],"title":"Tutorials"},{"children":[{"file":"notebooks/references.ipynb"}],"title":"References"}],"thumbnail":"/eo-datascience-cookbook/build/tuw-geo_eodc_logo_ho-1f1778fec5534a2a98ead4fcd08f3a6f.png","exports":[],"bibliography":[],"index":"index","pages":[{"level":1,"title":"Preamble"},{"slug":"notebooks.how-to-cite","title":"How to Cite This Cookbook","description":"","date":"","thumbnail":"/eo-datascience-cookbook/build/940d5ffd64b58a1e369604298a5c4034.svg","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2},{"level":1,"title":"Courses"},{"slug":"notebooks.courses.microwave-remote-sensing","title":"Microwave Remote Sensing","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2},{"level":1,"title":"Templates"},{"slug":"notebooks.templates.prereqs-templates","title":"Templates","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2},{"slug":"notebooks.templates.classification","title":"Classification of Sentinel-2 imagery","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":3},{"level":1,"title":"Tutorials"},{"slug":"notebooks.tutorials.prereqs-tutorials","title":"Tutorials","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2},{"slug":"notebooks.tutorials.floodmapping","title":"Reverend Bayes updates our Belief in Flood Detection","description":"","date":"","thumbnail":"/eo-datascience-cookbook/build/1ab490d3ba1d22952fb4c45d205afb33.gif","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":3},{"level":1,"title":"References"},{"slug":"notebooks.references","title":"References","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2}]}]},"page":{"version":2,"kind":"Article","sha256":"65c3f21834e059d7c0ae66d45f627112bec0062839be26d5cf5cd5f5f9058d32","slug":"notebooks.how-to-cite","location":"/notebooks/how-to-cite.md","dependencies":[],"frontmatter":{"title":"How to Cite This Cookbook","content_includes_title":false,"authors":[{"nameParsed":{"literal":"Wolfgang Wagner","given":"Wolfgang","family":"Wagner"},"name":"Wolfgang Wagner","id":"contributors-myst-generated-uid-0"},{"nameParsed":{"literal":"Martin Schobben","given":"Martin","family":"Schobben"},"name":"Martin Schobben","id":"contributors-myst-generated-uid-1"},{"nameParsed":{"literal":"Nikolas Pikall","given":"Nikolas","family":"Pikall"},"name":"Nikolas Pikall","id":"contributors-myst-generated-uid-2"},{"nameParsed":{"literal":"Joseph Wagner","given":"Joseph","family":"Wagner"},"name":"Joseph Wagner","id":"contributors-myst-generated-uid-3"},{"nameParsed":{"literal":"Davide Festa","given":"Davide","family":"Festa"},"name":"Davide Festa","id":"contributors-myst-generated-uid-4"},{"nameParsed":{"literal":"Felix David Reuß","given":"Felix David","family":"Reuß"},"name":"Felix David Reuß","id":"contributors-myst-generated-uid-5"},{"nameParsed":{"literal":"Luka Jović","given":"Luka","family":"Jović"},"name":"Luka Jović","id":"contributors-myst-generated-uid-6"}],"open_access":true,"license":{"content":{"id":"Apache-2.0","url":"https://opensource.org/licenses/Apache-2.0","name":"Apache License 2.0","free":true,"osi":true},"code":{"id":"CC-BY-4.0","url":"https://creativecommons.org/licenses/by/4.0/","name":"Creative Commons Attribution 4.0 International","free":true,"CC":true}},"copyright":"2024","numbering":{"title":{"offset":1}},"thumbnail":"/eo-datascience-cookbook/build/940d5ffd64b58a1e369604298a5c4034.svg","exports":[{"format":"md","filename":"how-to-cite.md","url":"/eo-datascience-cookbook/build/how-to-cite-ec4492e8a9a71082101de26da253d770.md"}]},"mdast":{"type":"root","children":[{"type":"block","children":[{"type":"paragraph","position":{"start":{"line":3,"column":1},"end":{"line":3,"column":1}},"children":[{"type":"text","value":"The material in this Project Pythia Cookbook is licensed for free and open consumption and reuse. All code is served under ","position":{"start":{"line":3,"column":1},"end":{"line":3,"column":1}},"key":"Cqkgg1yDEN"},{"type":"link","url":"https://www.apache.org/licenses/LICENSE-2.0","position":{"start":{"line":3,"column":1},"end":{"line":3,"column":1}},"children":[{"type":"text","value":"Apache 2.0","position":{"start":{"line":3,"column":1},"end":{"line":3,"column":1}},"key":"Fub01Grb74"}],"urlSource":"https://www.apache.org/licenses/LICENSE-2.0","key":"AmMfI6IPUA"},{"type":"text","value":", while all non-code content is licensed under ","position":{"start":{"line":3,"column":1},"end":{"line":3,"column":1}},"key":"YV2KmpndVb"},{"type":"link","url":"https://creativecommons.org/licenses/by/4.0/","position":{"start":{"line":3,"column":1},"end":{"line":3,"column":1}},"children":[{"type":"text","value":"Creative Commons BY 4.0 (CC BY 4.0)","position":{"start":{"line":3,"column":1},"end":{"line":3,"column":1}},"key":"m669q1bzZt"}],"urlSource":"https://creativecommons.org/licenses/by/4.0/","key":"gUunzdp1Hy"},{"type":"text","value":". Effectively, this means you are free to share and adapt this material so long as you give appropriate credit to the Cookbook authors and the Project Pythia community.","position":{"start":{"line":3,"column":1},"end":{"line":3,"column":1}},"key":"yLn9YS1uDC"}],"key":"zreRLHQBsM"},{"type":"paragraph","position":{"start":{"line":5,"column":1},"end":{"line":5,"column":1}},"children":[{"type":"text","value":"The source code for the book is ","position":{"start":{"line":5,"column":1},"end":{"line":5,"column":1}},"key":"zZCbxXXCDs"},{"type":"link","url":"https://github.com/TUW-GEO/eo-datascience-cookbook","position":{"start":{"line":5,"column":1},"end":{"line":5,"column":1}},"children":[{"type":"text","value":"released on GitHub","position":{"start":{"line":5,"column":1},"end":{"line":5,"column":1}},"key":"MiPXfJByWg"}],"urlSource":"https://github.com/TUW-GEO/eo-datascience-cookbook","error":true,"key":"F57ALttwyN"},{"type":"text","value":" and archived on Zenodo. This DOI will always resolve to the latest release of the book source:","position":{"start":{"line":5,"column":1},"end":{"line":5,"column":1}},"key":"afsGORTycd"}],"key":"Ij4B86SpTl"},{"type":"paragraph","position":{"start":{"line":7,"column":1},"end":{"line":7,"column":1}},"children":[{"type":"link","url":"https://doi.org/10.5281/zenodo.830421828","position":{"start":{"line":7,"column":1},"end":{"line":7,"column":1}},"children":[{"type":"image","url":"/eo-datascience-cookbook/build/940d5ffd64b58a1e369604298a5c4034.svg","alt":"DOI","position":{"start":{"line":7,"column":1},"end":{"line":7,"column":1}},"key":"KjkUwxZNbq","urlSource":"https://zenodo.org/badge/830421828.svg"}],"urlSource":"https://zenodo.org/badge/latestdoi/830421828","data":{"doi":"10.5281/zenodo.830421828"},"internal":false,"protocol":"doi","key":"jyw4iys1mW"}],"key":"Ly9h2UBOGe"}],"key":"YpDFit8KAs"}],"key":"AlxaPNyybd"},"references":{"cite":{"order":[],"data":{}}},"footer":{"navigation":{"prev":{"title":"Earth Observation Data Science Cookbook","url":"/","group":"Earth Observation Data Science Cookbook"},"next":{"title":"Microwave Remote Sensing","url":"/notebooks/courses/microwave-remote-sensing","group":"Courses"}}},"domain":"http://localhost:3000"},"project":{"open_access":true,"license":{"content":{"id":"Apache-2.0","url":"https://opensource.org/licenses/Apache-2.0","name":"Apache License 2.0","free":true,"osi":true},"code":{"id":"CC-BY-4.0","url":"https://creativecommons.org/licenses/by/4.0/","name":"Creative Commons Attribution 4.0 International","free":true,"CC":true}},"title":"Earth Observation Data Science Cookbook","authors":[{"nameParsed":{"literal":"Wolfgang Wagner","given":"Wolfgang","family":"Wagner"},"name":"Wolfgang Wagner","id":"contributors-myst-generated-uid-0"},{"nameParsed":{"literal":"Martin Schobben","given":"Martin","family":"Schobben"},"name":"Martin Schobben","id":"contributors-myst-generated-uid-1"},{"nameParsed":{"literal":"Nikolas Pikall","given":"Nikolas","family":"Pikall"},"name":"Nikolas Pikall","id":"contributors-myst-generated-uid-2"},{"nameParsed":{"literal":"Joseph Wagner","given":"Joseph","family":"Wagner"},"name":"Joseph Wagner","id":"contributors-myst-generated-uid-3"},{"nameParsed":{"literal":"Davide Festa","given":"Davide","family":"Festa"},"name":"Davide Festa","id":"contributors-myst-generated-uid-4"},{"nameParsed":{"literal":"Felix David Reuß","given":"Felix David","family":"Reuß"},"name":"Felix David Reuß","id":"contributors-myst-generated-uid-5"},{"nameParsed":{"literal":"Luka Jović","given":"Luka","family":"Jović"},"name":"Luka Jović","id":"contributors-myst-generated-uid-6"}],"copyright":"2024","references":{"foundations":{"url":"https://foundations.projectpythia.org"},"xarray":{"url":"https://docs.xarray.dev/en/stable"},"matplotlib":{"url":"https://matplotlib.org/stable"}},"thebe":{"binder":{"url":"https://mybinder.org/","provider":"github","repo":"projectpythia/eo-datascience-cookbook","ref":"HEAD"}},"toc":[{"file":"README.md"},{"children":[{"file":"notebooks/how-to-cite.md"}],"title":"Preamble"},{"children":[{"children":[{"file":"notebooks/courses/microwave-remote-sensing/01_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/02_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/03_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/04_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/05_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/06_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/07_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/08_in_class_exercise.ipynb"},{"file":"notebooks/courses/microwave-remote-sensing/09_in_class_exercise.ipynb"}],"file":"notebooks/courses/microwave-remote-sensing.ipynb"}],"title":"Courses"},{"children":[{"children":[{"file":"notebooks/templates/classification.ipynb"}],"file":"notebooks/templates/prereqs-templates.ipynb"}],"title":"Templates"},{"children":[{"children":[{"file":"notebooks/tutorials/floodmapping.ipynb"}],"file":"notebooks/tutorials/prereqs-tutorials.ipynb"}],"title":"Tutorials"},{"children":[{"file":"notebooks/references.ipynb"}],"title":"References"}],"thumbnail":"/eo-datascience-cookbook/build/tuw-geo_eodc_logo_ho-1f1778fec5534a2a98ead4fcd08f3a6f.png","exports":[],"bibliography":[],"index":"index","pages":[{"level":1,"title":"Preamble"},{"slug":"notebooks.how-to-cite","title":"How to Cite This Cookbook","description":"","date":"","thumbnail":"/eo-datascience-cookbook/build/940d5ffd64b58a1e369604298a5c4034.svg","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2},{"level":1,"title":"Courses"},{"slug":"notebooks.courses.microwave-remote-sensing","title":"Microwave Remote Sensing","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2},{"level":1,"title":"Templates"},{"slug":"notebooks.templates.prereqs-templates","title":"Templates","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2},{"slug":"notebooks.templates.classification","title":"Classification of Sentinel-2 imagery","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":3},{"level":1,"title":"Tutorials"},{"slug":"notebooks.tutorials.prereqs-tutorials","title":"Tutorials","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2},{"slug":"notebooks.tutorials.floodmapping","title":"Reverend Bayes updates our Belief in Flood Detection","description":"","date":"","thumbnail":"/eo-datascience-cookbook/build/1ab490d3ba1d22952fb4c45d205afb33.gif","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":3},{"level":1,"title":"References"},{"slug":"notebooks.references","title":"References","description":"","date":"","thumbnail":"","thumbnailOptimized":"","banner":"","bannerOptimized":"","tags":[],"level":2}]}}},"actionData":null,"errors":null},"future":{"unstable_dev":false,"unstable_postcss":false,"unstable_tailwind":false,"v2_errorBoundary":true,"v2_headers":true,"v2_meta":true,"v2_normalizeFormMethod":true,"v2_routeConvention":true}};</script><script type="module" async="">import "/eo-datascience-cookbook/build/manifest-2671EB98.js";
-import * as route0 from "/eo-datascience-cookbook/build/root-LMCDRB6W.js";
-import * as route1 from "/eo-datascience-cookbook/build/routes/$-SJYMRUNJ.js";
-window.__remixRouteModules = {"root":route0,"routes/$":route1};
+<!DOCTYPE html>
 
-import("/eo-datascience-cookbook/build/entry.client-UNPC4GT3.js");</script></body></html>
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>How to Cite This Cookbook &#8212; Earth Observation Data Science Cookbook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-pythia-theme.min.css?v=ba7ce088" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d0efeab3" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-T52X8HNYE8"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-T52X8HNYE8');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-T52X8HNYE8');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/how-to-cite';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Microwave Remote Sensing" href="courses/microwave-remote-sensing.html" />
+    <link rel="prev" title="Earth Observation Data Science Cookbook" href="../README.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="20 June 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div class="pst-scroll-pixel-helper"></div>
+    <header class="bd-header navbar navbar-dark navbar-expand-lg bg-dark fixed-top bd-navbar shadow" id="navbar-main">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://projectpythia.org">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/pythia_logo-white-rtext.svg" class="logo__image only-light" alt="Earth Observation Data Science Cookbook - Home"/>
+    <script>document.write(`<img src="../_static/pythia_logo-white-rtext.svg" class="logo__image only-dark" alt="Earth Observation Data Science Cookbook - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><ul id="navbar-main-elements" class="navbar-nav">
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org">Home</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://foundations.projectpythia.org">Foundations</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://cookbooks.projectpythia.org">Cookbooks</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/resource-gallery.html">Resources</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/index.html#join-us">Community</a>
+  </li>
+  
+  
+</ul></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ProjectPythia" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://www.youtube.com/channel/UCoZPBqJal5uKpO8ZiwzavCw" title="YouTube" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-youtube-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">YouTube</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+
+  
+</div>
+
+    </header>
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+        
+        
+        
+        <div class="bd-sidebar-primary bd-sidebar">
+          
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item"><ul id="navbar-main-elements" class="navbar-nav">
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org">Home</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://foundations.projectpythia.org">Foundations</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://cookbooks.projectpythia.org">Cookbooks</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/resource-gallery.html">Resources</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/index.html#join-us">Community</a>
+  </li>
+  
+  
+</ul></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ProjectPythia" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://www.youtube.com/channel/UCoZPBqJal5uKpO8ZiwzavCw" title="YouTube" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-youtube-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">YouTube</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Earth Observation Data Science Cookbook
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preamble</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">How to Cite This Cookbook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Courses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="courses/microwave-remote-sensing.html">Microwave Remote Sensing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="courses/microwave-remote-sensing/unit_01/01_in_class_exercise.html">Discover and Read SAR Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="courses/microwave-remote-sensing/unit_01/02_in_class_exercise.html">Unit Conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="courses/microwave-remote-sensing/unit_01/03_in_class_exercise.html">Backscattering Coefficients</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="courses/microwave-remote-sensing/unit_02/04_in_class_exercise.html">Datacubes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="courses/microwave-remote-sensing/unit_02/05_in_class_exercise.html">Wavelength and Polarization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="courses/microwave-remote-sensing/unit_02/06_in_class_exercise.html">Dielectric Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="courses/microwave-remote-sensing/unit_03/07_in_class_exercise.html">Speckle Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="courses/microwave-remote-sensing/unit_03/08_in_class_exercise.html">Interferograms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="courses/microwave-remote-sensing/unit_03/09_in_class_exercise.html">Phase Unwrapping</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="courses/environmental-remote-sensing.html">Environmental Remote Sensing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="courses/environmental-remote-sensing/mozambique-droughts.html">Remotely Sensed Droughts in Mozambique</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Templates</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="templates/prereqs-templates.html">Templates</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="templates/classification.html">Classification of Sentinel-2 imagery</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="tutorials/prereqs-tutorials.html">Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/floodmapping.html">Reverend Bayes updates our Belief in Flood Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/harmonic-parameters.html">Harmonic Parameters of Sentinel 1 Backscatter Time Series</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+        </div>
+
+        
+        <main id="main-content" class="bd-main" role="main">
+          
+
+            <div class="bd-content">
+
+              <div class="bd-article-container">
+
+                
+                  
+                  
+<div id="searchbox"></div>
+                  <article class="bd-article">
+                    
+  <section class="tex2jax_ignore mathjax_ignore" id="how-to-cite-this-cookbook">
+<h1>How to Cite This Cookbook<a class="headerlink" href="#how-to-cite-this-cookbook" title="Link to this heading"><i class="fas fa-link"></i></a></h1>
+<p>The material in this Project Pythia Cookbook is licensed for free and open consumption and reuse. All code is served under <a class="reference external" href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>, while all non-code content is licensed under <a class="reference external" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons BY 4.0 (CC BY 4.0)</a>. Effectively, this means you are free to share and adapt this material so long as you give appropriate credit to the Cookbook authors and the Project Pythia community.</p>
+<p>The source code for the book is <a class="reference external" href="https://github.com/TUW-GEO/eo-datascience-cookbook">released on GitHub</a> and archived on Zenodo. This DOI will always resolve to the latest release of the book source:</p>
+<p><a class="reference external" href="https://zenodo.org/badge/latestdoi/830421828"><img alt="DOI" src="https://zenodo.org/badge/830421828.svg" /></a></p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                  </article>
+
+                
+                
+
+                
+                
+                  <footer class="prev-next-footer">
+                    
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../README.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Earth Observation Data Science Cookbook</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="courses/microwave-remote-sensing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Microwave Remote Sensing</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                  </footer>
+                
+              </div>
+
+              
+              
+                
+              
+
+
+                
+                <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ProjectPythia/eo-datascience-cookbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ProjectPythia/eo-datascience-cookbook/edit/main/notebooks/how-to-cite.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ProjectPythia/eo-datascience-cookbook/issues/new?title=Issue%20on%20page%20%2Fnotebooks/how-to-cite.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/how-to-cite.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+            </div>
+
+            <footer class="bd-footer-content">
+              
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the <a href="https://projectpythia.org/">Project Pythia</a> Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 20 June 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+            </footer>
+
+        </main>
+    </div>
+  </div>
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+     
+  
+  
+  
+  
+    <div class="footer-items__start">
+      <div class="container-fluid m-0 p-0">
+      
+        <div class="footer-item">
+  <div class="container-fluid footer-logos">
+    <div class="container-xl">
+      <div class="row d-flex flex-wrap align-items-center">
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="NCAR" src="../_images/NSF-NCAR_Lockup-UCAR-Dark_102523.svg" style="width: 100%">
+        </div>
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="Unidata" src="../_images/Unidata_logo_horizontal_1200x300.svg" style="width: 100%">
+        </div>
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="UAlbany" src="../_images/UAlbany-A2-logo-purple-gold.svg" style="width: 100%">
+        </div>
+      </div>
+    </div>
+  </div></div>
+      
+        <div class="footer-item">  <div class="container-fluid footer-info">
+    <div class="container-xl">
+      <div class="d-flex justify-content-center">
+        <p class="py-1 m-0">
+            &copy;&nbsp;2025.
+        
+          By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
+        
+          Last updated on 20 June 2025.
+        </p>
+      </div>
+    </div>
+  </div></div>
+      
+        <div class="footer-item"><div class="container-fluid footer-extra">
+  <div class="container">
+    <center>
+      Theme by <a href="https://projectpythia.org">Project Pythia</a>. All code
+      in Pythia Cookbooks is licensed under
+      <a href="https://opensource.org/license/apache-2-0">Apache 2.0</a>. All
+      other non-code content is licensed under
+      <a href="https://creativecommons.org/licenses/by/4.0/">
+        Creative Commons BY 4.0 (CC BY 4.0)</a
+      >.
+    </center>
+    <br /><br />
+    <div class="row">
+      <p class="m-0">
+        <img
+          src="../_static/footer-logo-nsf.png"
+          style="float: left; width: 60px; height: 60px; margin-right: 1rem"
+        />
+        This material is based upon work supported by the National Science
+        Foundation under Grant Nos. 2026863 and 2026899. Any opinions, findings,
+        and conclusions or recommendations expressed in this material are those
+        of the author(s) and do not necessarily reflect the views of the
+        National Science Foundation.
+      </p>
+    </div>
+  </div>
+</div></div>
+      
+      </div>
+    </div>
+  
+
+  </footer>
+  </body>
+</html>
