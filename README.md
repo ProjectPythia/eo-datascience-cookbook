@@ -1,6 +1,6 @@
-<img src="notebooks/images/logos/tuw-geo_eodc_logo_horizontal.png" alt="tuw-geo-logo" width="500"/>
-
 # Earth Observation Data Science Cookbook
+
+<img src="notebooks/images/logos/tuw-geo_eodc_logo_horizontal.png" alt="tuw-geo-logo" width="500"/>
 
 [![nightly-build](https://github.com/ProjectPythia/eo-datascience-cookbook/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/ProjectPythia/eo-datascience-cookbook/actions/workflows/nightly-build.yaml)
 [![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/ProjectPythia/eo-datascience-cookbook/main?labpath=notebooks)
