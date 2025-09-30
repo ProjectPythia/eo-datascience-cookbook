@@ -1,45 +1,59 @@
-name: eo-datascience-cookbook-dev
+name: eo-datascience-cookbook
 channels:
   - conda-forge
 dependencies:
   - aiohttp
+  - black
   - bokeh
   - cartopy
   - cmcrameri
   - dask
   - datashader
+  - earthaccess
+  - ffmpeg
+  - fiona
+  - flake8-nb
   - folium
   - fsspec
   - geopandas
   - geoviews
   - graphviz
+  - hda
   - holoviews
+  - huggingface_hub
   - hvplot
+  - importlib-metadata==4.13.0
   - intake
   - intake-xarray
   - ipykernel
-  - jupyter
+  - isort
   - jupyter-book
-  - jupyterlab
-  - jupyterlab-myst
   - jupyter-cache
+  - jupyter-server-proxy
+  - jupyter==1.1.1
   - jupyter_bokeh
+  - jupyterlab==4.2.5
+  - jupyterlab_server==2.27.3
+  - jupyterlab_widgets==3.0.13
+  - lxml
   - mamba
   - matplotlib
-  - mystmd
   - nbformat
+  - nbqa
   - nbstripout
   - nodejs
   - numpy
   - odc-stac
+  - openpyxl
   - openssl
   - pandas
   - pip
   - pre-commit
+  - pyogrio
   - pyproj
   - pystac-client
   - pytest
-  - python=3.12
+  - python==3.13
   - rasterio
   - requests
   - rioxarray
@@ -50,7 +64,16 @@ dependencies:
   - snaphu
   - sphinx-pythia-theme
   - stackstac
+  - statsmodels
   - xarray
-  - zarr=2.18.4
+  - zarr==2.18.4
   - pip:
+      - ascat
+      - notebooks/courses/environmental-remote-sensing
+      - pdbufr
+      - pre-commit
+      - pynetcf
+      - pyswi
+      - python-dotenv
       - python-gitlab
+      - pyviz_comms==3.0.4
