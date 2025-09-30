@@ -102,7 +102,7 @@ need to follow this workflow:
    ```bash
    cd eo-datascience-cookbook
    ```
-1. Create and activate your conda environment from the ``environment.yml`` file
+1. Create and activate your conda environment from the `environment.yml` file
    ```bash
    conda env create -f environment.yml
    conda activate eo-datascience-cookbook-dev
