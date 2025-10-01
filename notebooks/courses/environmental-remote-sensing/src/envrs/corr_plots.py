@@ -36,7 +36,7 @@ def get_git_repo_name():
 def get_conda_env_path():
     conda_prefix = Path("../.conda_envs")
     result = subprocess.run(
-        ["conda", "info", "--json"],  # noqa
+        ["micromamba", "env", "list", "--json"],  # noqa
         check=False,
         capture_output=True,
         text=True,
@@ -122,7 +122,8 @@ def _plot_step_corr(df, var1, var2="copy", length=72):
             y1.plot(y=var1, ax=ax1)
             y2.shift(x).plot(y=var2, c="orange", ax=ax1)
             res = pd.Series(
-                smt.ccf(y1.values, y2.values, nlags=length), index=df.index[:length]
+                smt.ccf(y1.values, y2.values, nlags=length),
+                index=df.index[:length],  # noqa
             )
             plt.title(f"{var1} and {var2} at lag={x}")
 
