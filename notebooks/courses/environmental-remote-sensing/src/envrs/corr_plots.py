@@ -1,5 +1,14 @@
+"""Conda path solver for ffmpeg and functions to plot correlations.
+
+Returns
+-------
+        Conda path : str
+        Correlation animation plot: IPython.display
+        R-squared plot: matplotlib.pyplot
+
+"""
+
 import json
-import os
 import subprocess
 from pathlib import Path
 
@@ -14,29 +23,35 @@ from matplotlib.animation import FuncAnimation
 def get_git_repo_name():
     try:
         toplevel_path = subprocess.check_output(
-            ["git", "rev-parse", "--show-toplevel"],
+            ["git", "rev-parse", "--show-toplevel"],  # noqa
             stderr=subprocess.DEVNULL,
             text=True,
         ).strip()
 
-        return os.path.basename(toplevel_path)
+        return Path(toplevel_path).name
     except subprocess.CalledProcessError:
         return None
 
 
 def get_conda_env_path():
+    conda_prefix = Path("../.conda_envs")
     result = subprocess.run(
-        ["conda", "info", "--json"], check=False, capture_output=True, text=True
+        ["conda", "info", "--json"],  # noqa
+        check=False,
+        capture_output=True,
+        text=True,
     )
     info = json.loads(result.stdout)
     envs = [s for s in info.get("envs") if "environmental-remote-sensing" in s]
-    if get_git_repo_name() is None:
-        return envs[0]
-    # when cached on GH actions
-    if envs == []:
-        ROOT_GH_CACHE = "/home/runner/work/eo-datascience/eo-datascience/"
-        return ROOT_GH_CACHE + ".conda_envs/environmental-remote-sensing"
-    return [s for s in envs if f"{get_git_repo_name()}/.conda_envs" in s][0]
+    if len(envs) == 0:
+        # when cached on GH actions
+        root_gh_cache = "/home/runner/work/eo-datascience/eo-datascience/"
+        return root_gh_cache + ".conda_envs/environmental-remote-sensing"
+    if conda_prefix.is_dir():
+        conda_prefix_path = f"{get_git_repo_name()}/{conda_prefix.name}"
+        envs_with_prefix = [s for s in envs if conda_prefix_path in s]
+        return next(iter(envs_with_prefix), None)
+    return next(iter(envs), None)
 
 
 ffmpeg_path = Path(get_conda_env_path()) / Path("bin/ffmpeg")
@@ -61,8 +76,8 @@ def _plot_predicted_values(ax, df, variable, res, suffix):
     iv_l = pred_ols.summary_frame()["obs_ci_lower"]
     iv_u = pred_ols.summary_frame()["obs_ci_upper"]
     fitted = res.fittedvalues
-    x = df[variable].values
-    y = df["ndvi"].values
+    x = df[variable].to_numpy()
+    y = df["ndvi"].to_numpy()
     ax.set_title(f"{variable} {suffix}")
     ax.plot(x, y, "o", label="data", alpha=0.5)
     ax.plot(x, fitted, label="OLS")
