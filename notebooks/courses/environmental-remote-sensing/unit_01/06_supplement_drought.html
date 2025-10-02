@@ -1,0 +1,1127 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Access to Historic Soil Moisture Data &#8212; Earth Observation Data Science Cookbook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-pythia-theme.min.css?v=ba7ce088" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d0efeab3" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-T52X8HNYE8"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-T52X8HNYE8');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-T52X8HNYE8');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/courses/environmental-remote-sensing/unit_01/06_supplement_drought';</script>
+    <link rel="icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Templates" href="../../../templates/prereqs-templates.html" />
+    <link rel="prev" title="Access to Near Real Time Soil Moisture Data" href="05_supplement_drought.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="2 October 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div class="pst-scroll-pixel-helper"></div>
+    <header class="bd-header navbar navbar-dark navbar-expand-lg bg-dark fixed-top bd-navbar shadow" id="navbar-main">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://projectpythia.org">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/pythia_logo-white-rtext.svg" class="logo__image only-light" alt="Earth Observation Data Science Cookbook - Home"/>
+    <script>document.write(`<img src="../../../../_static/pythia_logo-white-rtext.svg" class="logo__image only-dark" alt="Earth Observation Data Science Cookbook - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><ul id="navbar-main-elements" class="navbar-nav">
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org">Home</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://foundations.projectpythia.org">Foundations</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://cookbooks.projectpythia.org">Cookbooks</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/resource-gallery.html">Resources</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/index.html#join-us">Community</a>
+  </li>
+  
+  
+</ul></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ProjectPythia" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://www.youtube.com/channel/UCoZPBqJal5uKpO8ZiwzavCw" title="YouTube" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-youtube-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">YouTube</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+        
+        
+        
+        <div class="bd-sidebar-primary bd-sidebar">
+          
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item"><ul id="navbar-main-elements" class="navbar-nav">
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org">Home</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://foundations.projectpythia.org">Foundations</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://cookbooks.projectpythia.org">Cookbooks</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/resource-gallery.html">Resources</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/index.html#join-us">Community</a>
+  </li>
+  
+  
+</ul></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ProjectPythia" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://www.youtube.com/channel/UCoZPBqJal5uKpO8ZiwzavCw" title="YouTube" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-youtube-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">YouTube</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../README.html">
+                    Earth Observation Data Science Cookbook
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preamble</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../how-to-cite.html">How to Cite This Cookbook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Courses</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../microwave-remote-sensing.html">Microwave Remote Sensing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_01/01_in_class_exercise.html">Discover and Read SAR Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_01/02_in_class_exercise.html">Unit Conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_01/03_in_class_exercise.html">Backscattering Coefficients</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_02/04_in_class_exercise.html">Datacubes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_02/05_in_class_exercise.html">Wavelength and Polarization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_02/06_in_class_exercise.html">Dielectric Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_03/07_in_class_exercise.html">Speckle Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_03/08_in_class_exercise.html">Interferograms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_03/09_in_class_exercise.html">Phase Unwrapping</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../environmental-remote-sensing.html">Environmental Remote Sensing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_handout_drought.html">Remotely Sensed Droughts in Mozambique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_handout_drought.html">Evaluating the Reliability of Remotely Sensed Soil Moisture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_handout_drought.html">Evaluating the Reliability of Remotely Sensed Droughts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_handout_drought.html">Leads and lags in Drought Dynamics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_supplement_drought.html">Access to Near Real Time Soil Moisture Data</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Access to Historic Soil Moisture Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Templates</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../templates/prereqs-templates.html">Templates</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../templates/classification.html">Classification of Sentinel-2 imagery</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../tutorials/prereqs-tutorials.html">Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/floodmapping.html">Reverend Bayes updates our Belief in Flood Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/harmonic-parameters.html">Harmonic Parameters of Sentinel 1 Backscatter Time Series</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+        </div>
+
+        
+        <main id="main-content" class="bd-main" role="main">
+          
+
+            <div class="bd-content">
+
+              <div class="bd-article-container">
+
+                
+                  
+                  
+<div id="searchbox"></div>
+                  <article class="bd-article">
+                    
+  <section class="tex2jax_ignore mathjax_ignore" id="access-to-historic-soil-moisture-data">
+<h1>Access to Historic Soil Moisture Data<a class="headerlink" href="#access-to-historic-soil-moisture-data" title="Link to this heading"><i class="fas fa-link"></i></a></h1>
+<p><strong>Downloading, Reading, and Working with Copernicus WEkEO Soil Water Index 12.5 km</strong></p>
+<p><img alt="Source: Copernicus WEkEO" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwekeo.copernicus.eu%2F_next%2Fimage%3Furl%3D%252Fpages%252Fhome%252Fwekeo-homepage-bg-desktop.webp%26w%3D3840%26q%3D75&amp;f=1&amp;nofb=1&amp;ipt=742bb5f4855344bc9114d980ee07a1baf8cb3be88d9d5d9ad734b027f4cad372" /></p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>In this notebook we will examine how one can obtain historic soil moisture data. We will do this by looking into the <a class="reference external" href="https://wekeo.copernicus.eu/">Copernicus WEkEO portal</a>.</p>
+</section>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.crs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccrs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hvplot.pandas</span>  <span class="c1"># noqa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">dotenv_values</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">envrs.download_path</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_url</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">envrs.ssm_cmap</span><span class="w"> </span><span class="kn">import</span> <span class="n">SSM_CMAP</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hda</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">Configuration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.lib.recfunctions</span><span class="w"> </span><span class="kn">import</span> <span class="n">unstructured_to_structured</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyswi.swi_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_swi_ts</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="copernicus-wekeo">
+<h2>Copernicus WEkEO<a class="headerlink" href="#copernicus-wekeo" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>The name WEkEO (pronounced [wikio]) refer to the four key organisations – EUMETSAT, ECMWF, Copernicus Programme, and Mercator Ocean International, which link to the broader user community (“WE”), with the purpose of knowledge advancement and sharing (“k”), focussing Earth and Environmental Observation (“EO”).</p>
+<p>The platform is a web-based service that helps people easily access and use Earth observation data. Its main goal is to make it simple for researchers, companies, and decision-makers to get the data they need and analyze it without needing advanced tools or a lot of technical knowledge.</p>
+</section>
+<section id="registration">
+<h2>Registration<a class="headerlink" href="#registration" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>Similarly to H SAF FTP server, we need to register as an user to make full use of WEkEO, although some features are available without an account. We can follow these steps:</p>
+<ol class="arabic simple">
+<li><p>Go to the <a class="reference external" href="https://wekeo.copernicus.eu/">homepage of WEkEO</a>.</p></li>
+</ol>
+<div style="text-align: center">
+<a href="https://wekeo.copernicus.eu/"><img width="600px" src="../images/home-wekeo-website.png"></a>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Click on top right <a class="reference external" href="https://identity.prod.wekeo2.eu/authenticationendpoint/login.do?client_id=kNvwaJ1xMQx3zk3Kort05m3D95ca&amp;amp;commonAuthCallerPath=%2Foauth2%2Fauthorize&amp;amp;forceAuth=false&amp;amp;passiveAuth=false&amp;amp;redirect_uri=https%3A%2F%2Fwekeo.copernicus.eu%2Flogin&amp;amp;response_type=code&amp;amp;scope=openid+email+profile+address&amp;amp;sessionDataKey=004043a7-c28f-41d7-bb80-65f072c60185&amp;amp;relyingParty=kNvwaJ1xMQx3zk3Kort05m3D95ca&amp;amp;type=oidc&amp;amp;sp=portallobelia&amp;amp;isSaaSApp=false&amp;amp;authenticators=BasicAuthenticator%3ALOCAL">“Login” button</a>, whereafter we select “Create an account” and fill out the form.</p></li>
+</ol>
+<div style="text-align: center">
+<a href="https://identity.prod.wekeo2.eu/authenticationendpoint/login.do?client_id=kNvwaJ1xMQx3zk3Kort05m3D95ca&commonAuthCallerPath=%2Foauth2%2Fauthorize&forceAuth=false&passiveAuth=false&redirect_uri=https%3A%2F%2Fwekeo.copernicus.eu%2Flogin&response_type=code&scope=openid+email+profile+address&sessionDataKey=004043a7-c28f-41d7-bb80-65f072c60185&relyingParty=kNvwaJ1xMQx3zk3Kort05m3D95ca&type=oidc&sp=portallobelia&isSaaSApp=false&authenticators=BasicAuthenticator%3ALOCAL"><img width="600px" src="../images/login-wekeo-website.png"></a>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Now we can login and, for example, look at the available data by clicking on “Go” in the “Data Catalogue” field in the middle of the screen.</p></li>
+</ol>
+<div style="text-align: center">
+<a href="https://wekeo.copernicus.eu/my-wekeo"><img width="600px" src="../images/portal-wekeo-website.png"></a>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>This shows us a data viewer where we can select from many different data products.</p></li>
+</ol>
+<div style="text-align: center">
+<a href="https://wekeo.copernicus.eu/data?view=catalogue"><img width="600px" src="../images/dataviewer-wekeo-website.png"></a>
+</div>
+<p>We will use the latter step to find the datasets we need and create query strings that we will use in a Python environment.</p>
+</section>
+<section id="harmonized-data-access">
+<h2>Harmonized Data Access<a class="headerlink" href="#harmonized-data-access" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>The Copernicus WEkEO platform offers a straightforward way to access data through its Application Programming Interface (API). APIs enable different programming languages to communicate and exchange information, effectively serving as a bridge for programs to utilize and extend each other’s functionalities. In the case of WEkEO, the API is called the Harmonized Data Access (HDA) API, which provides uniform access to the entire WEkEO catalogue, including subsetting and downloading capabilities. We will use the <a class="reference external" href="https://hda.readthedocs.io/en/latest/index.html">Python HDA client</a> to interact with this API.</p>
+<p>Install with either pip:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">hda</span>
+</pre></div>
+</div>
+<p>or conda:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">hda</span>
+</pre></div>
+</div>
+<p>Now, we need to authenticate using the <code class="docutils literal notranslate"><span class="pre">Configuration</span></code> object and provide your account’s username and password. As in the previous notebook, we will use a dotenv environment for this purpose. To utilize dotenv, you need to add your username to the <code class="docutils literal notranslate"><span class="pre">USER_WEKEO</span></code> variable and your password to the <code class="docutils literal notranslate"><span class="pre">PASS_WEKEO</span></code> variable in the <code class="docutils literal notranslate"><span class="pre">.env</span></code> file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conf</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span>
+    <span class="n">user</span><span class="o">=</span><span class="n">dotenv_values</span><span class="p">(</span><span class="s2">&quot;.env&quot;</span><span class="p">)[</span><span class="s2">&quot;USER_WEKEO&quot;</span><span class="p">],</span>
+    <span class="n">password</span><span class="o">=</span><span class="n">dotenv_values</span><span class="p">(</span><span class="s2">&quot;.env&quot;</span><span class="p">)[</span><span class="s2">&quot;PASS_WEKEO&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">hda_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">conf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="finding-soil-moisture-data">
+<h2>Finding Soil Moisture Data<a class="headerlink" href="#finding-soil-moisture-data" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>To find the SWI 12.5 km dataset in time series format, we have to return to the data viewer in the browser. Click in the “Layers” field on the <code class="docutils literal notranslate"><span class="pre">+</span></code> sign, and search for “Soil Water Index” in the “Free Text Search”.</p>
+<div style="text-align: center">
+<a href="https://wekeo.copernicus.eu/data?view=catalogue"><img width="600px" src="../images/swi-search-wekeo-website.png"></a>
+</div>
+<p>Then select the fourth dataset from the top; “Soil Water Index Time Series 2007-present (discrete global grid), global, daily - version 3”. Click on the download button in the layers field, which unfolds a form which allows subsetting of the data. We can enter here a bounding box (bbox) for Mozambique. Scroll further down and click on “Show API request(s)”.</p>
+<div style="text-align: center">
+<a href="https://wekeo.copernicus.eu/data?view=catalogue"><img width="600px" src="../images/api-swi-search-wekeo-website.png"></a>
+</div>
+<p>We will copy this query to our Python environment and use the <code class="docutils literal notranslate"><span class="pre">hda_client</span></code> to search for the files.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;dataset_id&quot;</span><span class="p">:</span> <span class="s2">&quot;EO:CLMS:DAT:CLMS_GLOBAL_SWI_12.5KM_V3_TIME-SERIES_NETCDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bbox&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="mf">30.315</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">27.49</span><span class="p">,</span>
+        <span class="mf">41.07</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">10.20</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;itemsPerPage&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="s2">&quot;startIndex&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">matches</span> <span class="o">=</span> <span class="n">hda_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you are content with the results then you can start the downloading process. Here we again create a directory to contain the downloaded files. The downloaded file with be in NetCDF format. NetCDF is a data formats that is tailored to multi-dimensional array-oriented scientific data with many options to label the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+
+<span class="n">local_path</span> <span class="o">=</span> <span class="s2">&quot;cgls_swi_12_5&quot;</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">local_path</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+    <span class="n">Path</span><span class="p">(</span><span class="n">local_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+
+<span class="n">matches</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">download_dir</span><span class="o">=</span><span class="n">local_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The downloaded data is projected on the same Fibonacci grid as the H SAF ASCAT 6.25 km surface soil moisture (see notebook 1). But the NetCDF data format requires another solution to read the data. Hence we will use another package to read the data. We use <a class="reference external" href="https://docs.xarray.dev/en/stable/index.html"><code class="docutils literal notranslate"><span class="pre">xarray</span></code></a>, which is optimised to work with multi-dimensional arrays. We will introduce this package into more detail later on. We will call the method <code class="docutils literal notranslate"><span class="pre">to_dataframe()</span></code> to turn the <code class="docutils literal notranslate"><span class="pre">xarray.Dataset</span></code> into a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_preprocess</span><span class="p">(</span><span class="n">ds</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Preprocess Dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ds: Xarray.Dataset</span>
+<span class="sd">        Individually loaded NetCDF</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Xarray.DataArray: _Data array containing only SWI from depth 10 cm</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ds</span><span class="o">.</span><span class="n">SWI_010</span>
+
+
+<span class="n">df_wekeo</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span>
+    <span class="s2">&quot;cgls_swi_12_5/*.nc&quot;</span><span class="p">,</span>
+    <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;h5netcdf&quot;</span><span class="p">,</span>
+    <span class="n">combine</span><span class="o">=</span><span class="s2">&quot;nested&quot;</span><span class="p">,</span>
+    <span class="n">parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">chunks</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">preprocess</span><span class="o">=</span><span class="n">_preprocess</span><span class="p">,</span>
+    <span class="n">join</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span><span class="p">,</span>
+    <span class="n">compat</span><span class="o">=</span><span class="s2">&quot;no_conflicts&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
+
+<span class="n">df_wekeo</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We use again <code class="docutils literal notranslate"><span class="pre">hvplot</span></code> to validate our search results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_wekeo</span><span class="o">.</span><span class="n">hvplot</span><span class="o">.</span><span class="n">points</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;lon&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;SWI_010&quot;</span><span class="p">,</span>
+    <span class="n">groupby</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span>
+    <span class="n">x_sampling</span><span class="o">=</span><span class="mf">0.16</span><span class="p">,</span>
+    <span class="n">y_sampling</span><span class="o">=</span><span class="mf">0.16</span><span class="p">,</span>
+    <span class="n">rasterize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span>
+    <span class="n">tiles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">SSM_CMAP</span><span class="p">,</span>
+    <span class="n">clim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="n">frame_width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">clabel</span><span class="o">=</span><span class="s2">&quot;Soil Water Index&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="what-is-the-soil-water-index">
+<h2>What is the Soil Water Index?<a class="headerlink" href="#what-is-the-soil-water-index" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>We have not yet talked about what the data exactly represents. The Soil Water Index is derived from surface soil moisture. The current dataset is derived from H SAF ASCAT 12.5 km and represents modelled approximation of soil water content at deeper layers of the soil. In the above plot we selected moisture content at a 10 cm depth interval. Remember that ASCAT can only probe the surface of soils.</p>
+<p>The Soil Water Index provides a measure of how wet or dry the soil is over a specific area, ranging between 0 and 1. It is often derived using a combination of satellite data and modeling techniques. One commonly used approach to derive the SWI is through the TU Wien model<a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<p>The equation to derive the SWI typically involves a convolution of surface soil moisture observations with an exponential filter. This process helps in estimating the root-zone soil moisture, which is more relevant for agricultural and hydrological applications. The general form of the equation can be described as follows:</p>
+<div class="math notranslate nohighlight">
+\[ \text{SWI} = \frac{\sum_{i=0}^{n} w_i \cdot SSM_i}{\sum_{i=0}^{n} w_i} \]</div>
+<p>Where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\text{SWI} &amp;\quad \text{: Soil Water Index} \\
+\text{SSM}_i &amp;\quad \text{: surface soil moisture at time step} i \\
+w_i &amp;\quad \text{: the weight assigned to the surface soil moisture at time step} i \\
+n &amp;\quad \text{: number of time steps considered in the convolution}
+\end{aligned}
+\end{split}\]</div>
+<p>The weights <span class="math notranslate nohighlight">\(w_i\)</span> are often determined using an exponential decay function, which gives more importance to recent observations. The exponential decay function can be expressed as:</p>
+<div class="math notranslate nohighlight">
+\[ w_i = e^{-\frac{t_i}{T}} \]</div>
+<p>Where:
+$<span class="math notranslate nohighlight">\(
+\begin{aligned}
+t_i &amp;\quad \text{: the time difference between the current time step and the time step} i \\
+T  &amp;\quad \text{: a characteristic time scale that determines the rate of decay of the weights}
+\end{aligned}
+\)</span>$</p>
+<p>This approach allows the SWI to reflect the cumulative effect of surface soil moisture over a period, providing a more stable and representative measure of the soil moisture conditions in the root zone.</p>
+<p>One will observe that the SWI at depth is often less variable (more stable) than contemporaneous surface soil moisture with only delayed and dampened responses to external forcing (e.g. precipitation). We can visualize this by applying the SWI algorithm to one of the five timeseries introduced in notebook 1.</p>
+<p>Let’s select only the year 2024 from the H SAF ASCAT 6.25 km surface soil moisture for Buzi:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sm_ts</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+        <span class="n">make_url</span><span class="p">(</span><span class="s2">&quot;ascat-6_25_ssm_timeseries.csv&quot;</span><span class="p">),</span>
+        <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span>
+        <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;2024&quot;</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">sm_ts</span> <span class="o">=</span> <span class="n">sm_ts</span><span class="p">[</span><span class="n">sm_ts</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Buzi&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="n">sm_ts</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can use the TU Wien developed package <code class="docutils literal notranslate"><span class="pre">pyswi</span></code> to calculate time series SWI. First we have to prepare the <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays for the SSM and Julian time stamps<a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, like so:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">swi_jd</span> <span class="o">=</span> <span class="n">sm_ts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">sm</span> <span class="o">=</span> <span class="n">sm_ts</span><span class="p">[</span><span class="s2">&quot;surface_soil_moisture&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+<span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">([(</span><span class="s2">&quot;sm_jd&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;sm&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)])</span>
+<span class="n">ssm_ts</span> <span class="o">=</span> <span class="n">unstructured_to_structured</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">swi_jd</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">sm</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can calculate the SWI. Here we calculate it for depth intervals of 5, 50, and 100 cm.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">swi_ts</span><span class="p">,</span> <span class="n">gain_out</span> <span class="o">=</span> <span class="n">calc_swi_ts</span><span class="p">(</span><span class="n">ssm_ts</span><span class="p">,</span> <span class="n">swi_jd</span><span class="p">,</span> <span class="n">t_value</span><span class="o">=</span><span class="n">t_value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After which, we convert the <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays back to a pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> and merge it with the original SSM data. This requires the Julian time steps to be converted back to a normal pandas <code class="docutils literal notranslate"><span class="pre">datetime</span></code> type.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">swi_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">swi_ts</span><span class="p">)</span>
+<span class="n">swi_ts</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">swi_ts</span><span class="p">[</span><span class="s2">&quot;swi_jd&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">2440587.5</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;D&quot;</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span><span class="n">sm_ts</span><span class="p">,</span> <span class="n">swi_ts</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">),</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we plot the results where see the lagged and dampened response of soil moisture content with increasing depth.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span><span class="o">.</span><span class="n">hvplot</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;surface_soil_moisture&quot;</span><span class="p">,</span> <span class="s2">&quot;swi_5&quot;</span><span class="p">,</span> <span class="s2">&quot;swi_50&quot;</span><span class="p">,</span> <span class="s2">&quot;swi_100&quot;</span><span class="p">],</span> <span class="n">frame_width</span><span class="o">=</span><span class="mi">800</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>W. Wagner, Lemoine, G., Rott, H., 1999, A Method for Estimating Soil Moisture from ERS Scatterometer and Soil Data, Remote Sensing of Environment, Volume 70-2, pp. 191-207, doi: <a class="reference external" href="https://doi.org/10.1016/S0034-4257(99)00036-X">S0034-4257(99)00036-X</a></p>
+</aside>
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Julian time stamps, also known as Julian dates, are continuous counts of days and fractions of days since a specific starting point, commonly used in astronomy and scientific applications to measure time intervals precisely.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/courses/environmental-remote-sensing/unit_01"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                  </article>
+
+                
+                
+
+                
+                
+                  <footer class="prev-next-footer">
+                    
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="05_supplement_drought.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Access to Near Real Time Soil Moisture Data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../../templates/prereqs-templates.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Templates</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                  </footer>
+                
+              </div>
+
+              
+              
+                
+                  <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#copernicus-wekeo">Copernicus WEkEO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#registration">Registration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harmonized-data-access">Harmonized Data Access</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-soil-moisture-data">Finding Soil Moisture Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-soil-water-index">What is the Soil Water Index?</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+                
+              
+
+
+                
+                <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://binder.projectpythia.org/v2/gh/ProjectPythia/eo-datascience-cookbook/main?urlpath=lab/tree/notebooks/courses/environmental-remote-sensing/unit_01/06_supplement_drought.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ProjectPythia/eo-datascience-cookbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ProjectPythia/eo-datascience-cookbook/edit/main/notebooks/courses/environmental-remote-sensing/unit_01/06_supplement_drought.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ProjectPythia/eo-datascience-cookbook/issues/new?title=Issue%20on%20page%20%2Fnotebooks/courses/environmental-remote-sensing/unit_01/06_supplement_drought.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../_sources/notebooks/courses/environmental-remote-sensing/unit_01/06_supplement_drought.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+            </div>
+
+            <footer class="bd-footer-content">
+              
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the <a href="https://projectpythia.org/">Project Pythia</a> Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2 October 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+            </footer>
+
+        </main>
+    </div>
+  </div>
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+     
+  
+  
+  
+  
+    <div class="footer-items__start">
+      <div class="container-fluid m-0 p-0">
+      
+        <div class="footer-item">
+  <div class="container-fluid footer-logos">
+    <div class="container-xl">
+      <div class="row d-flex flex-wrap align-items-center">
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="NCAR" src="../../../../_images/NSF-NCAR_Lockup-UCAR-Dark_102523.svg" style="width: 100%">
+        </div>
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="Unidata" src="../../../../_images/Unidata_logo_horizontal_1200x300.svg" style="width: 100%">
+        </div>
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="UAlbany" src="../../../../_images/UAlbany-A2-logo-purple-gold.svg" style="width: 100%">
+        </div>
+      </div>
+    </div>
+  </div></div>
+      
+        <div class="footer-item">  <div class="container-fluid footer-info">
+    <div class="container-xl">
+      <div class="d-flex justify-content-center">
+        <p class="py-1 m-0">
+            &copy;&nbsp;2025.
+        
+          By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
+        
+          Last updated on 2 October 2025.
+        </p>
+      </div>
+    </div>
+  </div></div>
+      
+        <div class="footer-item"><div class="container-fluid footer-extra">
+  <div class="container">
+    <center>
+      Theme by <a href="https://projectpythia.org">Project Pythia</a>. All code
+      in Pythia Cookbooks is licensed under
+      <a href="https://opensource.org/license/apache-2-0">Apache 2.0</a>. All
+      other non-code content is licensed under
+      <a href="https://creativecommons.org/licenses/by/4.0/">
+        Creative Commons BY 4.0 (CC BY 4.0)</a
+      >.
+    </center>
+    <br /><br />
+    <div class="row">
+      <p class="m-0">
+        <img
+          src="../../../../_static/footer-logo-nsf.png"
+          style="float: left; width: 60px; height: 60px; margin-right: 1rem"
+        />
+        This material is based upon work supported by the National Science
+        Foundation under Grant Nos. 2026863 and 2026899. Any opinions, findings,
+        and conclusions or recommendations expressed in this material are those
+        of the author(s) and do not necessarily reflect the views of the
+        National Science Foundation.
+      </p>
+    </div>
+  </div>
+</div></div>
+      
+      </div>
+    </div>
+  
+
+  </footer>
+  </body>
+</html>

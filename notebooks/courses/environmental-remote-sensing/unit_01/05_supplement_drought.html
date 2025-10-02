@@ -1,0 +1,1024 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Access to Near Real Time Soil Moisture Data &#8212; Earth Observation Data Science Cookbook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-pythia-theme.min.css?v=ba7ce088" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d0efeab3" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-T52X8HNYE8"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-T52X8HNYE8');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-T52X8HNYE8');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/courses/environmental-remote-sensing/unit_01/05_supplement_drought';</script>
+    <link rel="icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Access to Historic Soil Moisture Data" href="06_supplement_drought.html" />
+    <link rel="prev" title="Leads and lags in Drought Dynamics" href="04_handout_drought.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="2 October 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div class="pst-scroll-pixel-helper"></div>
+    <header class="bd-header navbar navbar-dark navbar-expand-lg bg-dark fixed-top bd-navbar shadow" id="navbar-main">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+     
+  
+
+<a class="navbar-brand logo" href="https://projectpythia.org">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/pythia_logo-white-rtext.svg" class="logo__image only-light" alt="Earth Observation Data Science Cookbook - Home"/>
+    <script>document.write(`<img src="../../../../_static/pythia_logo-white-rtext.svg" class="logo__image only-dark" alt="Earth Observation Data Science Cookbook - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><ul id="navbar-main-elements" class="navbar-nav">
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org">Home</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://foundations.projectpythia.org">Foundations</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://cookbooks.projectpythia.org">Cookbooks</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/resource-gallery.html">Resources</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/index.html#join-us">Community</a>
+  </li>
+  
+  
+</ul></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ProjectPythia" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://www.youtube.com/channel/UCoZPBqJal5uKpO8ZiwzavCw" title="YouTube" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-youtube-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">YouTube</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+        
+        
+        
+        <div class="bd-sidebar-primary bd-sidebar">
+          
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item"><ul id="navbar-main-elements" class="navbar-nav">
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org">Home</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://foundations.projectpythia.org">Foundations</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://cookbooks.projectpythia.org">Cookbooks</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/resource-gallery.html">Resources</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/index.html#join-us">Community</a>
+  </li>
+  
+  
+</ul></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/ProjectPythia" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://www.youtube.com/channel/UCoZPBqJal5uKpO8ZiwzavCw" title="YouTube" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-youtube-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">YouTube</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../README.html">
+                    Earth Observation Data Science Cookbook
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preamble</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../how-to-cite.html">How to Cite This Cookbook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Courses</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../microwave-remote-sensing.html">Microwave Remote Sensing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_01/01_in_class_exercise.html">Discover and Read SAR Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_01/02_in_class_exercise.html">Unit Conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_01/03_in_class_exercise.html">Backscattering Coefficients</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_02/04_in_class_exercise.html">Datacubes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_02/05_in_class_exercise.html">Wavelength and Polarization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_02/06_in_class_exercise.html">Dielectric Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_03/07_in_class_exercise.html">Speckle Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_03/08_in_class_exercise.html">Interferograms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../microwave-remote-sensing/unit_03/09_in_class_exercise.html">Phase Unwrapping</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../environmental-remote-sensing.html">Environmental Remote Sensing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_handout_drought.html">Remotely Sensed Droughts in Mozambique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_handout_drought.html">Evaluating the Reliability of Remotely Sensed Soil Moisture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_handout_drought.html">Evaluating the Reliability of Remotely Sensed Droughts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_handout_drought.html">Leads and lags in Drought Dynamics</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Access to Near Real Time Soil Moisture Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_supplement_drought.html">Access to Historic Soil Moisture Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Templates</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../templates/prereqs-templates.html">Templates</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../templates/classification.html">Classification of Sentinel-2 imagery</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../tutorials/prereqs-tutorials.html">Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/floodmapping.html">Reverend Bayes updates our Belief in Flood Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/harmonic-parameters.html">Harmonic Parameters of Sentinel 1 Backscatter Time Series</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+        </div>
+
+        
+        <main id="main-content" class="bd-main" role="main">
+          
+
+            <div class="bd-content">
+
+              <div class="bd-article-container">
+
+                
+                  
+                  
+<div id="searchbox"></div>
+                  <article class="bd-article">
+                    
+  <section class="tex2jax_ignore mathjax_ignore" id="access-to-near-real-time-soil-moisture-data">
+<h1>Access to Near Real Time Soil Moisture Data<a class="headerlink" href="#access-to-near-real-time-soil-moisture-data" title="Link to this heading"><i class="fas fa-link"></i></a></h1>
+<p><strong>Downloading, Reading and Working with H SAF Surface Soil Moisture 6.25 km</strong></p>
+<p><img alt="Storm Filipo over Mozambique (Source: H SAF Website)" src="https://www-cdn.eumetsat.int/files/2024-03/Filipo.png" /></p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>This notebook demonstrates how to access the H SAF soil moisture products in near real-time, as utilized in previous notebooks.</p>
+</section>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.crs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccrs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hvplot.pandas</span>  <span class="c1"># noqa</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ascat.download.interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">hsaf_download</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ascat.swath</span><span class="w"> </span><span class="kn">import</span> <span class="n">SwathGridFiles</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">dotenv_values</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">envrs.ssm_cmap</span><span class="w"> </span><span class="kn">import</span> <span class="n">SSM_CMAP</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="h-saf">
+<h2>H SAF<a class="headerlink" href="#h-saf" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>H SAF, the Satellite Application Facility on Support to Operational Hydrology and Water Management, is part of EUMETSAT, the ‘European Organisation for the Exploitation of Meteorological Satellites’ headquartered in Darmstadt, Germany. EUMETSAT consists of 30 European Member states and operates both geostationary satellites (Meteosat) and polar-orbiting satellites (Metop), the latter of which carry the ASCAT sensors used for soil moisture retrieval. These missions are crucial for weather forecasting and significantly contribute to environmental and climate change monitoring. H SAF aims to disseminate satellite-derived products useful for operational hydrology, including precipitation, snow cover, and soil moisture. They ensure that these products are accurate through rigorous validation and are delivered to users in a timely manner. All these products are freely available.</p>
+</section>
+<section id="registration">
+<h2>Registration<a class="headerlink" href="#registration" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>H SAF has an <a class="reference external" href="https://en.wikipedia.org/wiki/FTP_server">FTP server</a> for users to download near real time data products. Before you can start downloading data products, one need to register to become an H SAF user. This is relatively easy when following these steps:</p>
+<ol class="arabic simple">
+<li><p>Go to <a class="reference external" href="https://hsaf.meteoam.it/">H SAF homepage</a>.</p></li>
+</ol>
+<div style="text-align: center">
+<a href="https://hsaf.meteoam.it/"><img width="600px" src="../images/home-hsaf-website-r.png"></a>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Click on the lock icon at the top right of the screen and select “Register”.</p></li>
+</ol>
+<div style="text-align: center">
+<a href="https://hsaf.meteoam.it/User/Register"><img width="600px" src="../images/register-hsaf-website.png"></a>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>After completing the registration you can login on the webpage.</p></li>
+</ol>
+<div style="text-align: center">
+<a href="https://hsaf.meteoam.it/User/Login"><img width="600px" src="../images/login-hsaf-website-r.png"></a>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Now you browse the data products; for example, <a class="reference external" href="https://hsaf.meteoam.it/Products/ProductsList?type=soil_moisture">ASCAT SSM NRT 6.25 km (H122)</a></p></li>
+</ol>
+<div style="text-align: center">
+<a href="https://hsaf.meteoam.it/Products/ProductsList?type=soil_moisture"><img width="600px" src="../images/data-hsaf-website.png"></a>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>You can then click on “Download”. This will provide you with the URL of the FTP server for downloading.</p></li>
+</ol>
+</section>
+<section id="downloading">
+<h2>Downloading<a class="headerlink" href="#downloading" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>Now that we have the address for finding the soil moisture data products in the form of an URL, we need to think about a method to download the data. In other words we need a client, which requests the resources from the H SAF FTP servers. One way to download the data would be to use a client with a graphical user interface, like <a class="reference external" href="https://filezilla-project.org/">FileZilla</a>.</p>
+<p>Of course, we will look into a “Pythonic” way to download the data. For this we use the <a class="reference external" href="https://github.com/TUW-GEO/ascat"><code class="docutils literal notranslate"><span class="pre">ascat</span></code></a> package developed by the TU Wien. You can pip install this package from the Python Package Index (<a class="reference external" href="https://pypi.org/">PyPi</a>), like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">ascat</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">ascat</span></code> package has a download interface <code class="docutils literal notranslate"><span class="pre">hsaf_download</span></code>. The interface needs the following information; a local path for saving the downloaded data, a remote path to locate the H SAF data products on the FTP server, and a start and end datetime for the query. Here we show how to download the H SAF SSM 6.25 km product for the last 30 days from the time of running this notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">local_path</span> <span class="o">=</span> <span class="s2">&quot;h130&quot;</span>
+<span class="n">remote_path</span> <span class="o">=</span> <span class="s2">&quot;h130/h130_cur_mon_data&quot;</span>
+<span class="n">start_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>  <span class="c1"># noqa: DTZ005</span>
+<span class="n">end_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>  <span class="c1"># noqa: DTZ005</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You also need to provide your credentials to authenticate with the FTP server, which you obtained when registering as an user (see above). It is always a good practice to “not” store your credentials, tokens, and other secrets in scripts or notebooks. Hence, we will use a dotenv (<code class="docutils literal notranslate"><span class="pre">.env</span></code>). Dotenv is a tool that helps load environment variables from an <code class="docutils literal notranslate"><span class="pre">.env</span></code>-file into your application’s environment, allowing you to manage configuration settings separately from your code.</p>
+<p>Before you can use dotenv, you will have to create the <code class="docutils literal notranslate"><span class="pre">.env</span></code>-file manually or with the command line, like so</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">touch</span> <span class="o">.</span><span class="n">env</span>
+</pre></div>
+</div>
+<p>Open the file and write your email at the location indicated with <code class="docutils literal notranslate"><span class="pre">&lt;your_email_here&gt;</span></code> and your password here: <code class="docutils literal notranslate"><span class="pre">&lt;your_password_here&gt;</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">USER_HSAF</span><span class="o">=&lt;</span><span class="n">your_email_here</span><span class="o">&gt;</span>
+<span class="n">PASS_HSAF</span><span class="o">=&lt;</span><span class="n">your_password_here</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Now we can load the credentials from the dotenv and pass this information to the H SAF FTP server with <code class="docutils literal notranslate"><span class="pre">hsaf_download</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">credentials</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">dotenv_values</span><span class="p">(</span><span class="s2">&quot;.env&quot;</span><span class="p">)[</span><span class="s2">&quot;USER_HSAF&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">dotenv_values</span><span class="p">(</span><span class="s2">&quot;.env&quot;</span><span class="p">)[</span><span class="s2">&quot;PASS_HSAF&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the following code cell, we create the location to store the downloaded data and start the download.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">local_path</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+    <span class="n">Path</span><span class="p">(</span><span class="n">local_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+
+<span class="n">hsaf_download</span><span class="p">(</span><span class="n">credentials</span><span class="p">,</span> <span class="n">remote_path</span><span class="p">,</span> <span class="n">local_path</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="swath-vs-cell-format-soil-moisture-data">
+<h2>Swath vs. Cell Format Soil Moisture Data<a class="headerlink" href="#swath-vs-cell-format-soil-moisture-data" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>The data provided by the near real time service is provided in “swath” format as opposed to the “cell” format with which we worked before. A swath is the area on the Earth’s surface that is observed or imaged by a satellite or an airborne sensor during a single pass. This is often visualized as a strip or a corridor of data collected as the satellite or aircraft moves along its path (see figure below).</p>
+<p><img alt="Distinctive double strips when ASCAT scans the Earth's surface (Source: ESA) " src="https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2006/02/ascat_s_two_550_km-wide_swaths/9893928-2-eng-GB/ASCAT_s_two_550_km-wide_swaths_article.jpg" /></p>
+<p>Each format has its unique characteristics and implications for Earth observation research:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Aspect</p></th>
+<th class="head"><p>Swath Format</p></th>
+<th class="head"><p>Cell Format</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Definition</strong></p></td>
+<td><p>Data collected in continuous strips</p></td>
+<td><p>Data collected and presented in gridded format</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Coverage</strong></p></td>
+<td><p>Broad spatial coverage in a single pass</p></td>
+<td><p>Localized and detailed view</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Temporal Resolution</strong></p></td>
+<td><p>High, frequent updates over large areas</p></td>
+<td><p>Lower, depends on satellite revisit time</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Data Processing</strong></p></td>
+<td><p>Complex, handles continuous data</p></td>
+<td><p>Straightforward, each cell is independent</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Applications</strong></p></td>
+<td><p>Large-scale hydrological studies, weather forecasting, climate monitoring</p></td>
+<td><p>Precision agriculture, local hydrological studies, detailed environmental monitoring</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In summary, the choice between swath and cell formats depends on the specific requirements of the Earth observation research. Swath data is advantageous for broad, frequent coverage, while cell data offers detailed, localized information.</p>
+<p>Let’s have a look at the downloaded swath data. For this we can use again the <code class="docutils literal notranslate"><span class="pre">ascat</span></code> package and the <code class="docutils literal notranslate"><span class="pre">SwathGridFiles</span></code> class where point to the downloaded data and provide the product id <code class="docutils literal notranslate"><span class="pre">&quot;H130&quot;</span></code>. We can then read the data, which return the ASCAT 6.25 km data in swath format as a <code class="docutils literal notranslate"><span class="pre">Pandas.DataFrame</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h130_nrt</span> <span class="o">=</span> <span class="n">SwathGridFiles</span><span class="o">.</span><span class="n">from_product_id</span><span class="p">(</span><span class="n">local_path</span><span class="p">,</span> <span class="n">product_id</span><span class="o">=</span><span class="s2">&quot;H130&quot;</span><span class="p">)</span>
+<span class="n">df_h130</span> <span class="o">=</span> <span class="n">h130_nrt</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">date_range</span><span class="o">=</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">))</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
+<span class="n">df_h130</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-quality-flags">
+<h2>Data Quality Flags<a class="headerlink" href="#data-quality-flags" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> now includes additional columns when compared with earlier notebooks. These columns indicate that the data is accompanied by quality flags to ensure the reliability and accuracy of soil moisture estimates for specific studies and areas of interest. Users have to use these flags to filter out unreliable data to maintain an accurate overview of the conditions.</p>
+<p>For the data used in these notebooks, specific flags and threshold values were applied: “topographic_complexity” and “wetland_fraction” were set below 20%. This is because the backscattering of microwaves from topographically varied terrain, such as hills, valleys, and slopes, creates surface roughness that can scatter the microwave signal in multiple directions. This scattering leads to a more complex and less predictable backscatter signal. Additionally, wetland backscattering signals can be dominated by water, resulting in biased soil moisture retrievals. This bias can be further compounded by microwaves bouncing off water surfaces into reed belts and other vegetation along the shores of water bodies. To ensure sufficient variation in the backscatter signal, the sensitivity flag is set to more than 1 dB (decibel), allowing the retrieval algorithms to separate soil moisture contributions from noise. It is expected that in Mozambique, vegetation attenuation of microwaves can create unfavorable conditions for soil moisture retrievals due to this mechanism.</p>
+<p><em>There are many more processing and quality flags. Check the <a class="reference external" href="https://user.eumetsat.int/s3/eup-strapi-media/pdf_soilmoisture_prod_hb_1d71a1af97.pdf">ASCAT Soil Moisture User Manual</a> for the other flags and determine if they are important for your requirements.</em></p>
+<p>By applying these quality flags and understanding their implications, users can better interpret the soil moisture data and ensure that their analyses are based on reliable and accurate information. This approach helps mitigate the potential biases introduced by topographic complexity and wetland influences, ultimately leading to more robust and informative soil moisture retrievals.</p>
+</section>
+<section id="selecting-a-region-of-interest">
+<h2>Selecting a Region of Interest<a class="headerlink" href="#selecting-a-region-of-interest" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>We will plot the obtained soil moisture data without applying any filters. We use <code class="docutils literal notranslate"><span class="pre">hvplot</span></code>, as we typically do. It is evident that the “swath” format data provides global coverage. However, this format makes it more challenging to directly download data specific to your area of interest, such as Mozambique. To target a specific region before downloading the data, one needs to understand the intersection of the swath geometry with the area of interest at any given time. This is beyond the scope of this course. At present you can download the whole swaths and then extract the region of interest.</p>
+<p><em>Note, that one can stack swath format data to obtain cell format data. This functionality is available in the <code class="docutils literal notranslate"><span class="pre">ascat</span></code> package, but this is beyond the scope of this notebook.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_h130</span><span class="o">.</span><span class="n">hvplot</span><span class="o">.</span><span class="n">points</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;surface_soil_moisture&quot;</span><span class="p">,</span>
+    <span class="n">x_sampling</span><span class="o">=</span><span class="mf">0.16</span><span class="p">,</span>
+    <span class="n">y_sampling</span><span class="o">=</span><span class="mf">0.16</span><span class="p">,</span>
+    <span class="n">rasterize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span>
+    <span class="n">tiles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">SSM_CMAP</span><span class="p">,</span>
+    <span class="n">clim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="n">frame_width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">clabel</span><span class="o">=</span><span class="s2">&quot;Surface soil moisture (%)&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/courses/environmental-remote-sensing/unit_01"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                  </article>
+
+                
+                
+
+                
+                
+                  <footer class="prev-next-footer">
+                    
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="04_handout_drought.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Leads and lags in Drought Dynamics</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="06_supplement_drought.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Access to Historic Soil Moisture Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                  </footer>
+                
+              </div>
+
+              
+              
+                
+                  <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#h-saf">H SAF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#registration">Registration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#downloading">Downloading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#swath-vs-cell-format-soil-moisture-data">Swath vs. Cell Format Soil Moisture Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-quality-flags">Data Quality Flags</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-a-region-of-interest">Selecting a Region of Interest</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+                
+              
+
+
+                
+                <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://binder.projectpythia.org/v2/gh/ProjectPythia/eo-datascience-cookbook/main?urlpath=lab/tree/notebooks/courses/environmental-remote-sensing/unit_01/05_supplement_drought.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ProjectPythia/eo-datascience-cookbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ProjectPythia/eo-datascience-cookbook/edit/main/notebooks/courses/environmental-remote-sensing/unit_01/05_supplement_drought.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ProjectPythia/eo-datascience-cookbook/issues/new?title=Issue%20on%20page%20%2Fnotebooks/courses/environmental-remote-sensing/unit_01/05_supplement_drought.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../_sources/notebooks/courses/environmental-remote-sensing/unit_01/05_supplement_drought.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+            </div>
+
+            <footer class="bd-footer-content">
+              
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the <a href="https://projectpythia.org/">Project Pythia</a> Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on 2 October 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+            </footer>
+
+        </main>
+    </div>
+  </div>
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+     
+  
+  
+  
+  
+    <div class="footer-items__start">
+      <div class="container-fluid m-0 p-0">
+      
+        <div class="footer-item">
+  <div class="container-fluid footer-logos">
+    <div class="container-xl">
+      <div class="row d-flex flex-wrap align-items-center">
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="NCAR" src="../../../../_images/NSF-NCAR_Lockup-UCAR-Dark_102523.svg" style="width: 100%">
+        </div>
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="Unidata" src="../../../../_images/Unidata_logo_horizontal_1200x300.svg" style="width: 100%">
+        </div>
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="UAlbany" src="../../../../_images/UAlbany-A2-logo-purple-gold.svg" style="width: 100%">
+        </div>
+      </div>
+    </div>
+  </div></div>
+      
+        <div class="footer-item">  <div class="container-fluid footer-info">
+    <div class="container-xl">
+      <div class="d-flex justify-content-center">
+        <p class="py-1 m-0">
+            &copy;&nbsp;2025.
+        
+          By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
+        
+          Last updated on 2 October 2025.
+        </p>
+      </div>
+    </div>
+  </div></div>
+      
+        <div class="footer-item"><div class="container-fluid footer-extra">
+  <div class="container">
+    <center>
+      Theme by <a href="https://projectpythia.org">Project Pythia</a>. All code
+      in Pythia Cookbooks is licensed under
+      <a href="https://opensource.org/license/apache-2-0">Apache 2.0</a>. All
+      other non-code content is licensed under
+      <a href="https://creativecommons.org/licenses/by/4.0/">
+        Creative Commons BY 4.0 (CC BY 4.0)</a
+      >.
+    </center>
+    <br /><br />
+    <div class="row">
+      <p class="m-0">
+        <img
+          src="../../../../_static/footer-logo-nsf.png"
+          style="float: left; width: 60px; height: 60px; margin-right: 1rem"
+        />
+        This material is based upon work supported by the National Science
+        Foundation under Grant Nos. 2026863 and 2026899. Any opinions, findings,
+        and conclusions or recommendations expressed in this material are those
+        of the author(s) and do not necessarily reflect the views of the
+        National Science Foundation.
+      </p>
+    </div>
+  </div>
+</div></div>
+      
+      </div>
+    </div>
+  
+
+  </footer>
+  </body>
+</html>
