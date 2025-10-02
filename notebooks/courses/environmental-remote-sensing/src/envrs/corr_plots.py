@@ -9,6 +9,8 @@ Returns
 """
 
 import json
+import os
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -19,39 +21,43 @@ import statsmodels.tsa.stattools as smt
 from IPython.display import HTML
 from matplotlib.animation import FuncAnimation
 
+CONDA_PATH = Path("envs", "environmental-remote-sensing")
 
-def get_git_repo_name():
-    try:
-        toplevel_path = subprocess.check_output(
-            ["git", "rev-parse", "--show-toplevel"],  # noqa
-            stderr=subprocess.DEVNULL,
-            text=True,
-        ).strip()
 
-        return Path(toplevel_path).name
-    except subprocess.CalledProcessError:
-        return None
+def get_base(solver: str):
+    conda_prefix = os.environ.get("CONDA_PREFIX")
+    if conda_prefix:
+        return conda_prefix
+
+    conda_exe = shutil.which(solver)
+    if conda_exe:
+        try:
+            result = subprocess.run(
+                [conda_exe, "info", "--json"],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            info = json.loads(result.stdout)
+            envs = [s for s in info.get("envs") if "environmental-remote-sensing" in s]
+            return next(iter(envs), None)
+        except (subprocess.CalledProcessError, json.JSONDecodeError, KeyError):
+            pass
+
+    return None
 
 
 def get_conda_env_path():
-    conda_prefix = Path("../.conda_envs")
-    result = subprocess.run(
-        ["micromamba", "env", "list", "--json"],  # noqa
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    info = json.loads(result.stdout)
-    envs = [s for s in info.get("envs") if "environmental-remote-sensing" in s]
-    if len(envs) == 0:
-        # when cached on GH actions
-        root_gh_cache = "/home/runner/work/eo-datascience/eo-datascience/"
-        return root_gh_cache + ".conda_envs/environmental-remote-sensing"
-    if conda_prefix.is_dir():
-        conda_prefix_path = f"{get_git_repo_name()}/{conda_prefix.name}"
-        envs_with_prefix = [s for s in envs if conda_prefix_path in s]
-        return next(iter(envs_with_prefix), None)
-    return next(iter(envs), None)
+    conda_base = get_base("conda")
+    if conda_base:
+        return conda_base
+
+    micromamba_base = get_base("micromamba")
+    if micromamba_base:
+        return micromamba_base
+
+    print("Neither Conda nor Micromamba is installed or detected.")
+    return None
 
 
 ffmpeg_path = Path(get_conda_env_path()) / Path("bin/ffmpeg")
@@ -122,8 +128,7 @@ def _plot_step_corr(df, var1, var2="copy", length=72):
             y1.plot(y=var1, ax=ax1)
             y2.shift(x).plot(y=var2, c="orange", ax=ax1)
             res = pd.Series(
-                smt.ccf(y1.values, y2.values, nlags=length),
-                index=df.index[:length],  # noqa
+                smt.ccf(y1.values, y2.values, nlags=length), index=df.index[:length]
             )
             plt.title(f"{var1} and {var2} at lag={x}")
 
