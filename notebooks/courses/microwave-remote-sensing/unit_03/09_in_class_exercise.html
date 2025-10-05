@@ -430,7 +430,10 @@
 In this notebook we will use the resulting wrapped interferogram from notebook “Interferograms”, but we need to process it in the radar geometry in order to unwrap it (while in notebook “Interferograms” we end the whole process by performing the geocoding, just for better visualization purposes).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cmcrameri</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmc</span>  <span class="c1"># noqa: F401</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmcrameri</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmc</span>  <span class="c1"># noqa: F401</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">intake</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">patches</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -438,7 +441,6 @@ In this notebook we will use the resulting wrapped interferogram from notebook �
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">snaphu</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">clear_output</span>
 </pre></div>
 </div>
 </div>
@@ -496,7 +498,25 @@ The actual unwrapping is essentially an addition of the phase values, such that 
 <p><em>Figure 1: Illustration of how the unwrapping of the phase works. (Source: ESA)</em>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">unwrap_array</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">suppress_output</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">devnull</span><span class="p">:</span>
+        <span class="n">old_stdout</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">dup</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">old_stderr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">dup</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">devnull</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">devnull</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">old_stdout</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">old_stderr</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">old_stdout</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">old_stderr</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">unwrap_array</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">,</span>
     <span class="n">complex_var</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cmplx&quot;</span><span class="p">,</span>
     <span class="n">ouput_var</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;unwrapped&quot;</span><span class="p">,</span>
@@ -552,18 +572,16 @@ The actual unwrapping is essentially an addition of the phase values, such that 
         <span class="n">coherence</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">data_arr</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
 
     <span class="c1"># Unwrap the phase (already in complex form)</span>
-    <span class="n">unw</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">snaphu</span><span class="o">.</span><span class="n">unwrap</span><span class="p">(</span>
-        <span class="n">data_arr</span><span class="p">,</span>
-        <span class="n">coherence</span><span class="p">,</span>
-        <span class="n">nlooks</span><span class="o">=</span><span class="n">nlooks</span><span class="p">,</span>
-        <span class="n">cost</span><span class="o">=</span><span class="n">cost</span><span class="p">,</span>
-        <span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span>
-        <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Clear the output to avoid printing the snaphu output</span>
-    <span class="n">clear_output</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">suppress_output</span><span class="p">():</span>
+        <span class="n">unw</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">snaphu</span><span class="o">.</span><span class="n">unwrap</span><span class="p">(</span>
+            <span class="n">data_arr</span><span class="p">,</span>
+            <span class="n">coherence</span><span class="p">,</span>
+            <span class="n">nlooks</span><span class="o">=</span><span class="n">nlooks</span><span class="p">,</span>
+            <span class="n">cost</span><span class="o">=</span><span class="n">cost</span><span class="p">,</span>
+            <span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span>
+            <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="c1"># Build xarray DataArray with the unwrapped phase</span>
     <span class="c1"># unw_da = xr.DataArray(unw, coords=data.coords, dims=data.dims)</span>
