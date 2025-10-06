@@ -11,8 +11,7 @@ jobs:
   build:
     uses: ProjectPythia/cookbook-actions/.github/workflows/build-book.yaml@main
     with:
-      build_command: jupyter-book build . ; jupyter-book build .
-      environment_name: eo-datascience-cookbook
+      build_command: "myst build --execute --html"
 
   deploy:
     needs: build
