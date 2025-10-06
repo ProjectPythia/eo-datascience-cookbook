@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-pythia-theme.min.css?v=ba7ce088" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d0efeab3" />
@@ -435,12 +435,12 @@ In this notebook we will use the resulting wrapped interferogram from notebook â
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmcrameri</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmc</span>  <span class="c1"># noqa: F401</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">intake</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">patches</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">snaphu</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">patches</span>
 </pre></div>
 </div>
 </div>
@@ -530,12 +530,10 @@ The actual unwrapping is essentially an addition of the phase values, such that 
     <span class="n">init</span><span class="o">=</span><span class="s2">&quot;mcf&quot;</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Unwraps the phase data using the snaphu algorithm.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unwraps the phase data using the snaphu algorithm.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-
 <span class="sd">    data: xarray DataArray with complex numbers</span>
 <span class="sd">    complex_var: Name of the variable with the complex numbers</span>
 <span class="sd">    ouput_var: Name of the variable with the unwrapped phase</span>
@@ -546,8 +544,9 @@ The actual unwrapping is essentially an addition of the phase values, such that 
 <span class="sd">    coh_high_threshold: Higher threshold for the coherence values</span>
 
 <span class="sd">    Returns</span>
-<span class="sd">    ----------</span>
+<span class="sd">    -------</span>
 <span class="sd">    xarray DataArray with the unwrapped phase</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Get the complex data</span>
     <span class="n">data_arr</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">complex_var</span><span class="p">]</span>
@@ -767,12 +766,10 @@ d = - \frac{\lambda}{4 \cdot \pi} \cdot \Delta \phi_d
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">displacement</span><span class="p">(</span><span class="n">unw</span><span class="p">,</span> <span class="n">lambda_val</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.056</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculates the displacement from the unwrapped phase</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the displacement from the unwrapped phase</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-
 <span class="sd">    unw: xarray DataArray with the unwrapped phase</span>
 <span class="sd">    unw: xr.DataArray</span>
 <span class="sd">    lambda_val: Wavelength of the radar signal</span>
@@ -781,6 +778,7 @@ d = - \frac{\lambda}{4 \cdot \pi} \cdot \Delta \phi_d
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    xarray DataArray with the displacement</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">disp</span> <span class="o">=</span> <span class="n">unw</span> <span class="o">*</span> <span class="o">-</span><span class="n">lambda_val</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">disp</span>
@@ -911,7 +909,7 @@ d = - \frac{\lambda}{4 \cdot \pi} \cdot \Delta \phi_d
 </div>
 </div>
 <p>In the following animation, we can capture the 3D displacement caused by the Ridgecrest quake by observing the after and before elevation model.</p>
-<p><img alt="" src="notebooks/courses/images/ridgecrest.gif" />
+<p><img alt="" src="../../../../_images/ridgecrest.gif" />
 <em>Credits: NASA</em></p>
 </section>
 </section>
