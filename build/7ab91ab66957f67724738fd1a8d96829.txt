@@ -1,0 +1,440 @@
+[31m---------------------------------------------------------------------------[39m
+[31mRuntimeError[39m                              Traceback (most recent call last)
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/IPython/core/formatters.py:1036[39m, in [36mMimeBundleFormatter.__call__[39m[34m(self, obj, include, exclude)[39m
+[32m   1033[39m     method = get_real_method(obj, [38;5;28mself[39m.print_method)
+[32m   1035[39m     [38;5;28;01mif[39;00m method [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[32m-> [39m[32m1036[39m         [38;5;28;01mreturn[39;00m [43mmethod[49m[43m([49m[43minclude[49m[43m=[49m[43minclude[49m[43m,[49m[43m [49m[43mexclude[49m[43m=[49m[43mexclude[49m[43m)[49m
+[32m   1037[39m     [38;5;28;01mreturn[39;00m [38;5;28;01mNone[39;00m
+[32m   1038[39m [38;5;28;01melse[39;00m:
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/core/dimension.py:1381[39m, in [36mDimensioned._repr_mimebundle_[39m[34m(self, include, exclude)[39m
+[32m   1374[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m_repr_mimebundle_[39m([38;5;28mself[39m, include=[38;5;28;01mNone[39;00m, exclude=[38;5;28;01mNone[39;00m):
+[32m   1375[39m [38;5;250m    [39m[33;03m"""Resolves the class hierarchy for the class rendering the[39;00m
+[32m   1376[39m [33;03m    object using any display hooks registered on Store.display[39;00m
+[32m   1377[39m [33;03m    hooks.  The output of all registered display_hooks is then[39;00m
+[32m   1378[39m [33;03m    combined and returned.[39;00m
+[32m   1379[39m 
+[32m   1380[39m [33;03m    """[39;00m
+[32m-> [39m[32m1381[39m     [38;5;28;01mreturn[39;00m [43mStore[49m[43m.[49m[43mrender[49m[43m([49m[38;5;28;43mself[39;49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/core/options.py:1433[39m, in [36mStore.render[39m[34m(cls, obj)[39m
+[32m   1431[39m data, metadata = {}, {}
+[32m   1432[39m [38;5;28;01mfor[39;00m hook [38;5;129;01min[39;00m hooks:
+[32m-> [39m[32m1433[39m     ret = [43mhook[49m[43m([49m[43mobj[49m[43m)[49m
+[32m   1434[39m     [38;5;28;01mif[39;00m ret [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[32m   1435[39m         [38;5;28;01mcontinue[39;00m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/ipython/display_hooks.py:340[39m, in [36mpprint_display[39m[34m(obj)[39m
+[32m    338[39m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m ip.display_formatter.formatters[[33m'[39m[33mtext/plain[39m[33m'[39m].pprint:
+[32m    339[39m     [38;5;28;01mreturn[39;00m [38;5;28;01mNone[39;00m
+[32m--> [39m[32m340[39m [38;5;28;01mreturn[39;00m [43mdisplay[49m[43m([49m[43mobj[49m[43m,[49m[43m [49m[43mraw_output[49m[43m=[49m[38;5;28;43;01mTrue[39;49;00m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/ipython/display_hooks.py:311[39m, in [36mdisplay[39m[34m(obj, raw_output, **kwargs)[39m
+[32m    309[39m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(obj, (Layout, NdLayout, AdjointLayout)):
+[32m    310[39m     [38;5;28;01mwith[39;00m option_state(obj):
+[32m--> [39m[32m311[39m         output = [43mlayout_display[49m[43m([49m[43mobj[49m[43m)[49m
+[32m    312[39m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(obj, (HoloMap, DynamicMap)):
+[32m    313[39m     [38;5;28;01mwith[39;00m option_state(obj):
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/ipython/display_hooks.py:205[39m, in [36mdisplay_hook.<locals>.wrapped[39m[34m(element)[39m
+[32m    203[39m [38;5;28;01mtry[39;00m:
+[32m    204[39m     max_frames = OutputSettings.options[[33m'[39m[33mmax_frames[39m[33m'[39m]
+[32m--> [39m[32m205[39m     mimebundle = [43mfn[49m[43m([49m[43melement[49m[43m,[49m[43m [49m[43mmax_frames[49m[43m=[49m[43mmax_frames[49m[43m)[49m
+[32m    206[39m     [38;5;28;01mif[39;00m mimebundle [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[32m    207[39m         [38;5;28;01mreturn[39;00m {}, {}
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/ipython/display_hooks.py:274[39m, in [36mlayout_display[39m[34m(layout, max_frames)[39m
+[32m    271[39m     max_frame_warning(max_frames)
+[32m    272[39m     [38;5;28;01mreturn[39;00m [38;5;28;01mNone[39;00m
+[32m--> [39m[32m274[39m [38;5;28;01mreturn[39;00m [43mrender[49m[43m([49m[43mlayout[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/ipython/display_hooks.py:76[39m, in [36mrender[39m[34m(obj, **kwargs)[39m
+[32m     73[39m [38;5;28;01mif[39;00m renderer.fig == [33m'[39m[33mpdf[39m[33m'[39m:
+[32m     74[39m     renderer = renderer.instance(fig=[33m'[39m[33mpng[39m[33m'[39m)
+[32m---> [39m[32m76[39m [38;5;28;01mreturn[39;00m [43mrenderer[49m[43m.[49m[43mcomponents[49m[43m([49m[43mobj[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/renderer.py:396[39m, in [36mRenderer.components[39m[34m(self, obj, fmt, comm, **kwargs)[39m
+[32m    394[39m embed = ([38;5;129;01mnot[39;00m (dynamic [38;5;129;01mor[39;00m streams [38;5;129;01mor[39;00m [38;5;28mself[39m.widget_mode == [33m'[39m[33mlive[39m[33m'[39m) [38;5;129;01mor[39;00m config.embed)
+[32m    395[39m [38;5;28;01mif[39;00m embed [38;5;129;01mor[39;00m config.comms == [33m'[39m[33mdefault[39m[33m'[39m:
+[32m--> [39m[32m396[39m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43m_render_panel[49m[43m([49m[43mplot[49m[43m,[49m[43m [49m[43membed[49m[43m,[49m[43m [49m[43mcomm[49m[43m)[49m
+[32m    397[39m [38;5;28;01mreturn[39;00m [38;5;28mself[39m._render_ipywidget(plot)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/renderer.py:403[39m, in [36mRenderer._render_panel[39m[34m(self, plot, embed, comm)[39m
+[32m    401[39m doc = Document()
+[32m    402[39m [38;5;28;01mwith[39;00m config.set(embed=embed):
+[32m--> [39m[32m403[39m     model = [43mplot[49m[43m.[49m[43mlayout[49m[43m.[49m[43m_render_model[49m[43m([49m[43mdoc[49m[43m,[49m[43m [49m[43mcomm[49m[43m)[49m
+[32m    404[39m [38;5;28;01mif[39;00m embed:
+[32m    405[39m     [38;5;28;01mreturn[39;00m render_model(model, comm)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/viewable.py:768[39m, in [36mViewable._render_model[39m[34m(self, doc, comm)[39m
+[32m    766[39m [38;5;28;01mif[39;00m comm [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[32m    767[39m     comm = state._comm_manager.get_server_comm()
+[32m--> [39m[32m768[39m model = [38;5;28;43mself[39;49m[43m.[49m[43mget_root[49m[43m([49m[43mdoc[49m[43m,[49m[43m [49m[43mcomm[49m[43m)[49m
+[32m    770[39m [38;5;28;01mif[39;00m [38;5;28mself[39m._design [38;5;129;01mand[39;00m [38;5;28mself[39m._design.theme.bokeh_theme:
+[32m    771[39m     doc.theme = [38;5;28mself[39m._design.theme.bokeh_theme
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/layout/base.py:329[39m, in [36mPanel.get_root[39m[34m(self, doc, comm, preprocess)[39m
+[32m    325[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mget_root[39m(
+[32m    326[39m     [38;5;28mself[39m, doc: Document | [38;5;28;01mNone[39;00m = [38;5;28;01mNone[39;00m, comm: Comm | [38;5;28;01mNone[39;00m = [38;5;28;01mNone[39;00m,
+[32m    327[39m     preprocess: [38;5;28mbool[39m = [38;5;28;01mTrue[39;00m
+[32m    328[39m ) -> Model:
+[32m--> [39m[32m329[39m     root = [38;5;28;43msuper[39;49m[43m([49m[43m)[49m[43m.[49m[43mget_root[49m[43m([49m[43mdoc[49m[43m,[49m[43m [49m[43mcomm[49m[43m,[49m[43m [49m[43mpreprocess[49m[43m)[49m
+[32m    330[39m     [38;5;66;03m# ALERT: Find a better way to handle this[39;00m
+[32m    331[39m     [38;5;28;01mif[39;00m [38;5;28mhasattr[39m(root, [33m'[39m[33mstyles[39m[33m'[39m) [38;5;129;01mand[39;00m [33m'[39m[33moverflow-x[39m[33m'[39m [38;5;129;01min[39;00m root.styles:
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/viewable.py:698[39m, in [36mRenderable.get_root[39m[34m(self, doc, comm, preprocess)[39m
+[32m    696[39m wrapper = [38;5;28mself[39m._design._wrapper([38;5;28mself[39m)
+[32m    697[39m [38;5;28;01mif[39;00m wrapper [38;5;129;01mis[39;00m [38;5;28mself[39m:
+[32m--> [39m[32m698[39m     root = [38;5;28;43mself[39;49m[43m.[49m[43m_get_model[49m[43m([49m[43mdoc[49m[43m,[49m[43m [49m[43mcomm[49m[43m=[49m[43mcomm[49m[43m)[49m
+[32m    699[39m     [38;5;28;01mif[39;00m preprocess:
+[32m    700[39m         [38;5;28mself[39m._preprocess(root)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/layout/base.py:313[39m, in [36mPanel._get_model[39m[34m(self, doc, root, parent, comm)[39m
+[32m    311[39m root = root [38;5;129;01mor[39;00m model
+[32m    312[39m [38;5;28mself[39m._models[root.ref[[33m'[39m[33mid[39m[33m'[39m]] = (model, parent)
+[32m--> [39m[32m313[39m objects, _ = [38;5;28;43mself[39;49m[43m.[49m[43m_get_objects[49m[43m([49m[43mmodel[49m[43m,[49m[43m [49m[43m[[49m[43m][49m[43m,[49m[43m [49m[43mdoc[49m[43m,[49m[43m [49m[43mroot[49m[43m,[49m[43m [49m[43mcomm[49m[43m)[49m
+[32m    314[39m props = [38;5;28mself[39m._get_properties(doc)
+[32m    315[39m props[[38;5;28mself[39m._property_mapping[[33m'[39m[33mobjects[39m[33m'[39m]] = objects
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/layout/base.py:295[39m, in [36mPanel._get_objects[39m[34m(self, model, old_objects, doc, root, comm)[39m
+[32m    293[39m [38;5;28;01melse[39;00m:
+[32m    294[39m     [38;5;28;01mtry[39;00m:
+[32m--> [39m[32m295[39m         child = [43mpane[49m[43m.[49m[43m_get_model[49m[43m([49m[43mdoc[49m[43m,[49m[43m [49m[43mroot[49m[43m,[49m[43m [49m[43mmodel[49m[43m,[49m[43m [49m[43mcomm[49m[43m)[49m
+[32m    296[39m     [38;5;28;01mexcept[39;00m RerenderError [38;5;28;01mas[39;00m e:
+[32m    297[39m         [38;5;28;01mif[39;00m e.layout [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;129;01mand[39;00m e.layout [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28mself[39m:
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/pane/holoviews.py:487[39m, in [36mHoloViews._get_model[39m[34m(self, doc, root, parent, comm)[39m
+[32m    485[39m     plot = [38;5;28mself[39m.object
+[32m    486[39m [38;5;28;01melse[39;00m:
+[32m--> [39m[32m487[39m     plot = [38;5;28;43mself[39;49m[43m.[49m[43m_render[49m[43m([49m[43mdoc[49m[43m,[49m[43m [49m[43mcomm[49m[43m,[49m[43m [49m[43mroot[49m[43m)[49m
+[32m    489[39m plot.pane = [38;5;28mself[39m
+[32m    490[39m backend = plot.renderer.backend
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/pane/holoviews.py:581[39m, in [36mHoloViews._render[39m[34m(self, doc, comm, root)[39m
+[32m    578[39m     [38;5;28;01mif[39;00m comm:
+[32m    579[39m         kwargs[[33m'[39m[33mcomm[39m[33m'[39m] = comm
+[32m--> [39m[32m581[39m [38;5;28;01mreturn[39;00m [43mrenderer[49m[43m.[49m[43mget_plot[49m[43m([49m[38;5;28;43mself[39;49m[43m.[49m[43mobject[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/bokeh/renderer.py:70[39m, in [36mBokehRenderer.get_plot[39m[34m(self_or_cls, obj, doc, renderer, **kwargs)[39m
+[32m     63[39m [38;5;129m@bothmethod[39m
+[32m     64[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mget_plot[39m(self_or_cls, obj, doc=[38;5;28;01mNone[39;00m, renderer=[38;5;28;01mNone[39;00m, **kwargs):
+[32m     65[39m [38;5;250m    [39m[33;03m"""Given a HoloViews Viewable return a corresponding plot instance.[39;00m
+[32m     66[39m [33;03m    Allows supplying a document attach the plot to, useful when[39;00m
+[32m     67[39m [33;03m    combining the bokeh model with another plot.[39;00m
+[32m     68[39m 
+[32m     69[39m [33;03m    """[39;00m
+[32m---> [39m[32m70[39m     plot = [38;5;28;43msuper[39;49m[43m([49m[43m)[49m[43m.[49m[43mget_plot[49m[43m([49m[43mobj[49m[43m,[49m[43m [49m[43mdoc[49m[43m,[49m[43m [49m[43mrenderer[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+[32m     71[39m     [38;5;28;01mif[39;00m plot.document [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[32m     72[39m         plot.document = Document() [38;5;28;01mif[39;00m self_or_cls.notebook_context [38;5;28;01melse[39;00m curdoc()
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/renderer.py:216[39m, in [36mRenderer.get_plot[39m[34m(self_or_cls, obj, doc, renderer, comm, **kwargs)[39m
+[32m    213[39m     [38;5;28;01mraise[39;00m SkipRendering(msg.format(dims=dims))
+[32m    215[39m [38;5;66;03m# Initialize DynamicMaps with first data item[39;00m
+[32m--> [39m[32m216[39m [43minitialize_dynamic[49m[43m([49m[43mobj[49m[43m)[49m
+[32m    218[39m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m renderer:
+[32m    219[39m     renderer = self_or_cls
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/util.py:277[39m, in [36minitialize_dynamic[39m[34m(obj)[39m
+[32m    275[39m     [38;5;28;01mcontinue[39;00m
+[32m    276[39m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28mlen[39m(dmap):
+[32m--> [39m[32m277[39m     [43mdmap[49m[43m[[49m[43mdmap[49m[43m.[49m[43m_initial_key[49m[43m([49m[43m)[49m[43m][49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/core/spaces.py:1302[39m, in [36mDynamicMap.__getitem__[39m[34m(self, key)[39m
+[32m   1300[39m [38;5;66;03m# Not a cross product and nothing cached so compute element.[39;00m
+[32m   1301[39m [38;5;28;01mif[39;00m cache [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m: [38;5;28;01mreturn[39;00m cache
+[32m-> [39m[32m1302[39m val = [38;5;28;43mself[39;49m[43m.[49m[43m_execute_callback[49m[43m([49m[43m*[49m[43mtuple_key[49m[43m)[49m
+[32m   1303[39m [38;5;28;01mif[39;00m data_slice:
+[32m   1304[39m     val = [38;5;28mself[39m._dataslice(val, data_slice)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/core/spaces.py:1050[39m, in [36mDynamicMap._execute_callback[39m[34m(self, *args)[39m
+[32m   1047[39m     kwargs[[33m'[39m[33m_memoization_hash_[39m[33m'[39m] = hash_items
+[32m   1049[39m [38;5;28;01mwith[39;00m dynamicmap_memoization([38;5;28mself[39m.callback, [38;5;28mself[39m.streams):
+[32m-> [39m[32m1050[39m     retval = [38;5;28;43mself[39;49m[43m.[49m[43mcallback[49m[43m([49m[43m*[49m[43margs[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+[32m   1051[39m [38;5;28;01mreturn[39;00m [38;5;28mself[39m._style(retval)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/core/spaces.py:626[39m, in [36mCallable.__call__[39m[34m(self, *args, **kwargs)[39m
+[32m    623[39m     args, kwargs = (), [38;5;28mdict[39m(pos_kwargs, **kwargs)
+[32m    625[39m [38;5;28;01mtry[39;00m:
+[32m--> [39m[32m626[39m     ret = [38;5;28;43mself[39;49m[43m.[49m[43mcallable[49m[43m([49m[43m*[49m[43margs[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+[32m    627[39m [38;5;28;01mexcept[39;00m [38;5;167;01mKeyError[39;00m:
+[32m    628[39m     [38;5;66;03m# KeyError is caught separately because it is used to signal[39;00m
+[32m    629[39m     [38;5;66;03m# invalid keys on DynamicMap and should not warn[39;00m
+[32m    630[39m     [38;5;28;01mraise[39;00m
+
+[36mCell[39m[36m [39m[32mIn[6][39m[32m, line 30[39m, in [36mget_timeseries[39m[34m(x, y)[39m
+[32m     24[39m     select = fused_ds.where(mask)
+[32m     25[39m     label = [33m"[39m[33mMean LAI: [39m[33m"[39m + [38;5;28mstr[39m(np.round(lai_value, [32m1[39m))
+[32m     27[39m time_series = (
+[32m     28[39m     [43mselect[49m[43m.[49m[43mgam0[49m[43m.[49m[43mto_dataset[49m[43m([49m[33;43m"[39;49m[33;43msensor[39;49m[33;43m"[39;49m[43m)[49m
+[32m     29[39m [43m    [49m[43m.[49m[43mmedian[49m[43m([49m[43m[[49m[33;43m"[39;49m[33;43mx[39;49m[33;43m"[39;49m[43m,[49m[43m [49m[33;43m"[39;49m[33;43my[39;49m[33;43m"[39;49m[43m][49m[43m,[49m[43m [49m[43mskipna[49m[43m=[49m[38;5;28;43;01mTrue[39;49;00m[43m)[49m
+[32m---> [39m[32m30[39m [43m    [49m[43m.[49m[43mhvplot[49m[43m.[49m[43mscatter[49m[43m([49m[43mylim[49m[43m=[49m[43m([49m[43m-[49m[32;43m30[39;49m[43m,[49m[43m [49m[32;43m5[39;49m[43m)[49m[43m)[49m
+[32m     31[39m     .opts(title=label, frame_height=[32m400[39m)
+[32m     32[39m )
+[32m     34[39m [38;5;28;01mreturn[39;00m time_series
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/hvplot/plotting/core.py:450[39m, in [36mhvPlotTabular.scatter[39m[34m(self, x, y, **kwds)[39m
+[32m    382[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mscatter[39m([38;5;28mself[39m, x=[38;5;28;01mNone[39;00m, y=[38;5;28;01mNone[39;00m, **kwds):
+[32m    383[39m [38;5;250m    [39m[33;03m"""[39;00m
+[32m    384[39m [33;03m    The `scatter` plot visualizes your points as markers in 2D space. You can visualize[39;00m
+[32m    385[39m [33;03m    one more dimension by using colors.[39;00m
+[32m   (...)[39m[32m    448[39m [33;03m    - Wiki: https://en.wikipedia.org/wiki/Scatter_plot[39;00m
+[32m    449[39m [33;03m    """[39;00m
+[32m--> [39m[32m450[39m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m([49m[43mx[49m[43m,[49m[43m [49m[43my[49m[43m,[49m[43m [49m[43mkind[49m[43m=[49m[33;43m'[39;49m[33;43mscatter[39;49m[33;43m'[39;49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwds[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/hvplot/plotting/core.py:95[39m, in [36mhvPlotBase.__call__[39m[34m(self, x, y, kind, **kwds)[39m
+[32m     92[39m         plot = [38;5;28mself[39m._get_converter(x, y, kind, **kwds)(kind, x, y)
+[32m     93[39m         [38;5;28;01mreturn[39;00m pn.panel(plot, **panel_dict)
+[32m---> [39m[32m95[39m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43m_get_converter[49m[43m([49m[43mx[49m[43m,[49m[43m [49m[43my[49m[43m,[49m[43m [49m[43mkind[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwds[49m[43m)[49m(kind, x, y)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/hvplot/plotting/core.py:102[39m, in [36mhvPlotBase._get_converter[39m[34m(self, x, y, kind, **kwds)[39m
+[32m    100[39m y = y [38;5;129;01mor[39;00m params.pop([33m'[39m[33my[39m[33m'[39m, [38;5;28;01mNone[39;00m)
+[32m    101[39m kind = kind [38;5;129;01mor[39;00m params.pop([33m'[39m[33mkind[39m[33m'[39m, [38;5;28;01mNone[39;00m)
+[32m--> [39m[32m102[39m [38;5;28;01mreturn[39;00m [43mHoloViewsConverter[49m[43m([49m[38;5;28;43mself[39;49m[43m.[49m[43m_data[49m[43m,[49m[43m [49m[43mx[49m[43m,[49m[43m [49m[43my[49m[43m,[49m[43m [49m[43mkind[49m[43m=[49m[43mkind[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mparams[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/hvplot/converter.py:935[39m, in [36mHoloViewsConverter.__init__[39m[34m(self, data, x, y, kind, by, use_index, group_label, value_label, backlog, persist, use_dask, crs, fields, groupby, dynamic, grid, legend, legend_cols, legend_opts, rot, title, xlim, ylim, clim, robust, symmetric, logx, logy, loglog, hover, hover_cols, hover_formatters, hover_tooltips, subplots, label, invert, stacked, colorbar, cticks, datashade, rasterize, downsample, resample_when, row, col, debug, framewise, aggregator, selector, projection, global_extent, geo, precompute, flip_xaxis, flip_yaxis, dynspread, x_sampling, y_sampling, pixel_ratio, project, toolbar, autohide_toolbar, tools, attr_labels, coastline, tiles, tiles_opts, sort_date, check_symmetric_max, transforms, stream, cnorm, features, rescale_discrete_levels, autorange, subcoordinate_y, backend_opts, **kwds)[39m
+[32m    933[39m [38;5;28mself[39m.value_label = value_label
+[32m    934[39m [38;5;28mself[39m.label = label
+[32m--> [39m[32m935[39m [38;5;28;43mself[39;49m[43m.[49m[43m_process_data[49m[43m([49m
+[32m    936[39m [43m    [49m[43mkind[49m[43m,[49m
+[32m    937[39m [43m    [49m[43mdata[49m[43m,[49m
+[32m    938[39m [43m    [49m[43mx[49m[43m,[49m
+[32m    939[39m [43m    [49m[43my[49m[43m,[49m
+[32m    940[39m [43m    [49m[43mby[49m[43m,[49m
+[32m    941[39m [43m    [49m[43mgroupby[49m[43m,[49m
+[32m    942[39m [43m    [49m[43mrow[49m[43m,[49m
+[32m    943[39m [43m    [49m[43mcol[49m[43m,[49m
+[32m    944[39m [43m    [49m[43muse_dask[49m[43m,[49m
+[32m    945[39m [43m    [49m[43mpersist[49m[43m,[49m
+[32m    946[39m [43m    [49m[43mbacklog[49m[43m,[49m
+[32m    947[39m [43m    [49m[43mlabel[49m[43m,[49m
+[32m    948[39m [43m    [49m[43mgroup_label[49m[43m,[49m
+[32m    949[39m [43m    [49m[43mvalue_label[49m[43m,[49m
+[32m    950[39m [43m    [49m[43mhover_cols[49m[43m,[49m
+[32m    951[39m [43m    [49m[43mattr_labels[49m[43m,[49m
+[32m    952[39m [43m    [49m[43mtransforms[49m[43m,[49m
+[32m    953[39m [43m    [49m[43mstream[49m[43m,[49m
+[32m    954[39m [43m    [49m[43mrobust[49m[43m,[49m
+[32m    955[39m [43m    [49m[43mkwds[49m[43m,[49m
+[32m    956[39m [43m[49m[43m)[49m
+[32m    958[39m [38;5;28mself[39m.dynamic = dynamic
+[32m    959[39m [38;5;28mself[39m.geo = [38;5;28many[39m([geo, crs, global_extent, projection, project, coastline, features])
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/hvplot/converter.py:1494[39m, in [36mHoloViewsConverter._process_data[39m[34m(self, kind, data, x, y, by, groupby, row, col, use_dask, persist, backlog, label, group_label, value_label, hover_cols, attr_labels, transforms, stream, robust, kwds)[39m
+[32m   1492[39m     other_dims = []
+[32m   1493[39m da = data
+[32m-> [39m[32m1494[39m data, x, y, by_new, groupby_new = [43mprocess_xarray[49m[43m([49m
+[32m   1495[39m [43m    [49m[43mdata[49m[43m,[49m
+[32m   1496[39m [43m    [49m[43mx[49m[43m,[49m
+[32m   1497[39m [43m    [49m[43my[49m[43m,[49m
+[32m   1498[39m [43m    [49m[43mby[49m[43m,[49m
+[32m   1499[39m [43m    [49m[43mgroupby[49m[43m,[49m
+[32m   1500[39m [43m    [49m[43muse_dask[49m[43m,[49m
+[32m   1501[39m [43m    [49m[43mpersist[49m[43m,[49m
+[32m   1502[39m [43m    [49m[43mgridded[49m[43m,[49m
+[32m   1503[39m [43m    [49m[43mlabel[49m[43m,[49m
+[32m   1504[39m [43m    [49m[43mvalue_label[49m[43m,[49m
+[32m   1505[39m [43m    [49m[43mother_dims[49m[43m,[49m
+[32m   1506[39m [43m    [49m[43mkind[49m[43m=[49m[43mkind[49m[43m,[49m
+[32m   1507[39m [43m[49m[43m)[49m
+[32m   1508[39m [38;5;28;01mif[39;00m kind == [33m'[39m[33mrgb[39m[33m'[39m [38;5;129;01mand[39;00m robust:
+[32m   1509[39m     [38;5;66;03m# adapted from xarray[39;00m
+[32m   1510[39m     [38;5;66;03m# https://github.com/pydata/xarray/blob/6af547cdd9beac3b18420ccb204f801603e11519/xarray/plot/utils.py#L729[39;00m
+[32m   1511[39m     vmax = np.nanpercentile(data[z], [32m100[39m - [32m2[39m)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/hvplot/util.py:646[39m, in [36mprocess_xarray[39m[34m(data, x, y, by, groupby, use_dask, persist, gridded, label, value_label, other_dims, kind)[39m
+[32m    644[39m     data = data.persist() [38;5;28;01mif[39;00m persist [38;5;28;01melse[39;00m data
+[32m    645[39m [38;5;28;01melse[39;00m:
+[32m--> [39m[32m646[39m     data = [43mdataset[49m[43m.[49m[43mto_dataframe[49m[43m([49m[43m)[49m
+[32m    647[39m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m support_index(data) [38;5;129;01mand[39;00m [38;5;28mlen[39m(data.index.names) > [32m1[39m:
+[32m    648[39m         data = data.reset_index()
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/xarray/core/dataset.py:7269[39m, in [36mDataset.to_dataframe[39m[34m(self, dim_order)[39m
+[32m   7241[39m [38;5;250m[39m[33;03m"""Convert this dataset into a pandas.DataFrame.[39;00m
+[32m   7242[39m 
+[32m   7243[39m [33;03mNon-index variables in this dataset form the columns of the[39;00m
+[32m   (...)[39m[32m   7264[39m 
+[32m   7265[39m [33;03m"""[39;00m
+[32m   7267[39m ordered_dims = [38;5;28mself[39m._normalize_dim_order(dim_order=dim_order)
+[32m-> [39m[32m7269[39m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43m_to_dataframe[49m[43m([49m[43mordered_dims[49m[43m=[49m[43mordered_dims[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/xarray/core/dataset.py:7209[39m, in [36mDataset._to_dataframe[39m[34m(self, ordered_dims)[39m
+[32m   7198[39m extension_array_columns_different_index = [
+[32m   7199[39m     k
+[32m   7200[39m     [38;5;28;01mfor[39;00m k [38;5;129;01min[39;00m extension_array_columns
+[32m   7201[39m     [38;5;28;01mif[39;00m [38;5;28mset[39m([38;5;28mself[39m.variables[k].dims) != [38;5;28mset[39m(ordered_dims.keys())
+[32m   7202[39m ]
+[32m   7203[39m extension_array_columns_same_index = [
+[32m   7204[39m     k
+[32m   7205[39m     [38;5;28;01mfor[39;00m k [38;5;129;01min[39;00m extension_array_columns
+[32m   7206[39m     [38;5;28;01mif[39;00m k [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m extension_array_columns_different_index
+[32m   7207[39m ]
+[32m   7208[39m data = [
+[32m-> [39m[32m7209[39m     [38;5;28;43mself[39;49m[43m.[49m[43m_variables[49m[43m[[49m[43mk[49m[43m][49m[43m.[49m[43mset_dims[49m[43m([49m[43mordered_dims[49m[43m)[49m[43m.[49m[43mvalues[49m.reshape(-[32m1[39m)
+[32m   7210[39m     [38;5;28;01mfor[39;00m k [38;5;129;01min[39;00m non_extension_array_columns
+[32m   7211[39m ]
+[32m   7212[39m index = [38;5;28mself[39m.coords.to_index([*ordered_dims])
+[32m   7213[39m broadcasted_df = pd.DataFrame(
+[32m   7214[39m     {
+[32m   7215[39m         **[38;5;28mdict[39m([38;5;28mzip[39m(non_extension_array_columns, data, strict=[38;5;28;01mTrue[39;00m)),
+[32m   (...)[39m[32m   7221[39m     index=index,
+[32m   7222[39m )
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/xarray/core/variable.py:556[39m, in [36mVariable.values[39m[34m(self)[39m
+[32m    553[39m [38;5;129m@property[39m
+[32m    554[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mvalues[39m([38;5;28mself[39m) -> np.ndarray:
+[32m    555[39m [38;5;250m    [39m[33;03m"""The variable's data as a numpy.ndarray"""[39;00m
+[32m--> [39m[32m556[39m     [38;5;28;01mreturn[39;00m [43m_as_array_or_item[49m[43m([49m[38;5;28;43mself[39;49m[43m.[49m[43m_data[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/xarray/core/variable.py:336[39m, in [36m_as_array_or_item[39m[34m(data)[39m
+[32m    322[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m_as_array_or_item[39m(data):
+[32m    323[39m [38;5;250m    [39m[33;03m"""Return the given values as a numpy array, or as an individual item if[39;00m
+[32m    324[39m [33;03m    it's a 0d datetime64 or timedelta64 array.[39;00m
+[32m    325[39m 
+[32m   (...)[39m[32m    334[39m [33;03m    TODO: remove this (replace with np.asarray) once these issues are fixed[39;00m
+[32m    335[39m [33;03m    """[39;00m
+[32m--> [39m[32m336[39m     data = [43mnp[49m[43m.[49m[43masarray[49m[43m([49m[43mdata[49m[43m)[49m
+[32m    337[39m     [38;5;28;01mif[39;00m data.ndim == [32m0[39m:
+[32m    338[39m         kind = data.dtype.kind
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/dask/array/core.py:1723[39m, in [36mArray.__array__[39m[34m(self, dtype, copy, **kwargs)[39m
+[32m   1716[39m [38;5;28;01mif[39;00m copy [38;5;129;01mis[39;00m [38;5;28;01mFalse[39;00m:
+[32m   1717[39m     warnings.warn(
+[32m   1718[39m         [33m"[39m[33mCan[39m[33m'[39m[33mt acquire a memory view of a Dask array. [39m[33m"[39m
+[32m   1719[39m         [33m"[39m[33mThis will raise in the future.[39m[33m"[39m,
+[32m   1720[39m         [38;5;167;01mFutureWarning[39;00m,
+[32m   1721[39m     )
+[32m-> [39m[32m1723[39m x = [38;5;28;43mself[39;49m[43m.[49m[43mcompute[49m[43m([49m[43m)[49m
+[32m   1725[39m [38;5;66;03m# Apply requested dtype and convert non-numpy backends to numpy.[39;00m
+[32m   1726[39m [38;5;66;03m# If copy is True, numpy is going to perform its own deep copy[39;00m
+[32m   1727[39m [38;5;66;03m# after this method returns.[39;00m
+[32m   1728[39m [38;5;66;03m# If copy is None, finalize() ensures that the returned object[39;00m
+[32m   1729[39m [38;5;66;03m# does not share memory with an object stored in the graph or on a[39;00m
+[32m   1730[39m [38;5;66;03m# process-local Worker.[39;00m
+[32m   1731[39m [38;5;28;01mreturn[39;00m np.asarray(x, dtype=dtype)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/dask/base.py:373[39m, in [36mDaskMethodsMixin.compute[39m[34m(self, **kwargs)[39m
+[32m    349[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mcompute[39m([38;5;28mself[39m, **kwargs):
+[32m    350[39m [38;5;250m    [39m[33;03m"""Compute this dask collection[39;00m
+[32m    351[39m 
+[32m    352[39m [33;03m    This turns a lazy Dask collection into its in-memory equivalent.[39;00m
+[32m   (...)[39m[32m    371[39m [33;03m    dask.compute[39;00m
+[32m    372[39m [33;03m    """[39;00m
+[32m--> [39m[32m373[39m     (result,) = [43mcompute[49m[43m([49m[38;5;28;43mself[39;49m[43m,[49m[43m [49m[43mtraverse[49m[43m=[49m[38;5;28;43;01mFalse[39;49;00m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+[32m    374[39m     [38;5;28;01mreturn[39;00m result
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/dask/base.py:681[39m, in [36mcompute[39m[34m(traverse, optimize_graph, scheduler, get, *args, **kwargs)[39m
+[32m    678[39m     expr = expr.optimize()
+[32m    679[39m     keys = [38;5;28mlist[39m(flatten(expr.__dask_keys__()))
+[32m--> [39m[32m681[39m     results = [43mschedule[49m[43m([49m[43mexpr[49m[43m,[49m[43m [49m[43mkeys[49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkwargs[49m[43m)[49m
+[32m    683[39m [38;5;28;01mreturn[39;00m repack(results)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/xarray/core/indexing.py:659[39m, in [36mImplicitToExplicitIndexingAdapter.__array__[39m[34m(self, dtype, copy)[39m
+[32m    655[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m__array__[39m(
+[32m    656[39m     [38;5;28mself[39m, dtype: DTypeLike | [38;5;28;01mNone[39;00m = [38;5;28;01mNone[39;00m, /, *, copy: [38;5;28mbool[39m | [38;5;28;01mNone[39;00m = [38;5;28;01mNone[39;00m
+[32m    657[39m ) -> np.ndarray:
+[32m    658[39m     [38;5;28;01mif[39;00m Version(np.__version__) >= Version([33m"[39m[33m2.0.0[39m[33m"[39m):
+[32m--> [39m[32m659[39m         [38;5;28;01mreturn[39;00m np.asarray([38;5;28;43mself[39;49m[43m.[49m[43mget_duck_array[49m[43m([49m[43m)[49m, dtype=dtype, copy=copy)
+[32m    660[39m     [38;5;28;01melse[39;00m:
+[32m    661[39m         [38;5;28;01mreturn[39;00m np.asarray([38;5;28mself[39m.get_duck_array(), dtype=dtype)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/xarray/core/indexing.py:664[39m, in [36mImplicitToExplicitIndexingAdapter.get_duck_array[39m[34m(self)[39m
+[32m    663[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mget_duck_array[39m([38;5;28mself[39m):
+[32m--> [39m[32m664[39m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43marray[49m[43m.[49m[43mget_duck_array[49m[43m([49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/xarray/core/indexing.py:897[39m, in [36mCopyOnWriteArray.get_duck_array[39m[34m(self)[39m
+[32m    896[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mget_duck_array[39m([38;5;28mself[39m):
+[32m--> [39m[32m897[39m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43marray[49m[43m.[49m[43mget_duck_array[49m[43m([49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/xarray/core/indexing.py:737[39m, in [36mLazilyIndexedArray.get_duck_array[39m[34m(self)[39m
+[32m    734[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mxarray[39;00m[34;01m.[39;00m[34;01mbackends[39;00m[34;01m.[39;00m[34;01mcommon[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m BackendArray
+[32m    736[39m [38;5;28;01mif[39;00m [38;5;28misinstance[39m([38;5;28mself[39m.array, BackendArray):
+[32m--> [39m[32m737[39m     array = [38;5;28;43mself[39;49m[43m.[49m[43marray[49m[43m[[49m[38;5;28;43mself[39;49m[43m.[49m[43mkey[49m[43m][49m
+[32m    738[39m [38;5;28;01melse[39;00m:
+[32m    739[39m     array = apply_indexer([38;5;28mself[39m.array, [38;5;28mself[39m.key)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/xarray/backends/zarr.py:262[39m, in [36mZarrArrayWrapper.__getitem__[39m[34m(self, key)[39m
+[32m    260[39m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(key, indexing.OuterIndexer):
+[32m    261[39m     method = [38;5;28mself[39m._oindex
+[32m--> [39m[32m262[39m [38;5;28;01mreturn[39;00m [43mindexing[49m[43m.[49m[43mexplicit_indexing_adapter[49m[43m([49m
+[32m    263[39m [43m    [49m[43mkey[49m[43m,[49m[43m [49m[43marray[49m[43m.[49m[43mshape[49m[43m,[49m[43m [49m[43mindexing[49m[43m.[49m[43mIndexingSupport[49m[43m.[49m[43mVECTORIZED[49m[43m,[49m[43m [49m[43mmethod[49m
+[32m    264[39m [43m[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/xarray/core/indexing.py:1129[39m, in [36mexplicit_indexing_adapter[39m[34m(key, shape, indexing_support, raw_indexing_method)[39m
+[32m   1107[39m [38;5;250m[39m[33;03m"""Support explicit indexing by delegating to a raw indexing method.[39;00m
+[32m   1108[39m 
+[32m   1109[39m [33;03mOuter and/or vectorized indexers are supported by indexing a second time[39;00m
+[32m   (...)[39m[32m   1126[39m [33;03mIndexing result, in the form of a duck numpy-array.[39;00m
+[32m   1127[39m [33;03m"""[39;00m
+[32m   1128[39m raw_key, numpy_indices = decompose_indexer(key, shape, indexing_support)
+[32m-> [39m[32m1129[39m result = [43mraw_indexing_method[49m[43m([49m[43mraw_key[49m[43m.[49m[43mtuple[49m[43m)[49m
+[32m   1130[39m [38;5;28;01mif[39;00m numpy_indices.tuple:
+[32m   1131[39m     [38;5;66;03m# index the loaded duck array[39;00m
+[32m   1132[39m     indexable = as_indexable(result)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/xarray/backends/zarr.py:225[39m, in [36mZarrArrayWrapper._getitem[39m[34m(self, key)[39m
+[32m    224[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m_getitem[39m([38;5;28mself[39m, key):
+[32m--> [39m[32m225[39m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43m_array[49m[43m[[49m[43mkey[49m[43m][49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/zarr/core.py:796[39m, in [36mArray.__getitem__[39m[34m(self, selection)[39m
+[32m    794[39m     result = [38;5;28mself[39m.vindex[selection]
+[32m    795[39m [38;5;28;01melif[39;00m is_pure_orthogonal_indexing(pure_selection, [38;5;28mself[39m.ndim):
+[32m--> [39m[32m796[39m     result = [38;5;28;43mself[39;49m[43m.[49m[43mget_orthogonal_selection[49m[43m([49m[43mpure_selection[49m[43m,[49m[43m [49m[43mfields[49m[43m=[49m[43mfields[49m[43m)[49m
+[32m    797[39m [38;5;28;01melse[39;00m:
+[32m    798[39m     result = [38;5;28mself[39m.get_basic_selection(pure_selection, fields=fields)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/zarr/core.py:1078[39m, in [36mArray.get_orthogonal_selection[39m[34m(self, selection, out, fields)[39m
+[32m   1075[39m [38;5;66;03m# setup indexer[39;00m
+[32m   1076[39m indexer = OrthogonalIndexer(selection, [38;5;28mself[39m)
+[32m-> [39m[32m1078[39m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43m_get_selection[49m[43m([49m[43mindexer[49m[43m=[49m[43mindexer[49m[43m,[49m[43m [49m[43mout[49m[43m=[49m[43mout[49m[43m,[49m[43m [49m[43mfields[49m[43m=[49m[43mfields[49m[43m)[49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/zarr/core.py:1341[39m, in [36mArray._get_selection[39m[34m(self, indexer, out, fields)[39m
+[32m   1338[39m [38;5;28;01mif[39;00m math.prod(out_shape) > [32m0[39m:
+[32m   1339[39m     [38;5;66;03m# allow storage to get multiple items at once[39;00m
+[32m   1340[39m     lchunk_coords, lchunk_selection, lout_selection = [38;5;28mzip[39m(*indexer)
+[32m-> [39m[32m1341[39m     [38;5;28;43mself[39;49m[43m.[49m[43m_chunk_getitems[49m[43m([49m
+[32m   1342[39m [43m        [49m[43mlchunk_coords[49m[43m,[49m
+[32m   1343[39m [43m        [49m[43mlchunk_selection[49m[43m,[49m
+[32m   1344[39m [43m        [49m[43mout[49m[43m,[49m
+[32m   1345[39m [43m        [49m[43mlout_selection[49m[43m,[49m
+[32m   1346[39m [43m        [49m[43mdrop_axes[49m[43m=[49m[43mindexer[49m[43m.[49m[43mdrop_axes[49m[43m,[49m
+[32m   1347[39m [43m        [49m[43mfields[49m[43m=[49m[43mfields[49m[43m,[49m
+[32m   1348[39m [43m    [49m[43m)[49m
+[32m   1349[39m [38;5;28;01mif[39;00m out.shape:
+[32m   1350[39m     [38;5;28;01mreturn[39;00m out
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/zarr/core.py:2186[39m, in [36mArray._chunk_getitems[39m[34m(self, lchunk_coords, lchunk_selection, out, lout_selection, drop_axes, fields)[39m
+[32m   2184[39m [38;5;28;01mfor[39;00m ckey, chunk_select, out_select [38;5;129;01min[39;00m [38;5;28mzip[39m(ckeys, lchunk_selection, lout_selection):
+[32m   2185[39m     [38;5;28;01mif[39;00m ckey [38;5;129;01min[39;00m cdatas:
+[32m-> [39m[32m2186[39m         [38;5;28;43mself[39;49m[43m.[49m[43m_process_chunk[49m[43m([49m
+[32m   2187[39m [43m            [49m[43mout[49m[43m,[49m
+[32m   2188[39m [43m            [49m[43mcdatas[49m[43m[[49m[43mckey[49m[43m][49m[43m,[49m
+[32m   2189[39m [43m            [49m[43mchunk_select[49m[43m,[49m
+[32m   2190[39m [43m            [49m[43mdrop_axes[49m[43m,[49m
+[32m   2191[39m [43m            [49m[43mout_is_ndarray[49m[43m,[49m
+[32m   2192[39m [43m            [49m[43mfields[49m[43m,[49m
+[32m   2193[39m [43m            [49m[43mout_select[49m[43m,[49m
+[32m   2194[39m [43m            [49m[43mpartial_read_decode[49m[43m=[49m[43mpartial_read_decode[49m[43m,[49m
+[32m   2195[39m [43m        [49m[43m)[49m
+[32m   2196[39m     [38;5;28;01melse[39;00m:
+[32m   2197[39m         [38;5;66;03m# check exception type[39;00m
+[32m   2198[39m         [38;5;28;01mif[39;00m [38;5;28mself[39m._fill_value [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/zarr/core.py:2099[39m, in [36mArray._process_chunk[39m[34m(self, out, cdata, chunk_selection, drop_axes, out_is_ndarray, fields, out_selection, partial_read_decode)[39m
+[32m   2097[39m [38;5;28;01mexcept[39;00m ArrayIndexError:
+[32m   2098[39m     cdata = cdata.read_full()
+[32m-> [39m[32m2099[39m chunk = [38;5;28;43mself[39;49m[43m.[49m[43m_decode_chunk[49m[43m([49m[43mcdata[49m[43m)[49m
+[32m   2101[39m [38;5;66;03m# select data from chunk[39;00m
+[32m   2102[39m [38;5;28;01mif[39;00m fields:
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/zarr/core.py:2355[39m, in [36mArray._decode_chunk[39m[34m(self, cdata, start, nitems, expected_shape)[39m
+[32m   2353[39m         chunk = [38;5;28mself[39m._compressor.decode_partial(cdata, start, nitems)
+[32m   2354[39m     [38;5;28;01melse[39;00m:
+[32m-> [39m[32m2355[39m         chunk = [38;5;28;43mself[39;49m[43m.[49m[43m_compressor[49m[43m.[49m[43mdecode[49m[43m([49m[43mcdata[49m[43m)[49m
+[32m   2356[39m [38;5;28;01melse[39;00m:
+[32m   2357[39m     chunk = cdata
+
+[36mFile [39m[32mnumcodecs/blosc.pyx:585[39m, in [36mnumcodecs.blosc.Blosc.decode[39m[34m()[39m
+
+[36mFile [39m[32mnumcodecs/blosc.pyx:414[39m, in [36mnumcodecs.blosc.decompress[39m[34m()[39m
+
+[31mRuntimeError[39m: error during blosc decompression: 0
