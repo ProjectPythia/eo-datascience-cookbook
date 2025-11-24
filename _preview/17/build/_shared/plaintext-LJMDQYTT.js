@@ -1,0 +1,1 @@
+import{c as e}from"/eo-datascience-cookbook/_preview/17/build/_shared/chunk-OZE3FFNP.js";var n=e((l,t)=>{function a(i){return{name:"Plain text",aliases:["text","txt"],disableAutodetect:!0}}t.exports=a});export default n();
