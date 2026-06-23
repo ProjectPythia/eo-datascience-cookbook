@@ -10,9 +10,11 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
       - name: Find and Replace Repository Name
-        uses: jacobtomlinson/gha-find-replace@v3
+        uses: jacobtomlinson/gha-find-replace@2ff30f644d2e0078fc028beb9193f5ff0dcad39e # v3
         with:
           find: "ProjectPythia/cookbook-template"
           replace: "${{ github.repository_owner }}/${{ github.event.repository.name }}"
@@ -20,7 +22,7 @@ jobs:
           exclude: ".github/workflows/replace-links.yaml"
 
       - name: Find and Replace Repository ID
-        uses: jacobtomlinson/gha-find-replace@v3
+        uses: jacobtomlinson/gha-find-replace@2ff30f644d2e0078fc028beb9193f5ff0dcad39e # v3
         with:
           find: "475509405"
           replace: "${{ github.repository_id}}"
@@ -28,4 +30,4 @@ jobs:
           exclude: ".github/workflows/replace-links.yaml"
 
       - name: Push changes
-        uses: stefanzweifel/git-auto-commit-action@v7
+        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
