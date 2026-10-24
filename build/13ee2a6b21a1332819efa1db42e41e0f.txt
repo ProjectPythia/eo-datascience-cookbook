@@ -1,0 +1,215 @@
+[31m---------------------------------------------------------------------------[39m
+[31mKeyError[39m                                  Traceback (most recent call last)
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/core/dimension.py:1493[39m, in [36mDimensioned._repr_mimebundle_[39m[34m(self, include, exclude)[39m
+[32m   1486[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m_repr_mimebundle_[39m([38;5;28mself[39m, include=[38;5;28;01mNone[39;00m, exclude=[38;5;28;01mNone[39;00m):
+[32m   1487[39m [38;5;250m    [39m[33;03m"""Resolves the class hierarchy for the class rendering the[39;00m
+[32m   1488[39m [33;03m    object using any display hooks registered on Store.display[39;00m
+[32m   1489[39m [33;03m    hooks.  The output of all registered display_hooks is then[39;00m
+[32m   1490[39m [33;03m    combined and returned.[39;00m
+[32m   1491[39m 
+[32m   1492[39m [33;03m    """[39;00m
+[32m-> [39m[32m1493[39m     [38;5;28;01mreturn[39;00m [30;43mStore[39;49m[30;43m.[39;49m[30;43mrender[39;49m[30;43m([39;49m[30;43mself[39;49m[30;43m)[39;49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/core/options.py:1519[39m, in [36mStore.render[39m[34m(cls, obj)[39m
+[32m   1517[39m data, metadata = {}, {}
+[32m   1518[39m [38;5;28;01mfor[39;00m hook [38;5;129;01min[39;00m hooks:
+[32m-> [39m[32m1519[39m     ret = [30;43mhook[39;49m[30;43m([39;49m[30;43mobj[39;49m[30;43m)[39;49m
+[32m   1520[39m     [38;5;28;01mif[39;00m ret [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[32m   1521[39m         [38;5;28;01mcontinue[39;00m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/ipython/display_hooks.py:330[39m, in [36mpprint_display[39m[34m(obj)[39m
+[32m    328[39m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m ip.display_formatter.formatters[[33m"[39m[33mtext/plain[39m[33m"[39m].pprint:
+[32m    329[39m     [38;5;28;01mreturn[39;00m [38;5;28;01mNone[39;00m
+[32m--> [39m[32m330[39m [38;5;28;01mreturn[39;00m [30;43mdisplay[39;49m[30;43m([39;49m[30;43mobj[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mraw_output[39;49m[30;43m=[39;49m[30;43;01mTrue[39;49;00m[30;43m)[39;49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/ipython/display_hooks.py:298[39m, in [36mdisplay[39m[34m(obj, raw_output, **kwargs)[39m
+[32m    296[39m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(obj, (CompositeOverlay, ViewableElement)):
+[32m    297[39m     [38;5;28;01mwith[39;00m option_state(obj):
+[32m--> [39m[32m298[39m         output = [30;43melement_display[39;49m[30;43m([39;49m[30;43mobj[39;49m[30;43m)[39;49m
+[32m    299[39m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(obj, (Layout, NdLayout, AdjointLayout)):
+[32m    300[39m     [38;5;28;01mwith[39;00m option_state(obj):
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/ipython/display_hooks.py:193[39m, in [36mdisplay_hook.<locals>.wrapped[39m[34m(element)[39m
+[32m    191[39m [38;5;28;01mtry[39;00m:
+[32m    192[39m     max_frames = OutputSettings.options[[33m"[39m[33mmax_frames[39m[33m"[39m]
+[32m--> [39m[32m193[39m     mimebundle = [30;43mfn[39;49m[30;43m([39;49m[30;43melement[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mmax_frames[39;49m[30;43m=[39;49m[30;43mmax_frames[39;49m[30;43m)[39;49m
+[32m    194[39m     [38;5;28;01mif[39;00m mimebundle [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[32m    195[39m         [38;5;28;01mreturn[39;00m {}, {}
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/ipython/display_hooks.py:231[39m, in [36melement_display[39m[34m(element, max_frames)[39m
+[32m    228[39m [38;5;28;01mif[39;00m [38;5;28mtype[39m(element) [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m Store.registry[backend]:
+[32m    229[39m     [38;5;28;01mreturn[39;00m [38;5;28;01mNone[39;00m
+[32m--> [39m[32m231[39m [38;5;28;01mreturn[39;00m [30;43mrender[39;49m[30;43m([39;49m[30;43melement[39;49m[30;43m)[39;49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/ipython/display_hooks.py:62[39m, in [36mrender[39m[34m(obj, **kwargs)[39m
+[32m     59[39m [38;5;28;01mif[39;00m renderer.fig == [33m"[39m[33mpdf[39m[33m"[39m:
+[32m     60[39m     renderer = renderer.instance(fig=[33m"[39m[33mpng[39m[33m"[39m)
+[32m---> [39m[32m62[39m [38;5;28;01mreturn[39;00m [30;43mrenderer[39;49m[30;43m.[39;49m[30;43mcomponents[39;49m[30;43m([39;49m[30;43mobj[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43m*[39;49m[30;43m*[39;49m[30;43mkwargs[39;49m[30;43m)[39;49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/renderer.py:459[39m, in [36mRenderer.components[39m[34m(self, obj, fmt, comm, **kwargs)[39m
+[32m    457[39m embed = [38;5;129;01mnot[39;00m (dynamic [38;5;129;01mor[39;00m streams [38;5;129;01mor[39;00m [38;5;28mself[39m.widget_mode == [33m"[39m[33mlive[39m[33m"[39m) [38;5;129;01mor[39;00m config.embed
+[32m    458[39m [38;5;28;01mif[39;00m embed [38;5;129;01mor[39;00m config.comms == [33m"[39m[33mdefault[39m[33m"[39m:
+[32m--> [39m[32m459[39m     [38;5;28;01mreturn[39;00m [30;43mself[39;49m[30;43m.[39;49m[30;43m_render_panel[39;49m[30;43m([39;49m[30;43mplot[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43membed[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mcomm[39;49m[30;43m)[39;49m
+[32m    460[39m [38;5;28;01mreturn[39;00m [38;5;28mself[39m._render_ipywidget(plot)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/renderer.py:466[39m, in [36mRenderer._render_panel[39m[34m(self, plot, embed, comm)[39m
+[32m    464[39m doc = Document()
+[32m    465[39m [38;5;28;01mwith[39;00m config.set(embed=embed):
+[32m--> [39m[32m466[39m     model = [30;43mplot[39;49m[30;43m.[39;49m[30;43mlayout[39;49m[30;43m.[39;49m[30;43m_render_model[39;49m[30;43m([39;49m[30;43mdoc[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mcomm[39;49m[30;43m)[39;49m
+[32m    467[39m [38;5;28;01mif[39;00m embed:
+[32m    468[39m     [38;5;28;01mreturn[39;00m render_model(model, comm)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/viewable.py:908[39m, in [36mViewable._render_model[39m[34m(self, doc, comm)[39m
+[32m    906[39m [38;5;28;01mif[39;00m comm [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[32m    907[39m     comm = state._comm_manager.get_server_comm()
+[32m--> [39m[32m908[39m model = [30;43mself[39;49m[30;43m.[39;49m[30;43mget_root[39;49m[30;43m([39;49m[30;43mdoc[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mcomm[39;49m[30;43m)[39;49m
+[32m    910[39m [38;5;28;01mif[39;00m [38;5;28mself[39m._design [38;5;129;01mand[39;00m [38;5;28mself[39m._design.theme.bokeh_theme:
+[32m    911[39m     doc.theme = [38;5;28mself[39m._design.theme.bokeh_theme
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/layout/base.py:386[39m, in [36mPanel.get_root[39m[34m(self, doc, comm, preprocess)[39m
+[32m    382[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mget_root[39m(
+[32m    383[39m     [38;5;28mself[39m, doc: Document | [38;5;28;01mNone[39;00m = [38;5;28;01mNone[39;00m, comm: Comm | [38;5;28;01mNone[39;00m = [38;5;28;01mNone[39;00m,
+[32m    384[39m     preprocess: [38;5;28mbool[39m = [38;5;28;01mTrue[39;00m
+[32m    385[39m ) -> Model:
+[32m--> [39m[32m386[39m     root = [30;43msuper[39;49m[30;43m([39;49m[30;43m)[39;49m[30;43m.[39;49m[30;43mget_root[39;49m[30;43m([39;49m[30;43mdoc[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mcomm[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mpreprocess[39;49m[30;43m)[39;49m
+[32m    387[39m     [38;5;66;03m# ALERT: Find a better way to handle this[39;00m
+[32m    388[39m     [38;5;28;01mif[39;00m [38;5;28mhasattr[39m(root, [33m'[39m[33mstyles[39m[33m'[39m) [38;5;129;01mand[39;00m [33m'[39m[33moverflow-x[39m[33m'[39m [38;5;129;01min[39;00m root.styles:
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/viewable.py:820[39m, in [36mRenderable.get_root[39m[34m(self, doc, comm, preprocess)[39m
+[32m    818[39m wrapper = [38;5;28mself[39m._design._wrapper([38;5;28mself[39m)
+[32m    819[39m [38;5;28;01mif[39;00m wrapper [38;5;129;01mis[39;00m [38;5;28mself[39m:
+[32m--> [39m[32m820[39m     root = [30;43mself[39;49m[30;43m.[39;49m[30;43m_get_model[39;49m[30;43m([39;49m[30;43mdoc[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mcomm[39;49m[30;43m=[39;49m[30;43mcomm[39;49m[30;43m)[39;49m
+[32m    821[39m     [38;5;28;01mif[39;00m preprocess:
+[32m    822[39m         [38;5;28mself[39m._preprocess(root)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/layout/base.py:370[39m, in [36mPanel._get_model[39m[34m(self, doc, root, parent, comm)[39m
+[32m    368[39m root = root [38;5;129;01mor[39;00m model
+[32m    369[39m [38;5;28mself[39m._models[root.ref[[33m'[39m[33mid[39m[33m'[39m]] = (model, parent)
+[32m--> [39m[32m370[39m objects, _ = [30;43mself[39;49m[30;43m.[39;49m[30;43m_get_objects[39;49m[30;43m([39;49m[30;43mmodel[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43m[[39;49m[30;43m][39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mdoc[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mroot[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mcomm[39;49m[30;43m)[39;49m
+[32m    371[39m props = [38;5;28mself[39m._get_properties(doc)
+[32m    372[39m props[[38;5;28mself[39m._property_mapping[[33m'[39m[33mobjects[39m[33m'[39m]] = objects
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/layout/base.py:352[39m, in [36mPanel._get_objects[39m[34m(self, model, old_objects, doc, root, comm)[39m
+[32m    350[39m [38;5;28;01melse[39;00m:
+[32m    351[39m     [38;5;28;01mtry[39;00m:
+[32m--> [39m[32m352[39m         child = [30;43mpane[39;49m[30;43m.[39;49m[30;43m_acquire_model[39;49m[30;43m([39;49m[30;43mdoc[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mroot[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mmodel[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mcomm[39;49m[30;43m)[39;49m
+[32m    353[39m     [38;5;28;01mexcept[39;00m RerenderError [38;5;28;01mas[39;00m e:
+[32m    354[39m         [38;5;28;01mif[39;00m e.layout [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;129;01mand[39;00m e.layout [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28mself[39m:
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/viewable.py:686[39m, in [36mRenderable._acquire_model[39m[34m(self, doc, root, parent, comm)[39m
+[32m    684[39m     parents = [38;5;28mself[39m._model_parents.setdefault(ref, [owner])
+[32m    685[39m [38;5;28;01melse[39;00m:
+[32m--> [39m[32m686[39m     model = [30;43mself[39;49m[30;43m.[39;49m[30;43m_get_model[39;49m[30;43m([39;49m[30;43mdoc[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mroot[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mparent[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mcomm[39;49m[30;43m)[39;49m
+[32m    687[39m     parents = [38;5;28mself[39m._model_parents.setdefault(ref, [])
+[32m    688[39m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28many[39m(p [38;5;129;01mis[39;00m parent [38;5;28;01mfor[39;00m p [38;5;129;01min[39;00m parents):
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/pane/holoviews.py:497[39m, in [36mHoloViews._get_model[39m[34m(self, doc, root, parent, comm)[39m
+[32m    495[39m     plot = [38;5;28mself[39m.object
+[32m    496[39m [38;5;28;01melse[39;00m:
+[32m--> [39m[32m497[39m     plot = [30;43mself[39;49m[30;43m.[39;49m[30;43m_render[39;49m[30;43m([39;49m[30;43mdoc[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mcomm[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mroot[39;49m[30;43m)[39;49m
+[32m    499[39m plot.pane = [38;5;28mself[39m
+[32m    500[39m backend = plot.renderer.backend
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/panel/pane/holoviews.py:591[39m, in [36mHoloViews._render[39m[34m(self, doc, comm, root)[39m
+[32m    588[39m     [38;5;28;01mif[39;00m comm:
+[32m    589[39m         kwargs[[33m'[39m[33mcomm[39m[33m'[39m] = comm
+[32m--> [39m[32m591[39m [38;5;28;01mreturn[39;00m [30;43mrenderer[39;49m[30;43m.[39;49m[30;43mget_plot[39;49m[30;43m([39;49m[30;43mself[39;49m[30;43m.[39;49m[30;43mobject[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43m*[39;49m[30;43m*[39;49m[30;43mkwargs[39;49m[30;43m)[39;49m
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/bokeh/renderer.py:77[39m, in [36mBokehRenderer.get_plot[39m[34m(self_or_cls, obj, doc, renderer, **kwargs)[39m
+[32m     70[39m [38;5;129m@bothmethod[39m
+[32m     71[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mget_plot[39m(self_or_cls, obj, doc=[38;5;28;01mNone[39;00m, renderer=[38;5;28;01mNone[39;00m, **kwargs):
+[32m     72[39m [38;5;250m    [39m[33;03m"""Given a HoloViews Viewable return a corresponding plot instance.[39;00m
+[32m     73[39m [33;03m    Allows supplying a document attach the plot to, useful when[39;00m
+[32m     74[39m [33;03m    combining the bokeh model with another plot.[39;00m
+[32m     75[39m 
+[32m     76[39m [33;03m    """[39;00m
+[32m---> [39m[32m77[39m     plot = [30;43msuper[39;49m[30;43m([39;49m[30;43m)[39;49m[30;43m.[39;49m[30;43mget_plot[39;49m[30;43m([39;49m[30;43mobj[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mdoc[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mrenderer[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43m*[39;49m[30;43m*[39;49m[30;43mkwargs[39;49m[30;43m)[39;49m
+[32m     78[39m     [38;5;28;01mif[39;00m plot.document [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[32m     79[39m         plot.document = Document() [38;5;28;01mif[39;00m self_or_cls.notebook_context [38;5;28;01melse[39;00m curdoc()
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/renderer.py:300[39m, in [36mRenderer.get_plot[39m[34m(self_or_cls, obj, doc, renderer, comm, **kwargs)[39m
+[32m    296[39m     defaults = [kd.default [38;5;28;01mfor[39;00m kd [38;5;129;01min[39;00m plot.dimensions]
+[32m    297[39m     init_key = [38;5;28mtuple[39m(
+[32m    298[39m         v [38;5;28;01mif[39;00m d [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m [38;5;28;01melse[39;00m d [38;5;28;01mfor[39;00m v, d [38;5;129;01min[39;00m [38;5;28mzip[39m(plot.keys[[32m0[39m], defaults, strict=[38;5;28;01mNone[39;00m)
+[32m    299[39m     )
+[32m--> [39m[32m300[39m     [30;43mplot[39;49m[30;43m.[39;49m[30;43mupdate[39;49m[30;43m([39;49m[30;43minit_key[39;49m[30;43m)[39;49m
+[32m    301[39m [38;5;28;01melse[39;00m:
+[32m    302[39m     plot = obj
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/plot.py:1086[39m, in [36mDimensionedPlot.update[39m[34m(self, key)[39m
+[32m   1084[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mupdate[39m([38;5;28mself[39m, key):
+[32m   1085[39m     [38;5;28;01mif[39;00m [38;5;28mlen[39m([38;5;28mself[39m) == [32m1[39m [38;5;129;01mand[39;00m key [38;5;129;01min[39;00m ([32m0[39m, [38;5;28mself[39m.keys[[32m0[39m]) [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m [38;5;28mself[39m.drawn:
+[32m-> [39m[32m1086[39m         [38;5;28;01mreturn[39;00m [30;43mself[39;49m[30;43m.[39;49m[30;43minitialize_plot[39;49m[30;43m([39;49m[30;43m)[39;49m
+[32m   1087[39m     item = [38;5;28mself[39m.[34m__getitem__[39m(key)
+[32m   1088[39m     [38;5;28mself[39m.traverse([38;5;28;01mlambda[39;00m x: [38;5;28msetattr[39m(x, [33m"[39m[33m_updated[39m[33m"[39m, [38;5;28;01mTrue[39;00m))
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/geoviews/plotting/bokeh/plot.py:121[39m, in [36mGeoPlot.initialize_plot[39m[34m(self, ranges, plot, plots, source)[39m
+[32m    119[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34minitialize_plot[39m([38;5;28mself[39m, ranges=[38;5;28;01mNone[39;00m, plot=[38;5;28;01mNone[39;00m, plots=[38;5;28;01mNone[39;00m, source=[38;5;28;01mNone[39;00m):
+[32m    120[39m     opts = {} [38;5;28;01mif[39;00m [38;5;28misinstance[39m([38;5;28mself[39m, HvOverlayPlot) [38;5;28;01melse[39;00m {[33m'[39m[33msource[39m[33m'[39m: source}
+[32m--> [39m[32m121[39m     fig = [30;43msuper[39;49m[30;43m([39;49m[30;43m)[39;49m[30;43m.[39;49m[30;43minitialize_plot[39;49m[30;43m([39;49m[30;43mranges[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mplot[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mplots[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43m*[39;49m[30;43m*[39;49m[30;43mopts[39;49m[30;43m)[39;49m
+[32m    122[39m     style_element = [38;5;28mself[39m.current_frame.last [38;5;28;01mif[39;00m [38;5;28mself[39m.batched [38;5;28;01melse[39;00m [38;5;28mself[39m.current_frame
+[32m    123[39m     el_ranges = match_spec(style_element, [38;5;28mself[39m.current_ranges) [38;5;28;01mif[39;00m [38;5;28mself[39m.current_ranges [38;5;28;01melse[39;00m {}
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/bokeh/element.py:3906[39m, in [36mOverlayPlot.initialize_plot[39m[34m(self, ranges, plot, plots)[39m
+[32m   3904[39m [38;5;28mself[39m.tabs = [38;5;28mself[39m.tabs [38;5;129;01mor[39;00m [38;5;28many[39m([38;5;28misinstance[39m(sp, TablePlot) [38;5;28;01mfor[39;00m sp [38;5;129;01min[39;00m [38;5;28mself[39m.subplots.values())
+[32m   3905[39m [38;5;28;01mif[39;00m plot [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m [38;5;28mself[39m.tabs [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m [38;5;28mself[39m.batched:
+[32m-> [39m[32m3906[39m     plot = [30;43mself[39;49m[30;43m.[39;49m[30;43m_init_plot[39;49m[30;43m([39;49m[30;43mkey[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43melement[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mranges[39;49m[30;43m=[39;49m[30;43mranges[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mplots[39;49m[30;43m=[39;49m[30;43mplots[39;49m[30;43m)[39;49m
+[32m   3907[39m     [38;5;28mself[39m._populate_axis_handles(plot)
+[32m   3908[39m [38;5;28mself[39m.handles[[33m"[39m[33mplot[39m[33m"[39m] = plot
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/bokeh/element.py:1150[39m, in [36mElementPlot._init_plot[39m[34m(self, key, element, plots, ranges)[39m
+[32m   1146[39m subplots = [38;5;28mlist[39m([38;5;28mself[39m.subplots.values()) [38;5;28;01mif[39;00m [38;5;28mself[39m.subplots [38;5;28;01melse[39;00m []
+[32m   1148[39m axis_specs = {[33m"[39m[33mx[39m[33m"[39m: {}, [33m"[39m[33my[39m[33m"[39m: {}}
+[32m   1149[39m axis_specs[[33m"[39m[33mx[39m[33m"[39m][[33m"[39m[33mx[39m[33m"[39m] = (
+[32m-> [39m[32m1150[39m     *[30;43mself[39;49m[30;43m.[39;49m[30;43m_axis_props[39;49m[30;43m([39;49m[30;43mplots[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43msubplots[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43melement[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mranges[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mpos[39;49m[30;43m=[39;49m[30;43m0[39;49m[30;43m)[39;49m,
+[32m   1151[39m     [38;5;28mself[39m.xaxis,
+[32m   1152[39m     {},
+[32m   1153[39m )
+[32m   1154[39m [38;5;28;01mif[39;00m [38;5;28mself[39m.multi_y [38;5;129;01mand[39;00m subplots:
+[32m   1155[39m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m BOKEH_GE_3_2_0:
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/bokeh/element.py:936[39m, in [36mElementPlot._axis_props[39m[34m(self, plots, subplots, element, ranges, pos, dim, range_tags_extras, extra_range_name)[39m
+[32m    934[39m [38;5;28;01melse[39;00m:
+[32m    935[39m     [38;5;28;01mtry[39;00m:
+[32m--> [39m[32m936[39m         l, b, r, t = [30;43mself[39;49m[30;43m.[39;49m[30;43mget_extents[39;49m[30;43m([39;49m[30;43mrange_el[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mranges[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mdimension[39;49m[30;43m=[39;49m[30;43mdim[39;49m[30;43m)[39;49m
+[32m    937[39m     [38;5;28;01mexcept[39;00m [38;5;167;01mTypeError[39;00m:
+[32m    938[39m         [38;5;66;03m# Backward compatibility for e.g. GeoViews=<1.10.1 since dimension[39;00m
+[32m    939[39m         [38;5;66;03m# is a newly added keyword argument in HoloViews 1.17[39;00m
+[32m    940[39m         l, b, r, t = [38;5;28mself[39m.get_extents(range_el, ranges)
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/geoviews/plotting/plot.py:64[39m, in [36mProjectionPlot.get_extents[39m[34m(self, element, ranges, range_type, **kwargs)[39m
+[32m     62[39m     (x0, x1), (y0, y1) = proj.x_limits, proj.y_limits
+[32m     63[39m     [38;5;28;01mreturn[39;00m (x0, y0, x1, y1)
+[32m---> [39m[32m64[39m extents = [30;43msuper[39;49m[30;43m([39;49m[30;43m)[39;49m[30;43m.[39;49m[30;43mget_extents[39;49m[30;43m([39;49m[30;43melement[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mranges[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mrange_type[39;49m[30;43m)[39;49m
+[32m     65[39m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28mgetattr[39m(element, [33m'[39m[33mcrs[39m[33m'[39m, [38;5;28;01mNone[39;00m) [38;5;129;01mor[39;00m [38;5;129;01mnot[39;00m [38;5;28mself[39m.geographic:
+[32m     66[39m     [38;5;28;01mreturn[39;00m extents
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/plot.py:2285[39m, in [36mGenericOverlayPlot.get_extents[39m[34m(self, overlay, ranges, range_type, dimension, **kwargs)[39m
+[32m   2284[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mget_extents[39m([38;5;28mself[39m, overlay, ranges, range_type=[33m"[39m[33mcombined[39m[33m"[39m, dimension=[38;5;28;01mNone[39;00m, **kwargs):
+[32m-> [39m[32m2285[39m     subplot_extents = [30;43mself[39;49m[30;43m.[39;49m[30;43m_get_subplot_extents[39;49m[30;43m([39;49m[30;43moverlay[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mranges[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mrange_type[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mdimension[39;49m[30;43m)[39;49m
+[32m   2286[39m     zrange = [38;5;28misinstance[39m([38;5;28mself[39m.projection, [38;5;28mstr[39m) [38;5;129;01mand[39;00m [38;5;28mself[39m.projection == [33m"[39m[33m3d[39m[33m"[39m
+[32m   2287[39m     extents = {k: util.max_extents(rs, zrange) [38;5;28;01mfor[39;00m k, rs [38;5;129;01min[39;00m subplot_extents.items()}
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/holoviews/plotting/plot.py:2280[39m, in [36mGenericOverlayPlot._get_subplot_extents[39m[34m(self, overlay, ranges, range_type, dimension)[39m
+[32m   2278[39m         sp_ranges = util.match_spec(layer, ranges) [38;5;28;01mif[39;00m ranges [38;5;28;01melse[39;00m {}
+[32m   2279[39m     [38;5;28;01mfor[39;00m rt [38;5;129;01min[39;00m extents:
+[32m-> [39m[32m2280[39m         extent = [30;43msubplot[39;49m[30;43m.[39;49m[30;43mget_extents[39;49m[30;43m([39;49m[30;43mlayer[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43msp_ranges[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mrange_type[39;49m[30;43m=[39;49m[30;43mrt[39;49m[30;43m)[39;49m
+[32m   2281[39m         extents[rt].append(extent)
+[32m   2282[39m [38;5;28;01mreturn[39;00m extents
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/geoviews/plotting/plot.py:70[39m, in [36mProjectionPlot.get_extents[39m[34m(self, element, ranges, range_type, **kwargs)[39m
+[32m     68[39m     extents = [38;5;28;01mNone[39;00m
+[32m     69[39m [38;5;28;01melse[39;00m:
+[32m---> [39m[32m70[39m     extents = [30;43mproject_extents[39;49m[30;43m([39;49m[30;43mextents[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43melement[39;49m[30;43m.[39;49m[30;43mcrs[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mproj[39;49m[30;43m)[39;49m
+[32m     71[39m [38;5;28;01mreturn[39;00m (np.nan,)*[32m4[39m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m extents [38;5;28;01melse[39;00m extents
+
+[36mFile [39m[32m~/micromamba/envs/eo-datascience-cookbook/lib/python3.13/site-packages/geoviews/util.py:72[39m, in [36mproject_extents[39m[34m(extents, src_proj, dest_proj, tol)[39m
+[32m     67[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mproject_extents[39m(extents, src_proj, dest_proj, tol=[32m1e-6[39m):
+[32m     68[39m     x1, y1, x2, y2 = extents
+[32m     70[39m     [38;5;28;01mif[39;00m ([38;5;28misinstance[39m(src_proj, ccrs.PlateCarree) [38;5;129;01mand[39;00m
+[32m     71[39m         [38;5;129;01mnot[39;00m [38;5;28misinstance[39m(dest_proj, ccrs.PlateCarree) [38;5;129;01mand[39;00m
+[32m---> [39m[32m72[39m         [30;43msrc_proj[39;49m[30;43m.[39;49m[30;43mproj4_params[39;49m[30;43m[[39;49m[30;43m'[39;49m[30;43mlon_0[39;49m[30;43m'[39;49m[30;43m][39;49m != [32m0[39m):
+[32m     73[39m         xoffset = src_proj.proj4_params[[33m'[39m[33mlon_0[39m[33m'[39m]
+[32m     74[39m         x1 = x1 - xoffset
+
+[31mKeyError[39m: 'lon_0'
